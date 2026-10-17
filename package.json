@@ -1,0 +1,20 @@
+{
+  "name": "pila",
+  "private": true,
+  "scripts": {
+    "extract": "tsx extract/main.ts",
+    "test": "node --import tsx --test extract/tests/*.test.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "youtube-transcript-plus": "^2.0.3"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.5",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
+  }
+}

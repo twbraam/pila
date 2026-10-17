@@ -1,94 +1,109 @@
 # Pila
 
-A Chrome extension that checks YouTube subtitles for potential misinformation and shows evidence links during video playback.
+A planned Chrome extension that checks YouTube captions for potential misinformation and shows evidence links during video playback.
 
-## Tech Stack
+The **Extract module is implemented as a TypeScript/Node.js CLI and library**. Extract and Process share the same server runtime and root package configuration. Process, Overlay, and the WXT extension integration are planned. Extract uses [`youtube-transcript-plus`](https://github.com/ericmmartin/youtube-transcript-plus) to retrieve existing YouTube captions; it does not transcribe audio or require Gemini credentials.
 
-- **TypeScript + WXT (Manifest V3)** — Chrome extension framework.
-- **Content scripts + page-context bridge** — discover subtitles and monitor playback.
-- **Background service worker + Fetch API** — retrieve captions and communicate with Jev.
-- **Chrome messaging + storage** — internal communication and settings.
+## Project layout
 
-
-## Proof of Concept
-
-The POC will fetch the **whole transcript when a user opens a YouTube video**. Ingestion assembles subtitle fragments into complete sentences. All three modules run in the **TypeScript extension**, with Jev and Tavily requests handled by the background service worker.
-
-This is the planned architecture. The modules can be built in parallel using the shared data contracts below and mock inputs and outputs.
-
-### Limitations
-
-Because of potential long transcription time, we limit ourselves to videos of at most 10 minutes.
-
-## Modules
-
-### 1. Ingestion
-
-A standalone TypeScript CLI (`src/`) that turns a single YouTube video into subtitles using Gemini. There is no captions scraper, so it works the same whether or not the uploader enabled captions.
-
-```bash
-npm install
-export GEMINI_API_KEY=your_key        # or put it in a .env file
-npm run transcript -- <video-url-or-id> --format srt --out video.srt
+```text
+extract/                  Caption extraction, JSON CLI, and its tests
+  main.ts                 CLI entry point
+  index.ts                Reusable Extract API
+  tests/                  Offline tests and simulated YouTube responses
+process/                  Process step (implementation planned)
+shared/
+  transcript.ts           Shared Transcript types and runtime validation
+  transcript.schema.json  Portable JSON output contract
+examples/                 Example videos and transcript fixtures
+package.json              Shared dependencies and commands
+tsconfig.json             Shared TypeScript configuration
 ```
-It goes to
-| Option | Description |
-| --- | --- |
-| `--format srt\|vtt\|text\|json` | Output format (default `srt`) |
-| `--out <file>` | Write to a file instead of stdout |
 
-Env: `GEMINI_API_KEY` (required), `GEMINI_MODEL` (default `gemini-2.5-flash`).
+Run commands from the repository root. Each step keeps its implementation in its own folder; shared contracts belong in `shared/`.
 
-#### How it works
+## Proof of concept
+
+Extract retrieves the whole video's caption track and assembles caption fragments into timed sentence units. Processing will check those units and produce warnings for Overlay. All modules share the JSON `Transcript` contract below.
 
 ```mermaid
 flowchart LR
-    A["YouTube URL or ID"] --> B["Extract video ID"]
-    B --> C["Send the video link to Gemini"]
-    C --> D["Gemini watches and listens,<br/>returns text with start times"]
-    D --> E["Add an end time to each line"]
-    E --> F["Save as SRT, VTT, text or JSON"]
+    A["YouTube URL or ID"] --> B["Extract: fetch captions"]
+    B --> C["Assemble timed sentences"]
+    C --> D["Transcript JSON"]
+    D --> E["Processing: Jev + Tavily (planned)"]
+    E --> F["Overlay during playback (planned)"]
 ```
 
-1. **Extract the ID.** Accepts a plain ID or a `watch`, `youtu.be`, `shorts`, `embed` or `live` link.
-2. **Send the link to Gemini.** The video URL goes straight to the Gemini API. Nothing is downloaded.
-3. **Gemini transcribes.** It processes the video's audio and returns a JSON list of `{ start, text }`.
-4. **Add end times.** Gemini gives only start times, so each line ends where the next one starts (the last line gets 3 s).
-5. **Write the file.** Cues are formatted as SRT or VTT, or saved as plain text or JSON.
+The planned extension stack is TypeScript + WXT (Manifest V3), with content scripts for playback, a background service worker for requests to the shared Extract/Process server, and Chrome messaging/storage. The caption package imports Node.js filesystem modules and runs on that server. Extension-to-server integration is still planned.
 
-#### What Gemini does
+## 1. Extract
 
-```mermaid
-sequenceDiagram
-    participant CLI
-    participant Gemini
-    CLI->>Gemini: video URL + "transcribe, return JSON"
-    Note right of Gemini: Reads the video and<br/>transcribes the speech
-    Gemini-->>CLI: [ { start, text }, ... ]
-    Note left of CLI: Add end times,<br/>write SRT / VTT / text / JSON
+Requires **Node.js 22 or later**.
+
+```bash
+npm install
+
+# Save the whole normalized transcript as JSON.
+npm run extract -- 'https://www.youtube.com/watch?v=OwqIy8Ikv-c' --out transcript.json
+
+# Run the Extract entry point directly.
+npx tsx extract/main.ts zmfRG8-RHEI --out transcript.json
+
+# Print JSON to stdout. --silent suppresses npm's own script banner.
+npm run --silent extract -- OwqIy8Ikv-c
 ```
 
-The request asks for JSON with a fixed shape (`responseMimeType: application/json` plus a `responseSchema`), so the reply can be parsed directly with no text cleanup.
+| Option | Description |
+| --- | --- |
+| `<video-url-or-id>` | Required. An 11-character ID or a YouTube `watch`, `youtu.be`, `shorts`, `embed`, or `live` URL. |
+| `--lang`, `-l` | Exact caption language code, such as `en` or `zh-TW`; default `en`. |
+| `--out`, `-o` | Write UTF-8 JSON to this file instead of stdout. Its parent directory must exist. |
+| `--timeout` | Whole-request timeout in milliseconds; default `30000`. |
+| `--help`, `-h` | Show usage. |
 
-#### Transcriber output → Processing input
+**JSON is the only output format.** There is no hardcoded video ID, `--format` option, API key, or 10-minute duration cap. A successful run emits one complete `Transcript`; errors go to stderr with a nonzero exit code. Caption retrieval and normalization finish before an output file is opened, so a fetch/normalization failure leaves an existing destination untouched.
 
-**Handoff format: one JSON `Transcript` for the whole video, containing complete, timed sentences.** Use `--format json` for this handoff; SRT, VTT and plain text are export formats. The types below define the implementation target for parallel development. The transcriber implementation is not yet checked into this repository, so its runtime output has not been verified against this contract.
+### Library API
+
+```typescript
+import { extractTranscript, assertTranscript } from './extract';
+import type { Transcript } from './shared/transcript';
+
+async function main() {
+  const transcript: Transcript = await extractTranscript('OwqIy8Ikv-c', {
+    lang: 'en',
+    timeoutMs: 30_000,
+    // signal: controller.signal, // Optional caller cancellation.
+  });
+  assertTranscript(transcript);
+  console.log(JSON.stringify(transcript, null, 2));
+}
+
+main().catch(console.error);
+```
+
+`extractTranscript()` rejects on failure. It accepts an optional third `CaptionFetcher` argument for offline tests or a replacement transport. `normalizeCaptions(videoId, captions, locale?)` is the pure assembly function for already downloaded captions.
+
+### Output contract: Extract → Processing
+
+The source of truth is [`shared/transcript.ts`](./shared/transcript.ts). A portable [JSON Schema](./shared/transcript.schema.json) describes the file structure; `assertTranscript()` additionally checks unique IDs, finite timestamps, chronological order, and `start < end`.
 
 ```typescript
 export interface TranscriptSentence {
   id: string;       // Unique within this transcript, e.g. "s0001".
-  text: string;     // Complete sentence, as plain Unicode text.
+  text: string;     // Nonempty, plain Unicode caption text.
   start: number;    // Seconds from the start of the video, inclusive.
   end: number;      // Seconds from the start of the video, exclusive.
 }
 
 export interface Transcript {
   videoId: string;  // YouTube video ID, not the full URL.
-  sentences: TranscriptSentence[]; // In playback order.
+  sentences: TranscriptSentence[]; // In nondecreasing start order.
 }
 ```
 
-Example handoff (a shortened mock, with approximate timings):
+A complete [JSON example](./examples/transcripts/extracted.json) was retrieved from `OwqIy8Ikv-c` using the CLI. It contains 36 sentence units. Shortened example (timings rounded here for readability):
 
 ```json
 {
@@ -97,53 +112,69 @@ Example handoff (a shortened mock, with approximate timings):
     {
       "id": "s0001",
       "text": "I’m an atmospheric physicist.",
-      "start": 2.52,
-      "end": 4.41
+      "start": 2.42,
+      "end": 8.559
     },
     {
       "id": "s0002",
       "text": "I’ve published more than 200 scientific papers.",
-      "start": 4.41,
-      "end": 7.88
+      "start": 2.42,
+      "end": 8.559
     }
   ]
 }
 ```
 
-The transcriber owns the conversion from subtitle cues to this handoff:
+Extract owns this conversion:
 
-- Gemini's raw result is an array of `{ start, text }`. Add each cue's `end` from the next cue's `start`; the last cue ends at its own `start + 3`. These are estimated subtitle timings, not word-level alignments.
-- Assemble fragments into complete sentences before handing them to Processing. A sentence spanning several cues starts at the first contributing cue's `start` and ends at the last contributing cue's `end`. If a cue contains several sentences and finer timings are unavailable, those sentences may share its time range.
-- Assign sentence IDs after assembly. Keep the IDs, text and timestamps unchanged while Processing and Overlay use that transcript. IDs are scoped to this transcript; a new transcription may assign different IDs.
-- Emit sentences in nondecreasing `start` order, with nonempty text and finite timestamps satisfying `0 <= start < end`. All timestamps are numeric **seconds**, including fractions, not milliseconds or formatted time strings.
-- Deliver the whole transcript once transcription and sentence assembly succeed. A successful transcription with no speech has `sentences: []`; a transcription failure must be reported separately rather than passed off as an empty transcript.
+- Native captions have `{ text, offset, duration, lang }`, with numeric timestamps in **seconds**. Extract keeps their timing precision and uses `offset + duration` for each cue's end.
+- Captions are sorted by start time, preserving source order on ties. Whitespace and line breaks are normalized to spaces; empty caption text is omitted. Invalid timestamps fail extraction.
+- `Intl.Segmenter` finds sentence boundaries in the combined text, including across caption boundaries. Each sentence gets the earliest start and latest end of all contributing captions. Sentences from the same caption can share or overlap time ranges; no word-level alignment is invented.
+- IDs are assigned after assembly as `s0001`, `s0002`, and so on. Identical input and segmentation runtime produce identical IDs; sentence boundaries may change across runtime versions or caption updates. Processing and Overlay must preserve the IDs, text, and timestamps for that transcript.
+- Sentence detection is a punctuation-based heuristic, not a grammatical guarantee. Abbreviations and automatic captions can produce imperfect boundaries. A final fragment is retained without adding punctuation; a passage with no sentence punctuation can remain one long unit.
+- No network or parsing failure is converted into an empty success. The contract allows `sentences: []`, but the live extractor rejects empty/unusable caption tracks because it cannot establish that the video contains no speech.
 
-The existing [sample transcript](./examples/transcripts/transcript.json) is **raw cue data**, not this sentence-level `Transcript`. Its shape is:
+### Existing raw caption files
 
-```typescript
-type SampleCue = { text: string; start: number; duration: number };
-// The file contains SampleCue[]. Both start and duration are in seconds.
-```
+Earlier prototype downloads contained a raw caption array. They are **not** the new `Transcript` handoff. To normalize that shape, call `normalizeCaptions(videoId, captions)` and serialize its return value.
 
-To use that fixture, supply the video ID separately, calculate each cue's `end = start + duration`, then assemble sentences and assign IDs as above. Its text includes Chinese and English separated by `\n`; a line break alone does not mark a new sentence. Processing should consume the normalized `Transcript`, rather than parse subtitle files or infer sentences from raw cues.
+For older `{ text, start, duration }[]` downloads, supply the video ID separately and map `start` to `offset`, adding `lang`, before calling the normalizer. Bilingual text is retained; line breaks alone do not separate sentences. Processing consumes the normalized `Transcript`, rather than raw cues.
 
-### 2. Processing
+### Limitations
+
+- Videos need an accessible caption track in the requested language. Missing/disabled captions, an unavailable language, a removed video, HTTP 429, and timeouts are errors. There is no audio transcription fallback or automatic language fallback.
+- The package uses YouTube's unofficial API. YouTube can block requests or change the endpoints, so availability can vary by video and network. Extract makes no automatic retries.
+- Caption quality, punctuation, duplicate/rolling caption text, and coarse timing are inherited from YouTube. Extract normalizes boundaries and whitespace; it does not correct or deduplicate speech.
+- The entire transcript is held in memory and returned once extraction succeeds. The 30-second request timeout applies regardless of video duration.
+
+## 2. Processing (planned)
+
+The implementation belongs in [`process/`](./process/README.md), alongside Extract on the same server. It imports its input contract from `shared/`.
 
 For every sentence in the transcript:
 
 1. **Detect with Jev:** ask whether the sentence contains misinformation. If no, continue with the next sentence. A yes is a candidate for further checking.
-2. **Find and assess evidence:** use Tavily to search for a list of evidence links, then ask Jev to assess the results and choose the best source supporting the conclusion that the statement is false. If a suitable source is found, emit a warning for Overlay. If no good evidence is found, skip the warning and continue with the next sentence.
+2. **Find and assess evidence:** use Tavily to search for evidence links, then ask Jev to assess the results and choose the best source supporting the conclusion that the statement is false. If a suitable source is found, emit a warning for Overlay. If no good evidence is found, skip the warning and continue.
 
-**Input:** a `Transcript`. **Output:** `MisinformationWarning` results as checks complete. A skipped sentence produces no warning; that does not establish that it is true.
+**Input:** a `Transcript`. **Output:** `MisinformationWarning` results as checks complete; the warning contract is still to be implemented. A skipped sentence produces no warning; that does not establish that it is true.
 
-### 3. Overlay
+## 3. Overlay (planned)
 
 - Match warnings to sentences using the video ID and sentence ID.
-- Use the sentence timestamps and current playback position to show the relevant warning.
-- Tell the user **“This statement is probably false”** and display a clickable link to the selected source for more information.
+- Use the sentence timestamps and current playback position to show the relevant warning. Shared/overlapping time ranges may make several sentences active at once.
+- Tell the user **“This statement is probably false”** and display a clickable link to the selected source.
 
 **Input:** the `Transcript`, warnings from Processing, and the current playback position. Only sentences with evidence from Processing produce a warning.
 
+## Development
+
+```bash
+npm run typecheck
+npm test
+```
+
+Tests run offline and cover sentence assembly, source timing validation, the runtime output contract, URL handling, cancellation, and CLI success/failure behavior with simulated YouTube responses. Live retrieval depends on YouTube and is checked separately.
+
 ## Example videos
 
-See [example_videos](./example_videos/README.md)
+See [example videos](./examples/youtube_videos.md).
