@@ -1,0 +1,26 @@
+{
+  "model": "jev-1.13.0",
+  "answers": {
+    "target_0_suspicion": {
+      "type": "score",
+      "score": 2.79,
+      "confidence": 0.8,
+      "legend": {
+        "0": "0: No specific endorsed factual issue identified. Includes ordinary plausible facts, opinions, neutral quotations, explicit rebuttals, or merely missing citations.",
+        "1": "1: Weak or unresolved concern. A possible issue exists but ambiguity, missing scope, or uncertain attribution prevents identifying a specific substantive error.",
+        "2": "2: A concrete endorsed factual assertion has a plausible substantive contradiction or materially misleading inference; independent verification is warranted.",
+        "3": "3: A concrete endorsed assertion appears directly incompatible with well-established background knowledge, or an explicit inference is clearly invalid. Strong priority for verification, not an evidence-backed verdict."
+      },
+      "probabilities": {
+        "0": 0.02,
+        "1": 0.03,
+        "2": 0.08,
+        "3": 0.87
+      }
+    }
+  },
+  "usage": {
+    "input_tokens": 1954,
+    "output_tokens": 22
+  }
+}

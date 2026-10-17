@@ -118,7 +118,7 @@ npm run typecheck -w @pila/factcheck
 npm run build -w @pila/factcheck            # tsc -> dist/
 npm run test:sw -w @pila/factcheck          # runs the library in a real MV3 service worker (Playwright)
 npm run test:contract -w @pila/factcheck    # real APIs; keys from the repo's .env
-npm run check-video -w @pila/factcheck -- ../../examples/transcripts/transcript.json --id OwqIy8Ikv-c --channel PragerU --title "Climate Change: What Do Scientists Say?"
+npm run check-video -w @pila/factcheck -- ../../ref/transcript.json --id OwqIy8Ikv-c --channel PragerU --title "Climate Change: What Do Scientists Say?"
 ```
 
 `check-video` prints the `FactCheckResult[]` (add `--json` for raw JSON, `--report` for the detailed report).

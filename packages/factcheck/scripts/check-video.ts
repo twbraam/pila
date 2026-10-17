@@ -1,7 +1,7 @@
 /**
  * Fact-check a saved transcript from the terminal.
  *
- *   npm run check-video -w @pila/factcheck -- ../../examples/transcripts/transcript.json --id OwqIy8Ikv-c --channel PragerU --title "..."
+ *   npm run check-video -w @pila/factcheck -- ../../ref/transcript.json --id OwqIy8Ikv-c --channel PragerU --title "..."
  *
  * Prints the FactCheckResult[] that Overlay receives (`--json` for raw JSON). `--report` prints the
  * detailed pipeline report instead (every source and stance), for debugging.

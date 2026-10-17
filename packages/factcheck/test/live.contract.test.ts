@@ -13,7 +13,7 @@ if (existsSync(envFile)) process.loadEnvFile(envFile);
 const { TYPESAFE_API_KEY, TAVILY_API_KEY } = process.env;
 
 const transcript: TranscriptSegment[] = JSON.parse(
-  readFileSync(new URL("../../../examples/transcripts/transcript.json", import.meta.url), "utf8"),
+  readFileSync(new URL("../../../ref/transcript.json", import.meta.url), "utf8"),
 );
 
 describe.skipIf(!TAVILY_API_KEY)("Tavily (live)", () => {

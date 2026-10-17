@@ -19,3 +19,6 @@ playwright-report/
 
 # Built by npm run build:sw-test
 packages/factcheck/test/sw/extension/sw.js
+
+# Logs
+*.log

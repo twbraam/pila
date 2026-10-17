@@ -1,0 +1,48 @@
+{
+  "videoId": "BSI8oxcQFfw",
+  "source": "/home/hadao/sync/projects/pila/examples/transcripts/BSI8oxcQFfw.json",
+  "sourceSha256": "53a24272f7e2d4160bbb9d177d08c1638e5c94ff61565e004561cda56afb37c1",
+  "sentenceCount": 9,
+  "targetCount": 16,
+  "language": "zh-TW",
+  "languageSelection": "auto",
+  "languageDetection": {
+    "language": "zh-TW",
+    "method": "unicode-script-ratio",
+    "hanCharacters": 3336,
+    "latinLetters": 90,
+    "hanRatio": 0.9737302977232924
+  },
+  "options": {
+    "transcript": "/home/hadao/sync/projects/pila/examples/transcripts/BSI8oxcQFfw.json",
+    "language": "zh-TW",
+    "batchSize": 64,
+    "contextTokens": 4000,
+    "decisionType": "score",
+    "threshold": 2
+  },
+  "status": "completed",
+  "totalRequests": 2,
+  "completedRequests": 2,
+  "apiSeconds": 0.5267618970000003,
+  "requestStats": [
+    {
+      "requestIndex": 0,
+      "apiSeconds": 0.3236229150000001,
+      "targets": 10,
+      "usage": {
+        "input_tokens": 10663,
+        "output_tokens": 184
+      }
+    },
+    {
+      "requestIndex": 1,
+      "apiSeconds": 0.20313898200000016,
+      "targets": 6,
+      "usage": {
+        "input_tokens": 8356,
+        "output_tokens": 112
+      }
+    }
+  ]
+}

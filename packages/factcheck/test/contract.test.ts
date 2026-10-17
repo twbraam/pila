@@ -5,7 +5,7 @@ import { InvalidInputError } from "../src/errors.js";
 import type { TranscriptSegment } from "../src/types.js";
 
 const segments: TranscriptSegment[] = JSON.parse(
-  readFileSync(new URL("../../../examples/transcripts/transcript.json", import.meta.url), "utf8"),
+  readFileSync(new URL("../../../ref/transcript.json", import.meta.url), "utf8"),
 );
 
 const transcript = {

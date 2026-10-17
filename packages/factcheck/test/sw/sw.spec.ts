@@ -4,7 +4,7 @@ import { type BrowserContext, chromium, expect, test as base, type Worker } from
 
 const extensionPath = fileURLToPath(new URL("./extension", import.meta.url));
 const read = (path: string) => JSON.parse(readFileSync(new URL(path, import.meta.url), "utf8"));
-const args = { transcript: read("../../../../examples/transcripts/transcript.json"), tavilyFixture: read("../fixtures/tavily-lindzen.json") };
+const args = { transcript: read("../../../../ref/transcript.json"), tavilyFixture: read("../fixtures/tavily-lindzen.json") };
 
 const test = base.extend<{ context: BrowserContext; worker: Worker }>({
   context: async ({}, use) => {

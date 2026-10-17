@@ -1,17 +1,30 @@
 {
   "name": "pila",
   "private": true,
-  "type": "module",
   "workspaces": [
     "packages/*",
     "apps/*"
   ],
+  "scripts": {
+    "start": "tsx server/main.ts",
+    "extract": "tsx extract/main.ts",
+    "preprocess": "tsx process/preprocess.ts",
+    "jev": "tsx process/jev_call.ts",
+    "build": "npm run build --workspaces --if-present",
+    "test": "npm run test:root && npm run test --workspaces --if-present",
+    "test:root": "node --import tsx --test extract/tests/*.test.ts server/tests/*.test.ts",
+    "typecheck": "tsc --noEmit && npm run typecheck --workspaces --if-present"
+  },
   "engines": {
     "node": ">=22"
   },
-  "scripts": {
-    "build": "npm run build --workspaces --if-present",
-    "test": "npm run test --workspaces --if-present",
-    "typecheck": "npm run typecheck --workspaces --if-present"
+  "dependencies": {
+    "js-tiktoken": "^1.0.21",
+    "youtube-transcript-plus": "^2.0.3"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.5",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
   }
 }

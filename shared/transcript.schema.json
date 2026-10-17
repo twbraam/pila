@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Pila Transcript",
+  "description": "The internal whole-video JSON handoff from Extract to Process. IDs must be unique and sentences must be in nondecreasing start order; validate these cross-item constraints with assertTranscript.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["videoId", "sentences"],
+  "properties": {
+    "videoId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9_-]{11}$"
+    },
+    "sentences": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "text", "start", "end"],
+        "properties": {
+          "id": { "type": "string", "pattern": "\\S" },
+          "text": { "type": "string", "pattern": "\\S" },
+          "start": { "type": "number", "minimum": 0 },
+          "end": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "Must be strictly greater than this sentence's start; checked by assertTranscript."
+          }
+        }
+      }
+    }
+  }
+}
