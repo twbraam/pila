@@ -4,7 +4,7 @@ import { type BrowserContext, chromium, expect, test as base, type Worker } from
 
 const extensionPath = fileURLToPath(new URL("./extension", import.meta.url));
 const read = (path: string) => JSON.parse(readFileSync(new URL(path, import.meta.url), "utf8"));
-const args = { transcript: read("../../../../ref/transcript.json"), tavilyFixture: read("../fixtures/tavily-lindzen.json") };
+const args = { transcript: read("../../../../examples/transcripts/transcript.json"), tavilyFixture: read("../fixtures/tavily-lindzen.json") };
 
 const test = base.extend<{ context: BrowserContext; worker: Worker }>({
   context: async ({}, use) => {
@@ -29,9 +29,10 @@ const run = (worker: Worker, name: TestName) =>
   );
 
 test("runs the full pipeline inside an MV3 service worker", async ({ worker }) => {
-  const result = (await run(worker, "offline")) as { model: string; labels: string[] };
+  const result = (await run(worker, "offline")) as { model: string; labels: string[]; verdicts: string[] };
   expect(result.model).toBe("jev-1.13.0");
   expect(result.labels).toEqual(["false"]);
+  expect(result.verdicts).toEqual(["misinformation"]);
 });
 
 test("reaches the real Jev API from the worker and reports a bad key as AuthError", async ({ worker }) => {

@@ -64,6 +64,59 @@
         "supports": "The source says the claim is true",
         "not_relevant": "The source does not say whether the claim is true or false"
       }
+    },
+    "source_1_quote": {
+      "type": "choice",
+      "instructions": "Which sentence of `evidence.source_1` best states what it concludes about `claim`?",
+      "criteria": {
+        "s0": "# Video from PragerU makes several incorrect and misleading claims about climate change.",
+        "s1": "Scientists that evaluated the video found several claims about climate change to be incorrect and misleading to viewers.",
+        "s2": "In the video, former MIT Professor Richard Lindzen claims “there is no evidence that CO2 emissions are the dominant factor” in climate change.",
+        "s3": "Lindzen also misleadingly claims that over the past 30 years, “the climate has changed remarkably little,” but does not specify what “little” is relative to.",
+        "s4": "Another misleading claim made in the video is that “CO2 is a greenhouse gas without which life on Earth is not possible, but adding it to the atmosphere should lead to some warming.” Even though CO2 is important for life on Earth, increased concentrations of atmospheric CO2 have imbalanced the globa",
+        "s5": "Overall, several claims made in the video about climate change are incorrect, not supported by scientific evidence, or misleading to the viewer, as the reviewers detail below.",
+        "s6": "At the 8 second mark, Dr.",
+        "s7": "Lindzen claims that the climate has changed “remarkably little” over the past 30 years without any reference to what “remarkably little” is relative to.",
+        "s8": "When put in proper context, it is not true that the climate has changed “remarkably little” over the past 30 years.",
+        "s9": "Now we want to put this 0.7 degrees Celsius warming",
+        "none": "No sentence says whether the claim is true or false"
+      }
+    },
+    "source_2_quote": {
+      "type": "choice",
+      "instructions": "Which sentence of `evidence.source_2` best states what it concludes about `claim`?",
+      "criteria": {
+        "s0": "Title: Richard Lindzen - Science Feedback ## Review of Climate: The Movie (The Cold Truth) reveals numerous, well-known misinformation talking points and inaccuracies.",
+        "s1": "On 21 March 2024, a movie titled “Climate: The Movie (The Cold Truth)” was released on YouTube, and widely shared….",
+        "s2": "Global warming is just the end of the Little Ice Age; Warming is slower than climate models forecasted; Carbon dioxide is beneficial to Earth; Global warming is not intensifying or increasing the frequency of natural disasters.",
+        "s3": "## Scientific evidence indicates that modern warming is driven by CO2, contrary to Richard Lindzen’s claim.",
+        "s4": "“Believing CO2 controls the climate is pretty close to believing in magic.”.",
+        "s5": "## Video from PragerU makes several incorrect and misleading claims about climate change.",
+        "s6": "This video discussing climate change was first published on PragerU’s website in April 2016 and recently posted on Facebook in May 2020.",
+        "s7": "Scientists that evaluated the video found several claims about climate change to be incorrect and misleading to viewers.",
+        "s8": "## Letter signed by \"500 scientists\" relies on inaccurate claims about climate science.",
+        "s9": "“The scientific content is completely inaccurate, undocumented, and fails to bring proof for its claims.",
+        "s10": "The ending of the Little Ice Age in 1850 has no logical link with the fact that the Earth is warming now.",
+        "s11": "Most past climate variations have been slower or less intense as the present one, and if they were as fast or severe they brought about mass extinctions in",
+        "none": "No sentence says whether the claim is true or false"
+      }
+    },
+    "source_3_quote": {
+      "type": "choice",
+      "instructions": "Which sentence of `evidence.source_3` best states what it concludes about `claim`?",
+      "criteria": {
+        "s0": "Title: PragerU video on climate change repeats a range of misleading claims by Steven Koonin - Science Feedback # PragerU video on climate change repeats a range of misleading claims by Steven Koonin.",
+        "s1": "A popular PragerU video (viewed more than 1 million times) outlines a range of claims on climate change by Steve Koonin, a theoretical physicist and professor at the New York University Stern School of Business.",
+        "s2": "The claims, many of which Koonin has previously stated in his book, “Unsettled,” seek to downplay the severity of a range of climate findings.",
+        "s3": "As an example of a factually inaccurate statement, Koonin claims that “Greenland’s ice sheet isn’t shrinking any more rapidly today than it was 80 years ago”.",
+        "s4": "In fact, as Climate Feedback noted in April 2021, “the per year average ice loss during 2003-2010 is roughly 2.5 times higher than during 1900-2003.",
+        "s5": "“The Greenland Ice Sheet is currently melting at a rate comparable to (or greater than) any in the past 12,000 years, let alone 80 years ago,” Daniel Swain, climate scientist at the Institute of the Environment & Sustainability at UCLA, says.",
+        "s6": "Schoof points to Koonin’s claim that “government reports state clearly that heat waves in the US are now no more common than they were in 1900”.",
+        "s7": "In fact, science shows heat waves are occurring more frequently and have become more intense as a result of climate change.",
+        "s8": "The 2018 U.S.",
+        "s9": "National Climate Assessment shows that the heat wave season in the United States has increased in length since",
+        "none": "No sentence says whether the claim is true or false"
+      }
     }
   }
 }

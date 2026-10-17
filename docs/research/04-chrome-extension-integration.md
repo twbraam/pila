@@ -31,14 +31,17 @@ Run the library **in the extension's service worker** only.
 // background.ts (service worker)
 import { createFactChecker } from "@pila/factcheck";
 
-chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
+chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
   if (msg?.type !== "check-video") return;
   (async () => {
     const { typesafeApiKey, tavilyApiKey } = await chrome.storage.local.get(["typesafeApiKey", "tavilyApiKey"]);
     const checker = createFactChecker({ typesafeApiKey, tavilyApiKey });
-    const report = await checker.checkVideo(msg.input);
-    await chrome.storage.session.set({ [`report:${msg.input.video.id}`]: report });
-    sendResponse({ ok: true, report });
+    const results = await checker.factCheck(msg.transcript, {
+      video: msg.video,
+      onResult: (result) => chrome.tabs.sendMessage(sender.tab!.id!, { type: "fact-check-result", result }),
+    });
+    await chrome.storage.session.set({ [`results:${msg.transcript.videoId}`]: results });
+    sendResponse({ ok: true, results });
   })().catch((err) => sendResponse({ ok: false, error: { name: err.name, message: err.message } }));
   return true; // keep the channel open for the async reply
 });

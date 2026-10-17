@@ -34,6 +34,8 @@ export interface Claim extends Sentence {
 export interface Evidence {
   /** Publisher name, e.g. "Science Feedback". */
   readonly source: string;
+  /** Page title; may be empty or missing. */
+  readonly title?: string | undefined;
   readonly url: string;
   readonly text: string;
   /** True when the domain is on the trusted fact-checker list. */
@@ -49,6 +51,8 @@ export type Label = Verdict | "not_sure";
 export interface SourceResult extends Evidence {
   readonly stance: Stance;
   readonly stanceConfidence: number;
+  /** The sentence of `text` Jev picked as the source's conclusion about the claim. */
+  readonly quote?: string | undefined;
 }
 
 export interface JevVerdicts {

@@ -1,11 +1,11 @@
 import * as z from "zod/mini";
+import { HAS_CJK } from "./cjk.js";
 import { InvalidInputError } from "./errors.js";
 import type { Language, Sentence, TranscriptSegment } from "./types.js";
 
-const CJK = /[㐀-鿿豈-﫿]/;
 const SENTENCE_END = /[.?!;:。？！；：…]["'”’」』)）\]]*$/;
 const CAPTION_CUE = /\[[^\]]*\]/g;
-const MAX_SENTENCE_CHARS: Record<Language, number> = { en: 400, zh: 150 };
+export const MAX_SENTENCE_CHARS: Readonly<Record<Language, number>> = { en: 400, zh: 150 };
 const MAX_CODE_POINT = 0x10ffff;
 /** A Latin word, so stray "OK" or "2024" lines don't count as English. */
 const ENGLISH_WORD = /[A-Za-z]{3,}/;
@@ -48,7 +48,7 @@ interface Lines {
 
 function splitLines(text: string): Lines {
   const lines = text.split("\n").map(cleanLine).filter(Boolean);
-  return { en: lines.filter((l) => !CJK.test(l)), zh: lines.filter((l) => CJK.test(l)) };
+  return { en: lines.filter((l) => !HAS_CJK.test(l)), zh: lines.filter((l) => HAS_CJK.test(l)) };
 }
 
 /**
@@ -64,9 +64,17 @@ export function detectLanguage(segments: readonly TranscriptSegment[]): Language
 
 interface Piece {
   readonly start: number;
+  readonly end: number;
   readonly text: string;
   readonly endsSentence: boolean;
 }
+
+/** The cleaned lines of `text` in `language`, joined; empty when there are none. */
+export function pickLanguage(text: string, language: Language): string {
+  return splitLines(text)[language].join(" ");
+}
+
+const roundTime = (seconds: number) => Math.round(seconds * 1000) / 1000;
 
 function toPiece(segment: TranscriptSegment, language: Language, maxChars: number): Piece {
   const lines = splitLines(segment.text);
@@ -74,21 +82,27 @@ function toPiece(segment: TranscriptSegment, language: Language, maxChars: numbe
   const own = lines[language].join(" ").slice(0, maxChars);
   // Bilingual captions often punctuate only one language, so either one can end a sentence.
   const endsSentence = SENTENCE_END.test(own) || SENTENCE_END.test(lines[other].join(" "));
-  return { start: segment.start, text: own, endsSentence };
+  return { start: segment.start, end: roundTime(segment.start + segment.duration), text: own, endsSentence };
+}
+
+export interface TimedSentence extends Sentence {
+  /** Seconds from the start of the video where the last caption of the sentence ends. */
+  readonly end: number;
 }
 
 /**
- * Merge caption segments into sentences in the given language.
+ * Merge caption segments into sentences in the given language, with start and end times.
  * A sentence starts at its first segment's `start`. Text without punctuation is split by length.
  */
-export function toSentences(segments: readonly TranscriptSegment[], language: Language): Sentence[] {
+export function toTimedSentences(segments: readonly TranscriptSegment[], language: Language): TimedSentence[] {
   const maxChars = MAX_SENTENCE_CHARS[language];
-  const sentences: Array<Omit<Sentence, "index">> = [];
+  const sentences: Array<Omit<TimedSentence, "index">> = [];
   let buffer: Piece[] = [];
 
   const flush = () => {
     const first = buffer[0];
-    if (first) sentences.push({ start: first.start, text: buffer.map((p) => p.text).join(" ") });
+    const last = buffer.at(-1);
+    if (first && last) sentences.push({ start: first.start, end: last.end, text: buffer.map((p) => p.text).join(" ") });
     buffer = [];
   };
   const bufferLength = () => buffer.reduce((sum, p) => sum + p.text.length + 1, 0);
@@ -104,3 +118,7 @@ export function toSentences(segments: readonly TranscriptSegment[], language: La
 
   return sentences.map((s, index) => ({ index, ...s }));
 }
+
+/** Like `toTimedSentences`, without end times. */
+export const toSentences = (segments: readonly TranscriptSegment[], language: Language): Sentence[] =>
+  toTimedSentences(segments, language).map(({ index, start, text }) => ({ index, start, text }));

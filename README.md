@@ -20,12 +20,14 @@ This is the planned architecture. The modules can be built in parallel using the
 
 ### 2. Processing
 
-For every sentence in the transcript:
+Implemented in [`packages/factcheck`](./packages/factcheck) as `factCheck(transcript, options)`.
 
-1. **Detect with Jev:** ask whether the sentence contains misinformation. If no, continue with the next sentence. A yes is a candidate for further checking.
-2. **Find and assess evidence:** use Tavily to search for a list of evidence links, then ask Jev to assess the results and choose the best source supporting the conclusion that the statement is false. If a suitable source is found, emit a warning for Overlay. If no good evidence is found, skip the warning and continue with the next sentence.
+1. **Find claims with Jev:** one request asks, for every sentence, whether it is a specific factual claim that can be checked. The top 5 are kept (configurable). Jev has no world knowledge, so it picks *checkable* sentences; it does not judge truth on its own.
+2. **Find evidence with Tavily:** one search for reviews of the whole video (title + channel + "fact check"), plus one search per claim. Fact-checker domains are preferred; YouTube and copies of the video's own transcript are dropped.
+3. **Assess with Jev:** per claim, one request asks for a verdict, what each source says about the claim, and which sentence of each source states its conclusion.
+4. **Decide in code:** trusted fact-checkers win; unclear or inconsistent answers become `unknown`.
 
-**Input:** a `Transcript`. **Output:** `MisinformationWarning` results as checks complete. A skipped sentence produces no warning; that does not establish that it is true.
+**Input:** a `Transcript`, plus the video's `title` and `channel` (they find published reviews of the video, the best evidence). **Output:** one `FactCheckResult` per checked sentence, streamed to `onResult` as each check completes and returned together at the end. Sentences that were not checked produce no result; that does not establish that they are true.
 
 ### 3. Overlay
 
@@ -33,7 +35,7 @@ For every sentence in the transcript:
 - Use the sentence timestamps and current playback position to show the relevant warning.
 - Tell the user **“This statement is probably false”** and display a clickable link to the selected source for more information.
 
-**Input:** the `Transcript`, warnings from Processing, and the current playback position. Only sentences with evidence from Processing produce a warning.
+**Input:** the `Transcript`, `FactCheckResult`s from Processing, and the current playback position. Show a warning only for results with `verdict: "misinformation"`; use `sources[0]` as the link and `explanation` as the detail text.
 
 ## Shared Data Contracts
 
@@ -52,15 +54,48 @@ type Transcript = {
   sentences: SubtitleSentence[];
 };
 
-type MisinformationWarning = {
+type FactCheckResult = {
   videoId: string;
   sentenceId: string;
-  source: {
-    title: string;
-    url: string;
-  };
+  startSeconds: number;
+  endSeconds: number;
+  sentence: string;                 // as given in the Transcript
+  verdict: "misinformation" | "verified" | "unknown";
+  confidence: number;               // 0-1
+  explanation: string;              // template + a quote from the best source, e.g.
+                                    // Science Feedback says this claim is false: “…”
+  sources: { title: string; url: string }[];  // best first; empty when nothing relevant was found
 };
 ```
+
+- `misinformation`: a source (usually a fact-checker) says the claim is false.
+- `verified`: a source confirms the claim.
+- `unknown`: no relevant evidence, unclear or conflicting sources, a misleading-but-not-false claim, or a failed check. `explanation` says which.
+- `confidence` is how sure Processing is of its finding. For `unknown` it can be high (for example, a clearly *misleading* claim), so read it together with `explanation`.
+- `explanation`, `sources[].title`, and `sources[].url` contain text from the web. Overlay must render them as plain text (`textContent`), never as HTML, and should only link `https:` URLs.
+
+Example:
+
+```json
+{
+  "videoId": "OwqIy8Ikv-c",
+  "sentenceId": "OwqIy8Ikv-c-16",
+  "startSeconds": 104.71,
+  "endSeconds": 111.79,
+  "sentence": "None of these is fully understood, and there is no evidence that CO2 emissions are the dominant factor.",
+  "verdict": "misinformation",
+  "confidence": 0.93,
+  "explanation": "Science Feedback says this claim is false: “In the video, former MIT Professor Richard Lindzen claims “there is no evidence that CO2 emissions are the dominant factor” in climate change. This is false.”",
+  "sources": [
+    {
+      "title": "Video from PragerU makes several incorrect and misleading claims about climate change - Science Feedback",
+      "url": "https://science.feedback.org/review/video-from-prageru-makes-several-incorrect-and-misleading-claims-about-climate-change-richard-lindzen"
+    }
+  ]
+}
+```
+
+The example is illustrative; it has not been produced by a live Jev run yet.
 
 Ingestion can be developed against sample subtitle data, Processing against fixture transcripts, and Overlay against fixture transcripts and warnings. This lets each module progress before the others are connected.
 

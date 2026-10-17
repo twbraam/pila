@@ -1,8 +1,8 @@
 # @pila/factcheck
 
-Fact-check a YouTube video from its transcript. The library finds checkable claims with
-TypeSafe's Jev model, searches for evidence with Tavily, and asks Jev whether the evidence
-supports or refutes each claim.
+The Processing module from the [repo README](../../README.md). It fact-checks a YouTube video
+from its transcript: it finds checkable claims with TypeSafe's Jev model, searches for evidence
+with Tavily, and asks Jev whether the evidence supports or refutes each claim.
 
 Runs in a Chrome MV3 service worker and in Node 22+. ESM only, web-standard APIs only.
 
@@ -16,6 +16,28 @@ const checker = createFactChecker({
   tavilyApiKey,               // optional: without it, Tavily's rate-limited keyless mode is used
 });
 
+// transcript: the README `Transcript` from Ingestion: { videoId, sentences: [{ id, text, startSeconds, endSeconds }] }
+const results = await checker.factCheck(transcript, {
+  video: { title: "Climate Change: What Do Scientists Say?", channel: "PragerU" },
+  onResult: (result) => overlay.add(result),   // streams each FactCheckResult as it completes
+  signal,                                      // cancel when the user leaves the video
+});
+```
+
+`results` is `FactCheckResult[]` in video order; see the repo README for the type. Overlay shows
+a warning only for `verdict: "misinformation"`, and must render `explanation` and source titles as
+plain text (they come from the web). If `onResult` throws, the run continues and the error is
+passed to `reportError`.
+
+Without Ingestion (tests, demos), build a `Transcript` from raw caption segments with
+`segmentsToTranscript(videoId, segments)`.
+
+### Detailed report
+
+`checkVideo` runs the same pipeline on raw caption segments and returns every label, source,
+and stance, plus usage. Use it for debugging and evals:
+
+```ts
 const report = await checker.checkVideo(
   {
     video: { id: "abc123", title: "Climate Change: What Do Scientists Say?", channel: "PragerU" },
@@ -44,7 +66,11 @@ Call the library **from the service worker only**. Add both APIs to `host_permis
 
 See `docs/research/04-chrome-extension-integration.md` for message wiring and caching.
 
-## Labels
+## Labels (detailed report)
+
+`factCheck` maps these to `verdict`: `false` -> `misinformation`, `true` -> `verified`,
+everything else -> `unknown`. Set `misleadingAs: "misinformation"` in the config to also warn
+on `misleading`.
 
 | `label` | Meaning |
 | - | - |
@@ -74,7 +100,7 @@ when they come from an API. Messages never contain API keys.
 
 ## Options
 
-`createFactChecker` also takes `model` (default `jev-1.13.0`, pinned), `fetch`, `maxRetries`,
+`createFactChecker` also takes `model` (default `jev-1.13.0`, pinned), `misleadingAs`, `fetch`, `maxRetries`,
 `trustedDomains`, `thresholds`, and `limits`. Defaults are exported as `DEFAULT_MODEL`,
 `DEFAULT_THRESHOLDS`, `DEFAULT_LIMITS`, and `DEFAULT_TRUSTED_DOMAINS`. The default is 5 claims
 per video.
@@ -96,8 +122,10 @@ npm run typecheck -w @pila/factcheck
 npm run build -w @pila/factcheck            # tsc -> dist/
 npm run test:sw -w @pila/factcheck          # runs the library in a real MV3 service worker (Playwright)
 npm run test:contract -w @pila/factcheck    # real APIs; keys from the repo's .env
-npm run check-video -w @pila/factcheck -- ../../ref/transcript.json --channel PragerU --title "Climate Change: What Do Scientists Say?"
+npm run check-video -w @pila/factcheck -- ../../examples/transcripts/transcript.json --id OwqIy8Ikv-c --channel PragerU --title "Climate Change: What Do Scientists Say?"
 ```
+
+`check-video` prints the `FactCheckResult[]` (add `--json` for raw JSON, `--report` for the detailed report).
 
 `test:sw` needs Playwright's Chromium once: `npx playwright install chromium`. Its Jev and
 Tavily checks make real network calls (a bad-key Jev call and a keyless Tavily search).

@@ -176,20 +176,25 @@ function publisher(title: string, url: URL): string {
 
 const normalizeTitle = (title: string) => title.toLowerCase().replace(/\s+/g, " ").trim();
 
+/** Web text is shown to users; drop any HTML tags and tidy whitespace. Overlay must still render it as text. */
+const plainText = (text: string) => text.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+
 /** Filter, de-duplicate, and rank search results into evidence for Jev. Trusted sources come first. */
 export function toEvidence(results: readonly TavilyResult[], options: EvidenceOptions): Evidence[] {
   const seen = new Set<string>();
   const evidence = results.flatMap((result): Evidence[] => {
     const url = httpsUrl(result.url);
     if (!url || result.score < options.minScore) return [];
-    const key = normalizeTitle(result.title) || url.href;
+    const title = plainText(result.title);
+    const key = normalizeTitle(title) || url.href;
     if (seen.has(key) || seen.has(url.href)) return [];
     seen.add(key).add(url.href);
     return [
       {
-        source: publisher(result.title, url),
+        source: publisher(title, url),
+        title,
         url: url.href,
-        text: result.content.replace(/\s+/g, " ").trim().slice(0, options.maxChars),
+        text: plainText(result.content).slice(0, options.maxChars),
         trusted: isTrusted(url, options.trustedDomains),
         score: result.score,
       },

@@ -25,7 +25,7 @@ describe("dropTranscriptCopies", () => {
 
   it("ignores short sentences that could match by chance", () => {
     const short = [{ index: 0, start: 0, text: "Group one is." }, { index: 1, start: 1, text: "It is." }, { index: 2, start: 2, text: "Yes." }];
-    const evidence = [{ source: "x", url: "https://x.org", text: "Group one is. It is. Yes.", trusted: false, score: 1 }];
+    const evidence = [{ source: "x", title: "x", url: "https://x.org", text: "Group one is. It is. Yes.", trusted: false, score: 1 }];
     expect(dropTranscriptCopies(evidence, short)).toEqual(evidence);
   });
 });

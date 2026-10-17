@@ -5,7 +5,16 @@ import { CancelledError, InvalidInputError, isFatal } from "./errors.js";
 import { createJevClient } from "./jev/client.js";
 import { findClaims } from "./jev/detect.js";
 import { verifyWithJev } from "./jev/verify.js";
-import { type CheckVideoInput, type FactCheckerConfig, parseInput, resolveConfig, type RunOptions } from "./options.js";
+import { detectTranscriptLanguage, type FactCheckResult, parseContractTranscript, type Transcript, toPipelineSentences } from "./contract.js";
+import {
+  type CheckVideoInput,
+  type FactCheckerConfig,
+  type FactCheckOptions,
+  parseInput,
+  resolveConfig,
+  type RunOptions,
+} from "./options.js";
+import { toFactCheckResult } from "./result.js";
 import { claimQuery, videoQuery } from "./queries.js";
 import { createTavilyClient, rankTrusted, type SearchDepth, toEvidence } from "./tavily.js";
 import { detectLanguage, parseTranscript, toSentences } from "./transcript.js";
@@ -13,7 +22,12 @@ import type { Claim, ClaimResult, Evidence, Language, Sentence, VideoInfo, Video
 import { decideLabel } from "./verdict.js";
 
 export interface FactChecker {
-  /** Run the whole pipeline for one video. */
+  /**
+   * The Processing module from the repo README: check a `Transcript` from Ingestion and return a
+   * `FactCheckResult` per checked sentence, in video order. Results also stream to `onResult`.
+   */
+  factCheck(transcript: Transcript, options?: FactCheckOptions): Promise<FactCheckResult[]>;
+  /** Run the whole pipeline on raw caption segments and return the detailed report (debugging, CLI). */
   checkVideo(input: CheckVideoInput, options?: RunOptions): Promise<VideoReport>;
   /** Step 2: ask Jev which sentences are checkable claims. */
   findClaims(sentences: readonly Sentence[], options?: RunOptions): Promise<Claim[]>;
@@ -48,6 +62,15 @@ const dedupeByUrl = (evidence: readonly Evidence[]) =>
 /** a1, b1, a2, b2, ... so neither list can fill every slot on its own. */
 const interleave = <T>(a: readonly T[], b: readonly T[]): T[] =>
   Array.from({ length: Math.max(a.length, b.length) }, (_, i) => [a[i], b[i]]).flat().filter((x): x is T => x !== undefined);
+
+/** A throwing user callback must not stop the run; surface it like an uncaught error instead. */
+function reportCallbackError(error: unknown): void {
+  if (typeof globalThis.reportError === "function") globalThis.reportError(error);
+  else
+    queueMicrotask(() => {
+      throw error;
+    });
+}
 
 const describe = (error: unknown): FailedSearch => ({ name: (error as Error).name, message: (error as Error).message });
 
@@ -123,34 +146,39 @@ export function createFactChecker(input: FactCheckerConfig): FactChecker {
       signal,
     });
 
-  async function checkVideo(raw: CheckVideoInput, options: RunOptions = {}): Promise<VideoReport> {
+  const throwIfCancelled = (signal?: AbortSignal) => {
+    if (signal?.aborted) throw new CancelledError("Fact check was cancelled", { cause: signal.reason });
+  };
+
+  /** Steps 2-5 for numbered sentences. `onClaim` gets each result as soon as it is ready. */
+  async function run(
+    sentences: readonly Sentence[],
+    video: VideoInfo | undefined,
+    language: Language,
+    options: RunOptions,
+    onClaim?: (result: ClaimResult) => void,
+  ): Promise<VideoReport> {
     const { signal, onProgress } = options;
     const startedAt = Date.now();
-    if (signal?.aborted) throw new CancelledError("Fact check was cancelled", { cause: signal.reason });
-
-    const input = parseInput(raw);
-    const transcript = parseTranscript(input.transcript);
-    const language = input.language ?? detectLanguage(transcript);
-    const sentences = toSentences(transcript, language);
-    if (sentences.length === 0) throw new InvalidInputError("The transcript has no usable text");
     const dropCopies = transcriptCopyFilter(sentences);
     onProgress?.({ stage: "sentences", done: sentences.length, total: sentences.length });
 
-    const [found, reviews] = await Promise.all([detect(sentences, signal), searchVideo(input.video, language, dropCopies, signal)]);
+    const [found, reviews] = await Promise.all([detect(sentences, signal), searchVideo(video, language, dropCopies, signal)]);
     onProgress?.({ stage: "claims", done: 1, total: 1 });
     onProgress?.({ stage: "evidence", done: 1, total: 1 });
 
     let verified = 0;
     const results = await mapLimit(found.claims, limits.concurrency, async (claim) => {
-      const context = { video: input.video, language, dropCopies, reviews: reviews.value };
+      const context = { video, language, dropCopies, reviews: reviews.value };
       const result = await checkClaim(claim, context, signal);
+      onClaim?.(result.value);
       onProgress?.({ stage: "verify", done: ++verified, total: found.claims.length });
       return result;
     });
     onProgress?.({ stage: "done", done: 1, total: 1 });
 
     return {
-      video: input.video ?? {},
+      video: video ?? {},
       language,
       model: found.model,
       claims: results.map((r) => r.value),
@@ -164,7 +192,46 @@ export function createFactChecker(input: FactCheckerConfig): FactChecker {
     };
   }
 
+  async function checkVideo(raw: CheckVideoInput, options: RunOptions = {}): Promise<VideoReport> {
+    throwIfCancelled(options.signal);
+    const input = parseInput(raw);
+    const transcript = parseTranscript(input.transcript);
+    const language = input.language ?? detectLanguage(transcript);
+    const sentences = toSentences(transcript, language);
+    if (sentences.length === 0) throw new InvalidInputError("The transcript has no usable text");
+    return run(sentences, input.video, language, options);
+  }
+
+  async function factCheck(raw: Transcript, options: FactCheckOptions = {}): Promise<FactCheckResult[]> {
+    throwIfCancelled(options.signal);
+    const transcript = parseContractTranscript(raw);
+    const { video, language: chosen } = parseInput({ video: options.video, transcript: undefined, language: options.language });
+    const language = chosen ?? detectTranscriptLanguage(transcript);
+    const pairs = toPipelineSentences(transcript, language);
+    if (pairs.length === 0) throw new InvalidInputError("The transcript has no usable text");
+
+    const context = { videoId: transcript.videoId, language, misleadingAs: config.misleadingAs };
+    const results: FactCheckResult[] = [];
+    await run(
+      pairs.map((p) => p.sentence),
+      video,
+      language,
+      options,
+      (claim) => {
+        const result = toFactCheckResult(claim, pairs[claim.claim.index]!.ref, context);
+        results.push(result);
+        try {
+          options.onResult?.(result);
+        } catch (error) {
+          reportCallbackError(error);
+        }
+      },
+    );
+    return [...results].sort((a, b) => a.startSeconds - b.startSeconds);
+  }
+
   return {
+    factCheck,
     checkVideo,
     findClaims: async (sentences, options = {}) => (await detect(sentences, options.signal)).claims,
     searchEvidence: async (query, options = {}) => (await search(query, "basic", options.signal)).value,

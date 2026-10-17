@@ -4,7 +4,7 @@ import { DEFAULT_TRUSTED_DOMAINS } from "../src/config.js";
 import { AuthError, CancelledError, RateLimitError, UpstreamError } from "../src/errors.js";
 import { createJevClient } from "../src/jev/client.js";
 import { buildDetectionRequest, findClaims } from "../src/jev/detect.js";
-import { buildVerificationRequest, verifyWithJev } from "../src/jev/verify.js";
+import { buildVerificationRequest, splitEvidenceSentences, verifyWithJev } from "../src/jev/verify.js";
 import { toEvidence } from "../src/tavily.js";
 import { toSentences } from "../src/transcript.js";
 import type { Evidence, Sentence } from "../src/types.js";
@@ -19,8 +19,15 @@ const sentences: Sentence[] = [
 ];
 
 const evidence: Evidence[] = [
-  { source: "Science Feedback", url: "https://science.feedback.org/review/x", text: "Lindzen claims... This is false.", trusted: true, score: 0.85 },
-  { source: "facebook.com", url: "https://www.facebook.com/x", text: "Unrelated post", trusted: false, score: 0.7 },
+  {
+    source: "Science Feedback",
+    title: "Review - Science Feedback",
+    url: "https://science.feedback.org/review/x",
+    text: "In the video, Lindzen claims there is no evidence. This is false, attribution studies show otherwise.",
+    trusted: true,
+    score: 0.85,
+  },
+  { source: "facebook.com", title: "", url: "https://www.facebook.com/x", text: "Unrelated post", trusted: false, score: 0.7 },
 ];
 
 const read = (path: string) => JSON.parse(readFileSync(new URL(path, import.meta.url), "utf8"));
@@ -113,11 +120,27 @@ describe("buildVerificationRequest", () => {
     expect(state).toEqual({
       claim: "CO2 is not the dominant factor.",
       evidence: {
-        source_1: { source: "Science Feedback", text: "Lindzen claims... This is false." },
+        source_1: { source: "Science Feedback", text: "In the video, Lindzen claims there is no evidence. This is false, attribution studies show otherwise." },
         source_2: { source: "facebook.com", text: "Unrelated post" },
       },
     });
-    expect(Object.keys(questions)).toEqual(["verdict", "verdict_reversed", "source_1_stance", "source_2_stance"]);
+    expect(Object.keys(questions)).toEqual([
+      "verdict",
+      "verdict_reversed",
+      "source_1_stance",
+      "source_2_stance",
+      "source_1_quote",
+      "source_2_quote",
+    ]);
+    expect(questions.source_1_quote).toMatchObject({
+      type: "choice",
+      instructions: "Which sentence of `evidence.source_1` best states what it concludes about `claim`?",
+      criteria: {
+        s0: "In the video, Lindzen claims there is no evidence.",
+        s1: "This is false, attribution studies show otherwise.",
+        none: "No sentence says whether the claim is true or false",
+      },
+    });
     expect(Object.keys(questions.verdict!.criteria!)).toEqual(VERDICTS);
     expect(Object.keys(questions.verdict_reversed!.criteria!)).toEqual([...VERDICTS].reverse());
     expect(questions.source_2_stance!.instructions).toBe("What does `evidence.source_2` say about `claim`?");
@@ -129,6 +152,8 @@ describe("verifyWithJev", () => {
     const { fetch } = fakeFetch({
       [JEV]: jevResponder((key) => {
         if (key.startsWith("verdict")) return choiceAnswer("false", 0.9, VERDICTS);
+        if (key === "source_1_quote") return choiceAnswer("s1", 0.8, ["s0", "s1", "none"]);
+        if (key === "source_2_quote") return choiceAnswer("none", 0.9, ["s0", "none"]);
         return key === "source_1_stance" ? choiceAnswer("refutes", 0.93, STANCES) : choiceAnswer("not_relevant", 0.8, STANCES);
       }),
     });
@@ -139,13 +164,44 @@ describe("verifyWithJev", () => {
       ["Science Feedback", "refutes", 0.93],
       ["facebook.com", "not_relevant", 0.8],
     ]);
+    expect(result.sources.map((s) => s.quote)).toEqual(["This is false, attribution studies show otherwise.", undefined]);
     expect(result.model).toBe("jev-1.13.0");
     expect(result.inputTokens).toBe(100);
+  });
+
+  it("drops a quote with an unexpected answer instead of failing the claim", async () => {
+    const { fetch } = fakeFetch({
+      [JEV]: jevResponder((key) => {
+        if (key.startsWith("verdict")) return choiceAnswer("false", 0.9, VERDICTS);
+        if (key.endsWith("_quote")) return choiceAnswer("s99", 0.9, ["s99", "none"]);
+        return choiceAnswer("refutes", 0.9, STANCES);
+      }),
+    });
+    const result = await verifyWithJev(jevClient(fetch), "claim", evidence);
+    expect(result.sources.map((s) => s.quote)).toEqual([undefined, undefined]);
   });
 
   it("rejects a verdict outside the allowed options", async () => {
     const { fetch } = fakeFetch({ [JEV]: jevResponder(() => choiceAnswer("maybe", 0.9, ["maybe", "no"])) });
     await expect(verifyWithJev(jevClient(fetch), "claim", evidence)).rejects.toBeInstanceOf(UpstreamError);
+  });
+});
+
+describe("splitEvidenceSentences", () => {
+  it("splits on sentence ends and Tavily chunk breaks, dropping fragments", () => {
+    expect(splitEvidenceSentences("First point here. Second point here! [...] Third one is here? ok. 這是中文句子。")).toEqual([
+      "First point here.",
+      "Second point here!",
+      "Third one is here?",
+      "這是中文句子。",
+    ]);
+  });
+
+  it("caps the number and length of sentences", () => {
+    const text = Array.from({ length: 40 }, (_, i) => `Sentence number ${i} ${"x".repeat(400)}.`).join(" ");
+    const sentences = splitEvidenceSentences(text);
+    expect(sentences).toHaveLength(20);
+    for (const s of sentences) expect(s.length).toBeLessThanOrEqual(300);
   });
 });
 

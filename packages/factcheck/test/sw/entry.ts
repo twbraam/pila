@@ -2,7 +2,7 @@
  * Bundled into test/sw/extension/sw.js and run inside a real MV3 service worker by sw.spec.ts.
  * Exposes test functions on the worker's global scope.
  */
-import { createFactChecker, type FactCheckError, type TranscriptSegment } from "../../src/index.js";
+import { createFactChecker, type FactCheckError, segmentsToTranscript, type TranscriptSegment } from "../../src/index.js";
 import { fakeFetch, json } from "../helpers/fake-fetch.js";
 import { choiceAnswer, JEV, jevResponder, noulAnswer } from "../helpers/fake-jev.js";
 
@@ -23,13 +23,15 @@ const tests = {
       [JEV]: jevResponder((key) => {
         if (key.startsWith("checkable_")) return noulAnswer(key === "checkable_20" ? 0.95 : 0.1);
         if (key.startsWith("verdict")) return choiceAnswer("false", 0.9, VERDICTS);
+        if (key.endsWith("_quote")) return choiceAnswer("s0", 0.9, ["s0", "none"]);
         return choiceAnswer("refutes", 0.9, STANCES);
       }),
       "https://api.tavily.com/search": () => json(tavilyFixture),
     });
     const checker = createFactChecker({ typesafeApiKey: "test", tavilyApiKey: "tvly-test", fetch, maxRetries: 0 });
     const report = await checker.checkVideo({ video: { channel: "PragerU" }, transcript });
-    return { model: report.model, labels: report.claims.map((c) => c.label) };
+    const results = await checker.factCheck(segmentsToTranscript("OwqIy8Ikv-c", transcript), { video: { channel: "PragerU" } });
+    return { model: report.model, labels: report.claims.map((c) => c.label), verdicts: results.map((r) => r.verdict) };
   },
 
   /** Real fetch to Jev with a bad key: proves the SDK reaches the API from the worker and maps 401. */

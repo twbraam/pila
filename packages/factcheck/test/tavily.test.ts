@@ -144,6 +144,7 @@ describe("toEvidence", () => {
       ["facebook.com", false],
     ]);
     expect(evidence[0]?.url).toContain("science.feedback.org/review/video-from-prageru");
+    expect(evidence[0]?.title).toBe("Video from PragerU makes several incorrect and misleading claims about climate change - Science Feedback");
   });
 
   it("caps text length", () => {
@@ -156,6 +157,15 @@ describe("toEvidence", () => {
 
   it("limits the number of sources", () => {
     expect(toEvidence(results, { ...options, maxSources: 2 })).toHaveLength(2);
+  });
+
+  it("strips HTML tags from titles and text", () => {
+    const [e] = toEvidence(
+      [{ title: "<b>Bold</b> title", url: "https://x.org/a", content: 'Fine <img src=x onerror="alert(1)"> text', score: 0.9 }],
+      options,
+    );
+    expect(e?.title).toBe("Bold title");
+    expect(e?.text).toBe("Fine text");
   });
 
   it("drops results that are not https links", () => {

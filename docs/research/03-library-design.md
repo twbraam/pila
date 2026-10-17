@@ -2,6 +2,10 @@
 
 Built in `packages/factcheck`. This page records the design; see the package README for usage.
 
+Since the merge with `main` (2026-10-17), the main entry point is `factCheck(transcript, options)`,
+which takes the repo README's `Transcript` and returns `FactCheckResult[]`. `checkVideo` below
+is the detailed variant on raw caption segments.
+
 ## Runtime rules
 
 The library must run unchanged in a Chrome MV3 service worker and in Node 22+.

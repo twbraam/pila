@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { AuthError, CancelledError, InvalidInputError } from "../src/errors.js";
-import { createFactChecker } from "../src/index.js";
+import { createFactChecker, type FactCheckResult, segmentsToTranscript } from "../src/index.js";
 import type { ProgressEvent, TranscriptSegment } from "../src/types.js";
 import { fakeFetch, json, type Handler } from "./helpers/fake-fetch.js";
 import { choiceAnswer, JEV, type JevRequestBody, jevResponder, noulAnswer } from "./helpers/fake-jev.js";
@@ -24,6 +24,7 @@ const jev = jevResponder((key, _q, body: JevRequestBody) => {
     return noulAnswer(isCheckable(sentences[Number(key.split("_")[1])]!) ? 0.9 : 0.1);
   }
   if (key.startsWith("verdict")) return choiceAnswer("false", 0.9, VERDICTS);
+  if (key.endsWith("_quote")) return choiceAnswer("s0", 0.8, ["s0", "none"]);
   const evidence = (body.state as { evidence: Record<string, { source: string }> }).evidence;
   const source = evidence[key.replace("_stance", "")]!.source;
   return source === "Science Feedback" ? choiceAnswer("refutes", 0.93, STANCES) : choiceAnswer("not_relevant", 0.8, STANCES);
@@ -173,6 +174,62 @@ describe("checkVideo", () => {
     const controller = new AbortController();
     controller.abort();
     await expect(checker.checkVideo({ transcript }, { signal: controller.signal })).rejects.toBeInstanceOf(CancelledError);
+  });
+});
+
+describe("factCheck", () => {
+  const contract = segmentsToTranscript("OwqIy8Ikv-c", transcript);
+
+  it("returns README FactCheckResults for the checked sentences, in video order", async () => {
+    const { checker } = setup();
+    const streamed: FactCheckResult[] = [];
+    const results = await checker.factCheck(contract, { video, onResult: (r) => streamed.push(r) });
+
+    expect(results.length).toBeGreaterThan(0);
+    expect(results.length).toBeLessThanOrEqual(5);
+    expect(streamed).toHaveLength(results.length);
+    expect(results.map((r) => r.startSeconds)).toEqual([...results.map((r) => r.startSeconds)].sort((a, b) => a - b));
+    for (const r of results) {
+      const original = contract.sentences.find((s) => s.id === r.sentenceId)!;
+      expect(r).toMatchObject({
+        videoId: "OwqIy8Ikv-c",
+        sentence: original.text,
+        startSeconds: original.startSeconds,
+        endSeconds: original.endSeconds,
+        verdict: "misinformation",
+        confidence: 0.93,
+      });
+      expect(r.explanation).toMatch(/^Science Feedback says this claim is false: “.+”$/);
+      expect(r.sources[0]).toEqual({
+        title: "Video from PragerU makes several incorrect and misleading claims about climate change - Science Feedback",
+        url: expect.stringContaining("science.feedback.org"),
+      });
+    }
+  });
+
+  it("keeps checking when the onResult callback throws, and reports the error", async () => {
+    const { checker } = setup();
+    const reported: unknown[] = [];
+    const original = globalThis.reportError;
+    globalThis.reportError = (e: unknown) => reported.push(e);
+    try {
+      const results = await checker.factCheck(contract, {
+        video,
+        onResult: () => {
+          throw new Error("overlay broke");
+        },
+      });
+      expect(results.length).toBeGreaterThan(0);
+      expect(reported).toHaveLength(results.length);
+      expect(String(reported[0])).toContain("overlay broke");
+    } finally {
+      globalThis.reportError = original;
+    }
+  });
+
+  it("validates the transcript", async () => {
+    const { checker } = setup();
+    await expect(checker.factCheck({ videoId: "", sentences: [] } as never)).rejects.toBeInstanceOf(InvalidInputError);
   });
 });
 

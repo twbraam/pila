@@ -5,6 +5,7 @@ import { decideLabel } from "../src/verdict.js";
 
 const source = (stance: Stance, stanceConfidence: number, trusted: boolean): SourceResult => ({
   source: trusted ? "Science Feedback" : "Some Blog",
+  title: "A",
   url: "https://example.org/a",
   text: "...",
   trusted,
