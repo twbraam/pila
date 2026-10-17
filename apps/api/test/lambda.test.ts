@@ -66,8 +66,9 @@ const setup = (loadSecrets = vi.fn(async () => secrets)) => {
     o?.onResult?.(result, { claim: { index: 0, start: 0, text: "x", checkable: 1, suspicious: 1 }, label: "false", confidence: 0.9, sources: [] });
     return [result];
   });
-  const handler = createLambdaHandler({ loadSecrets, env: {}, logger, createChecker: () => ({ factCheck }) });
-  return { handler, loadSecrets, factCheck };
+  const getTranscript = vi.fn(async (videoId: string) => ({ videoId, segments: [{ text: "The Great Wall is visible from the Moon.", start: 0, duration: 5 }] }));
+  const handler = createLambdaHandler({ loadSecrets, env: {}, logger, createChecker: () => ({ factCheck }), getTranscript });
+  return { handler, loadSecrets, factCheck, getTranscript };
 };
 
 const origin = { "x-origin-verify": "cf-secret" };
@@ -82,17 +83,31 @@ describe("Lambda handler", () => {
   });
 
   it("runs /factcheck with a valid token and returns FactCheckResult[]", async () => {
-    const { handler, factCheck } = setup();
-    const res = await handler(event("POST", "/factcheck", { ...origin, authorization: "Bearer ext-token", "content-type": "application/json" }, { transcript }));
+    const { handler, factCheck, getTranscript } = setup();
+    const res = await handler(event("POST", "/factcheck", { ...origin, authorization: "Bearer ext-token", "content-type": "application/json" }, { videoId: "dQw4w9WgXcQ" }));
     expect(res.statusCode).toBe(200);
     expect(JSON.parse(res.body)).toEqual({ success: true, data: [result], error: null });
+    expect(getTranscript).toHaveBeenCalledWith("dQw4w9WgXcQ", expect.anything());
     expect(factCheck).toHaveBeenCalledOnce();
   });
 
   it("requires the API token from SSM", async () => {
     const { handler } = setup();
-    const res = await handler(event("POST", "/factcheck", { ...origin, "content-type": "application/json" }, { transcript }));
+    const res = await handler(event("POST", "/factcheck", { ...origin, "content-type": "application/json" }, { videoId: "dQw4w9WgXcQ" }));
     expect(res.statusCode).toBe(401);
+  });
+
+  it("labels an injected transcript function as custom", async () => {
+    const { handler } = setup();
+    const res = await handler(event("POST", "/factcheck", { ...origin, authorization: "Bearer ext-token", "content-type": "application/json" }, { videoId: "dQw4w9WgXcQ" }));
+    expect(res.headers?.["x-pila-transcript-source"]).toBe("custom");
+  });
+
+  it("warns at startup when the mock transcript is in use", async () => {
+    logger.warn.mockClear();
+    const handler = createLambdaHandler({ loadSecrets: async () => secrets, env: {}, logger, createChecker: () => ({ factCheck: vi.fn() }) });
+    await handler(event("GET", "/health", origin));
+    expect(JSON.stringify(logger.warn.mock.calls)).toContain("mock");
   });
 
   it("loads secrets once per container", async () => {

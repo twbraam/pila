@@ -7,6 +7,8 @@ import { createFactChecker, type FactChecker } from "@pila/factcheck";
 import { handle, type LambdaContext, type LambdaEvent } from "hono/aws-lambda";
 import { createApp, type Logger } from "./app.js";
 import { type ApiConfig, loadConfig } from "./env.js";
+import { errorInfo } from "./http.js";
+import { type GetTranscript, transcriptProviders } from "./transcripts/index.js";
 import { createLogger } from "./logger.js";
 
 const SSM_PREFIX = "/pila/factcheck";
@@ -24,6 +26,8 @@ export interface LambdaDeps {
   readonly env: Readonly<Record<string, string | undefined>>;
   readonly logger: Logger;
   readonly createChecker?: ((config: ApiConfig) => Pick<FactChecker, "factCheck">) | undefined;
+  /** Overrides `TRANSCRIPT_SOURCE` (tests). */
+  readonly getTranscript?: GetTranscript | undefined;
 }
 
 export interface LambdaResponse {
@@ -72,7 +76,11 @@ export function createLambdaHandler(deps: LambdaDeps) {
       ALLOWED_ORIGINS: deps.env.ALLOWED_ORIGINS ?? "*", // safe with bearer tokens; the extension's origin varies per install
     });
     const checker = deps.createChecker?.(config) ?? createFactChecker({ typesafeApiKey: config.typesafeApiKey, tavilyApiKey: config.tavilyApiKey });
-    return handle(createApp({ checker, config, logger: deps.logger })) as AppHandler;
+    const transcripts = deps.getTranscript
+      ? { get: deps.getTranscript, source: "custom" }
+      : { get: transcriptProviders[config.transcriptSource], source: config.transcriptSource };
+    if (transcripts.source === "mock") deps.logger.warn({}, "TRANSCRIPT_SOURCE is mock: every video gets the sample transcript");
+    return handle(createApp({ checker, config, logger: deps.logger, transcripts })) as AppHandler;
   }
 
   return async (event: LambdaEvent, context?: LambdaContext): Promise<LambdaResponse> => {
@@ -84,8 +92,7 @@ export function createLambdaHandler(deps: LambdaDeps) {
     try {
       app = await ready;
     } catch (error) {
-      const { name, message } = error as Error;
-      deps.logger.error({ error: { name, message } }, "lambda init failed");
+      deps.logger.error({ error: errorInfo(error) }, "lambda init failed");
       return unavailable();
     }
     return app(event, context);

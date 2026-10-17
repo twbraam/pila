@@ -16,10 +16,11 @@ describe("loadConfig", () => {
       cacheTtlMs: 6 * 60 * 60 * 1000,
       cacheMaxEntries: 500,
       requestTimeoutMs: 55_000,
-      maxBodyBytes: 2_000_000,
+      maxBodyBytes: 16_384,
       trustProxy: false,
       trustedProxyHops: 1,
       originSecret: undefined,
+      transcriptSource: "mock",
       production: false,
     });
   });
@@ -54,6 +55,10 @@ describe("loadConfig", () => {
   it("requires API tokens in production", () => {
     expect(() => loadConfig({ ...base, NODE_ENV: "production" })).toThrow(/PILA_API_TOKENS/);
     expect(loadConfig({ ...base, NODE_ENV: "production", PILA_API_TOKENS: "t" }).production).toBe(true);
+  });
+
+  it("rejects an unknown transcript source", () => {
+    expect(() => loadConfig({ ...base, TRANSCRIPT_SOURCE: "nope" })).toThrow(/TRANSCRIPT_SOURCE/);
   });
 
   it("rejects bad numbers", () => {

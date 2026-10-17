@@ -6,22 +6,26 @@ import {
   QuotaError,
   RateLimitError,
   type Transcript,
+  type TranscriptSegment,
   UpstreamError,
 } from "@pila/factcheck";
+import { type GetTranscript, TranscriptNotFoundError } from "../src/transcripts/index.js";
 import { describe, expect, it, vi } from "vitest";
 import { createApp } from "../src/app.js";
 import { type ApiConfig, loadConfig } from "../src/env.js";
 
-const transcript: Transcript = {
-  videoId: "OwqIy8Ikv-c",
-  sentences: [
-    { id: "s1", text: "There is no evidence that CO2 is the dominant factor.", startSeconds: 104.7, endSeconds: 111.8 },
-    { id: "s2", text: "The climate is always changing.", startSeconds: 121.2, endSeconds: 123.9 },
-  ],
-};
+const videoId = "OwqIy8Ikv-c";
+const segments: TranscriptSegment[] = [
+  { text: "There is no evidence that CO2 is the dominant factor.", start: 104.7, duration: 7.1 },
+  { text: "The climate is always changing.", start: 121.2, duration: 2.7 },
+];
+const ids = [`${videoId}-0`, `${videoId}-1`];
+
+type GetTranscriptFn = GetTranscript;
+const fakeTranscripts = (impl?: GetTranscriptFn) => vi.fn(impl ?? (async (id: string) => ({ videoId: id, segments })));
 
 const result = (sentenceId: string): FactCheckResult => ({
-  videoId: transcript.videoId,
+  videoId,
   sentenceId,
   startSeconds: 104.7,
   endSeconds: 111.8,
@@ -65,10 +69,10 @@ const failingChecker = (error: Error): FactCheck => vi.fn(async () => Promise.re
 
 const logger = { info: vi.fn(), warn: vi.fn(), error: vi.fn() };
 
-const setup = (factCheck: FactCheck = streamingChecker(), env: Record<string, string> = {}) => {
+const setup = (factCheck: FactCheck = streamingChecker(), env: Record<string, string> = {}, getTranscript = fakeTranscripts()) => {
   const config: ApiConfig = loadConfig({ TYPESAFE_API_KEY: "k", PILA_API_TOKENS: "good-token", TRUST_PROXY: "true", ...env });
-  const app = createApp({ checker: { factCheck }, config, logger });
-  return { app, factCheck };
+  const app = createApp({ checker: { factCheck }, config, logger, transcripts: { get: getTranscript, source: "fake" } });
+  return { app, factCheck, getTranscript };
 };
 
 const post = (app: ReturnType<typeof setup>["app"], body: unknown, headers: Record<string, string> = {}) =>
@@ -100,7 +104,7 @@ describe("origin check", () => {
 
   it("rejects requests without the CloudFront header with 403, health included", async () => {
     const { app } = setup(streamingChecker(), env);
-    for (const res of [await app.request("/health"), await post(app, { transcript }), await post(app, { transcript }, { "x-origin-verify": "wrong" })]) {
+    for (const res of [await app.request("/health"), await post(app, { videoId }), await post(app, { videoId }, { "x-origin-verify": "wrong" })]) {
       expect(res.status).toBe(403);
       expect(await res.json()).toMatchObject({ success: false, error: { code: "forbidden" } });
     }
@@ -109,48 +113,124 @@ describe("origin check", () => {
   it("lets requests with the right header through", async () => {
     const { app } = setup(streamingChecker(), env);
     expect((await app.request("/health", { headers: { "x-origin-verify": "cf-secret" } })).status).toBe(200);
-    expect((await post(app, { transcript }, { "x-origin-verify": "cf-secret" })).status).toBe(200);
+    expect((await post(app, { videoId }, { "x-origin-verify": "cf-secret" })).status).toBe(200);
   });
 });
 
 describe("POST /factcheck", () => {
   it("returns results in the response envelope", async () => {
     const { app, factCheck } = setup();
-    const res = await post(app, { transcript, video: { title: "Climate Change", channel: "PragerU" }, language: "en" });
+    const res = await post(app, { videoId, video: { title: "Climate Change", channel: "PragerU" }, language: "en" });
     expect(res.status).toBe(200);
     expect(res.headers.get("x-pila-cache")).toBe("miss");
-    expect(await res.json()).toEqual({ success: true, data: [result("s1"), result("s2")], error: null });
-    expect(factCheck).toHaveBeenCalledWith(
-      transcript,
-      expect.objectContaining({ video: { title: "Climate Change", channel: "PragerU" }, language: "en" }),
-    );
+    expect(await res.json()).toEqual({ success: true, data: [result(ids[0]!), result(ids[1]!)], error: null });
+    const [checked, options] = vi.mocked(factCheck).mock.calls[0]!;
+    expect(checked).toEqual({
+      videoId,
+      sentences: [
+        { id: ids[0], text: segments[0]!.text, startSeconds: 104.7, endSeconds: 111.8 },
+        { id: ids[1], text: segments[1]!.text, startSeconds: 121.2, endSeconds: 123.9 },
+      ],
+    });
+    expect(options).toMatchObject({ video: { title: "Climate Change", channel: "PragerU" }, language: "en" });
+    expect(res.headers.get("x-pila-transcript-source")).toBe("fake");
+  });
+
+  it("fetches the transcript by video ID, with the request's signal", async () => {
+    const { app, getTranscript } = setup();
+    await post(app, { videoId });
+    expect(getTranscript).toHaveBeenCalledWith(videoId, expect.objectContaining({ signal: expect.any(AbortSignal) }));
+  });
+
+  it("uses the transcript's language when the request doesn't set one", async () => {
+    const chinese = [{ text: "没有证据表明二氧化碳排放是主要因素。", start: 107.8, duration: 4 }];
+    const { app, factCheck } = setup(streamingChecker(), {}, fakeTranscripts(async (id) => ({ videoId: id, segments: chinese, language: "zh" })));
+    await post(app, { videoId });
+    expect(vi.mocked(factCheck).mock.calls[0]?.[1]).toMatchObject({ language: "zh" });
+  });
+
+  it.each([
+    ["has no transcript", async () => Promise.reject(new TranscriptNotFoundError("no captions")), 404, "transcript_not_found"],
+    ["fails", async () => Promise.reject(new Error("youtube down: internal detail")), 502, "transcript_unavailable"],
+    ["returns bad segments", async (id: string) => ({ videoId: id, segments: [{ text: 1 }] as never }), 502, "transcript_unavailable"],
+    ["returns no text", async (id: string) => ({ videoId: id, segments: [{ text: "", start: 0, duration: 1 }] }), 404, "transcript_not_found"],
+  ])("answers %s with a safe error", async (_name, impl, status, code) => {
+    const { app, factCheck } = setup(streamingChecker(), {}, fakeTranscripts(impl as GetTranscriptFn));
+    const res = await post(app, { videoId });
+    expect(res.status).toBe(status);
+    const body = await res.json();
+    expect(body).toMatchObject({ success: false, error: { code } });
+    expect(body.error.message).not.toContain("internal detail");
+    expect(factCheck).not.toHaveBeenCalled();
+  });
+
+  it("answers 502 when the transcript function rejects with no error object", async () => {
+    const { app } = setup(streamingChecker(), {}, fakeTranscripts(async () => Promise.reject(undefined)));
+    const res = await post(app, { videoId });
+    expect(res.status).toBe(502);
+    expect(await res.json()).toMatchObject({ error: { code: "transcript_unavailable" } });
+  });
+
+  it("answers 502 when the transcript is for a different video", async () => {
+    const { app, factCheck } = setup(streamingChecker(), {}, fakeTranscripts(async () => ({ videoId: "dQw4w9WgXcQ", segments })));
+    expect((await post(app, { videoId })).status).toBe(502);
+    expect(factCheck).not.toHaveBeenCalled();
+  });
+
+  it("returns real HTTP statuses for transcript errors on the streaming path too", async () => {
+    const { app } = setup(streamingChecker(), {}, fakeTranscripts(async () => Promise.reject(new TranscriptNotFoundError())));
+    const res = await post(app, { videoId }, { accept: "text/event-stream" });
+    expect(res.status).toBe(404);
+    expect(await res.json()).toMatchObject({ error: { code: "transcript_not_found" } });
+  });
+
+  it("logs a transcript failure once, with the original error", async () => {
+    logger.error.mockClear();
+    const { app } = setup(streamingChecker(), {}, fakeTranscripts(async () => Promise.reject(new Error("socket hang up"))));
+    await post(app, { videoId });
+    expect(logger.error).toHaveBeenCalledOnce();
+    expect(JSON.stringify(logger.error.mock.calls[0])).toContain("socket hang up");
+  });
+
+  it("detects the language once and passes it to the fact check", async () => {
+    const chinese = [{ text: "没有证据表明二氧化碳排放是主要因素。", start: 107.8, duration: 4 }];
+    const { app, factCheck } = setup(streamingChecker(), {}, fakeTranscripts(async (id) => ({ videoId: id, segments: chinese })));
+    await post(app, { videoId });
+    expect(vi.mocked(factCheck).mock.calls[0]?.[1]).toMatchObject({ language: "zh" });
+  });
+
+  it("does not fetch the transcript again on a cache hit", async () => {
+    const { app, getTranscript } = setup();
+    await post(app, { videoId });
+    await post(app, { videoId });
+    expect(getTranscript).toHaveBeenCalledOnce();
   });
 
   it("streams results as server-sent events when asked", async () => {
-    const res = await post(setup().app, { transcript }, { accept: "text/event-stream" });
+    const res = await post(setup().app, { videoId }, { accept: "text/event-stream" });
     expect(res.headers.get("content-type")).toContain("text/event-stream");
     expect(sseEvents(await res.text())).toEqual([
-      { event: "result", data: result("s1") },
-      { event: "result", data: result("s2") },
-      { event: "done", data: { videoId: "OwqIy8Ikv-c", count: 2, cached: false } },
+      { event: "result", data: result(ids[0]!) },
+      { event: "result", data: result(ids[1]!) },
+      { event: "done", data: { videoId, count: 2, cached: false } },
     ]);
   });
 
   it("serves a repeated request from the cache", async () => {
     const { app, factCheck } = setup();
-    await post(app, { transcript });
-    const res = await post(app, { transcript });
+    await post(app, { videoId });
+    const res = await post(app, { videoId });
     expect(res.headers.get("x-pila-cache")).toBe("hit");
     expect((await res.json()).data).toHaveLength(2);
-    const streamed = sseEvents(await (await post(app, { transcript }, { accept: "text/event-stream" })).text());
-    expect(streamed.at(-1)).toEqual({ event: "done", data: { videoId: "OwqIy8Ikv-c", count: 2, cached: true } });
+    const streamed = sseEvents(await (await post(app, { videoId }, { accept: "text/event-stream" })).text());
+    expect(streamed.at(-1)).toEqual({ event: "done", data: { videoId, count: 2, cached: true } });
     expect(factCheck).toHaveBeenCalledTimes(1);
   });
 
   it("does not cache runs where a claim failed", async () => {
     const { app, factCheck } = setup(streamingChecker({ failClaim: true }));
-    await post(app, { transcript });
-    await post(app, { transcript });
+    await post(app, { videoId });
+    await post(app, { videoId });
     expect(factCheck).toHaveBeenCalledTimes(2);
   });
 
@@ -162,7 +242,7 @@ describe("POST /factcheck", () => {
     const res = await setup().app.request("/factcheck", {
       method: "POST",
       headers: { "content-type": "application/json", ...headers },
-      body: JSON.stringify({ transcript }),
+      body: JSON.stringify({ videoId }),
     });
     expect(res.status).toBe(401);
     expect(await res.json()).toMatchObject({ success: false, data: null, error: { code: "unauthorized" } });
@@ -173,16 +253,17 @@ describe("POST /factcheck", () => {
     const res = await app.request("/factcheck", {
       method: "POST",
       headers: { "content-type": "application/json" },
-      body: JSON.stringify({ transcript }),
+      body: JSON.stringify({ videoId }),
     });
     expect(res.status).toBe(200);
   });
 
   it.each([
     ["invalid JSON", "{nope", "invalid_json"],
-    ["a missing transcript", { video: {} }, "invalid_request"],
-    ["an invalid transcript", { transcript: { videoId: "", sentences: [] } }, "invalid_request"],
-    ["an unknown language", { transcript, language: "fr" }, "invalid_request"],
+    ["a missing videoId", { video: {} }, "invalid_request"],
+    ["an invalid videoId", { videoId: "https://youtu.be/OwqIy8Ikv-c" }, "invalid_request"],
+    ["the old transcript body", { transcript: { videoId, sentences: [] } }, "invalid_request"],
+    ["an unknown language", { videoId, language: "fr" }, "invalid_request"],
   ])("rejects %s with 400", async (_name, body, code) => {
     const { app, factCheck } = setup();
     const res = await post(app, body);
@@ -193,7 +274,7 @@ describe("POST /factcheck", () => {
 
   it("rejects streamed bodies over the size limit with 413, not 400", async () => {
     const { app } = setup(streamingChecker(), { MAX_BODY_BYTES: "100" });
-    const chunk = new TextEncoder().encode(JSON.stringify({ transcript }));
+    const chunk = new TextEncoder().encode(JSON.stringify({ videoId, video: { title: "x".repeat(200) } }));
     const body = new ReadableStream({
       start(controller) {
         controller.enqueue(chunk);
@@ -211,38 +292,38 @@ describe("POST /factcheck", () => {
 
   it("rejects bodies over the size limit with 413", async () => {
     const { app } = setup(streamingChecker(), { MAX_BODY_BYTES: "100" });
-    const res = await post(app, { transcript });
+    const res = await post(app, { videoId, video: { title: "x".repeat(200) } });
     expect(res.status).toBe(413);
     expect(await res.json()).toMatchObject({ error: { code: "payload_too_large" } });
   });
 
   it("rate limits each client separately even when they share a token", async () => {
     const { app } = setup(streamingChecker(), { RATE_LIMIT_PER_MINUTE: "1" });
-    expect((await post(app, { transcript }, { "x-forwarded-for": "198.51.100.1" })).status).toBe(200);
-    expect((await post(app, { transcript }, { "x-forwarded-for": "198.51.100.2" })).status).toBe(200);
-    expect((await post(app, { transcript }, { "x-forwarded-for": "198.51.100.1" })).status).toBe(429);
+    expect((await post(app, { videoId }, { "x-forwarded-for": "198.51.100.1" })).status).toBe(200);
+    expect((await post(app, { videoId }, { "x-forwarded-for": "198.51.100.2" })).status).toBe(200);
+    expect((await post(app, { videoId }, { "x-forwarded-for": "198.51.100.1" })).status).toBe(429);
   });
 
   it("ignores client-supplied X-Forwarded-For entries before the trusted proxy's", async () => {
     const { app } = setup(streamingChecker(), { RATE_LIMIT_PER_MINUTE: "1" });
-    expect((await post(app, { transcript }, { "x-forwarded-for": "10.0.0.1, 198.51.100.7" })).status).toBe(200);
+    expect((await post(app, { videoId }, { "x-forwarded-for": "10.0.0.1, 198.51.100.7" })).status).toBe(200);
     // A spoofed first entry does not create a new bucket: the last (proxy-added) entry is the client.
-    expect((await post(app, { transcript }, { "x-forwarded-for": "10.0.0.99, 198.51.100.7" })).status).toBe(429);
+    expect((await post(app, { videoId }, { "x-forwarded-for": "10.0.0.99, 198.51.100.7" })).status).toBe(429);
   });
 
   it("prefers CloudFront-Viewer-Address for the client IP", async () => {
     const { app } = setup(streamingChecker(), { RATE_LIMIT_PER_MINUTE: "1" });
     const viewer = (address: string, xff: string) => ({ "cloudfront-viewer-address": address, "x-forwarded-for": xff });
-    expect((await post(app, { transcript }, viewer("2001:db8::1:443", "1.1.1.1"))).status).toBe(200);
-    expect((await post(app, { transcript }, viewer("2001:db8::1:51000", "2.2.2.2"))).status).toBe(429);
-    expect((await post(app, { transcript }, viewer("203.0.113.9:443", "1.1.1.1"))).status).toBe(200);
+    expect((await post(app, { videoId }, viewer("2001:db8::1:443", "1.1.1.1"))).status).toBe(200);
+    expect((await post(app, { videoId }, viewer("2001:db8::1:51000", "2.2.2.2"))).status).toBe(429);
+    expect((await post(app, { videoId }, viewer("203.0.113.9:443", "1.1.1.1"))).status).toBe(200);
   });
 
   it("rate limits per token", async () => {
     const { app } = setup(streamingChecker(), { RATE_LIMIT_PER_MINUTE: "2" });
-    expect((await post(app, { transcript })).status).toBe(200);
-    expect((await post(app, { transcript })).status).toBe(200);
-    const limited = await post(app, { transcript });
+    expect((await post(app, { videoId })).status).toBe(200);
+    expect((await post(app, { videoId })).status).toBe(200);
+    const limited = await post(app, { videoId });
     expect(limited.status).toBe(429);
     expect(limited.headers.get("retry-after")).toMatch(/^\d+$/);
     expect(await limited.json()).toMatchObject({ error: { code: "rate_limited" } });
@@ -255,7 +336,7 @@ describe("POST /factcheck", () => {
     [new RateLimitError("Jev rate limit reached", { service: "jev", status: 429 }), 503, "upstream_busy"],
     [new UpstreamError("Could not reach Tavily", { service: "tavily" }), 502, "upstream_error"],
   ])("maps %o to a safe %i response", async (error, status, code) => {
-    const res = await post(setup(failingChecker(error)).app, { transcript });
+    const res = await post(setup(failingChecker(error)).app, { videoId });
     expect(res.status).toBe(status);
     const body = await res.json();
     expect(body).toMatchObject({ success: false, data: null, error: { code } });
@@ -265,7 +346,7 @@ describe("POST /factcheck", () => {
   });
 
   it("sends an error event when a streamed run fails", async () => {
-    const res = await post(setup(failingChecker(new QuotaError("q", { service: "tavily" }))).app, { transcript }, { accept: "text/event-stream" });
+    const res = await post(setup(failingChecker(new QuotaError("q", { service: "tavily" }))).app, { videoId }, { accept: "text/event-stream" });
     expect(sseEvents(await res.text())).toEqual([
       { event: "error", data: { code: "upstream_quota", message: expect.any(String), requestId: expect.any(String) } },
     ]);
@@ -273,14 +354,14 @@ describe("POST /factcheck", () => {
 
   it("times out slow runs with 504", async () => {
     const { app } = setup(streamingChecker({ delayMs: 500 }), { REQUEST_TIMEOUT_SECONDS: "0.05" });
-    const res = await post(app, { transcript });
+    const res = await post(app, { videoId });
     expect(res.status).toBe(504);
     expect(await res.json()).toMatchObject({ error: { code: "timeout" } });
   });
 
   it("allows any origin when configured with *", async () => {
     const { app } = setup(streamingChecker(), { ALLOWED_ORIGINS: "*" });
-    const res = await post(app, { transcript }, { origin: "chrome-extension://anything" });
+    const res = await post(app, { videoId }, { origin: "chrome-extension://anything" });
     expect(res.headers.get("access-control-allow-origin")).toBe("*");
     const preflight = await app.request("/factcheck", {
       method: "OPTIONS",
@@ -292,16 +373,16 @@ describe("POST /factcheck", () => {
 
   it("adds CORS headers to error responses too", async () => {
     const { app } = setup(streamingChecker(), { ALLOWED_ORIGINS: "*" });
-    const res = await post(app, { transcript }, { origin: "chrome-extension://x", authorization: "Bearer nope" });
+    const res = await post(app, { videoId }, { origin: "chrome-extension://x", authorization: "Bearer nope" });
     expect(res.status).toBe(401);
     expect(res.headers.get("access-control-allow-origin")).toBe("*");
   });
 
   it("allows CORS only for configured origins", async () => {
     const { app } = setup(streamingChecker(), { ALLOWED_ORIGINS: "chrome-extension://abc" });
-    const allowed = await post(app, { transcript }, { origin: "chrome-extension://abc" });
+    const allowed = await post(app, { videoId }, { origin: "chrome-extension://abc" });
     expect(allowed.headers.get("access-control-allow-origin")).toBe("chrome-extension://abc");
-    const other = await post(app, { transcript: { ...transcript, videoId: "v2" } }, { origin: "https://evil.example" });
+    const other = await post(app, { videoId: "v2v2v2v2v2v" }, { origin: "https://evil.example" });
     expect(other.headers.get("access-control-allow-origin")).toBeNull();
   });
 
@@ -313,7 +394,7 @@ describe("POST /factcheck", () => {
 
   it("never logs the bearer token", async () => {
     const { app } = setup();
-    await post(app, { transcript });
+    await post(app, { videoId });
     const logged = JSON.stringify([...logger.info.mock.calls, ...logger.warn.mock.calls, ...logger.error.mock.calls]);
     expect(logged).not.toContain("good-token");
   });

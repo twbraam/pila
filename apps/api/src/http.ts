@@ -23,10 +23,20 @@ export class HttpError extends Error {
     readonly code: string,
     message: string,
     readonly retryAfterSeconds?: number,
+    /** The original error, for server logs only. */
+    options?: { readonly cause?: unknown },
   ) {
-    super(message);
+    super(message, options);
     this.name = "HttpError";
   }
+}
+
+/** Name, message, and library fields of anything thrown, including `undefined` or a string. */
+export function errorInfo(error: unknown): { name: string; message: string; service?: string; status?: number } {
+  if (!(error instanceof Error)) return { name: typeof error, message: String(error) };
+  const { name, message } = error;
+  const { service, status } = error as Error & { service?: string; status?: number };
+  return { name, message, ...(service ? { service } : {}), ...(status ? { status } : {}) };
 }
 
 /**

@@ -1,10 +1,22 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "lib": ["ES2022", "DOM"],
-    "types": ["node"],
-    "customConditions": ["source"],
-    "noEmit": true
+    "lib": [
+      "ES2022",
+      "DOM"
+    ],
+    "types": [
+      "node"
+    ],
+    "customConditions": [
+      "source"
+    ],
+    "noEmit": true,
+    "resolveJsonModule": true
   },
-  "include": ["src", "test", "*.config.ts"]
+  "include": [
+    "src",
+    "test",
+    "*.config.ts"
+  ]
 }

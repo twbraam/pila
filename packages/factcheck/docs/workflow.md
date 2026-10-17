@@ -8,14 +8,16 @@ Diagrams are Mermaid. They render on GitHub and in the IntelliJ Markdown preview
 
 ## 0. System
 
-The extension never holds the Jev or Tavily keys. It calls our API; the API runs the library.
+The extension never holds the Jev or Tavily keys. It sends a YouTube video ID to our API; the API
+loads the transcript, then runs the library.
 
 ```mermaid
 flowchart LR
-    EXT["Chrome extension<br/>service worker"] -->|"POST /factcheck<br/>Authorization: Bearer token"| CF["CloudFront<br/>d3tuhog92nak7r.cloudfront.net"]
+    EXT["Chrome extension<br/>service worker"] -->|"POST /factcheck { videoId }<br/>Authorization: Bearer token"| CF["CloudFront<br/>d3tuhog92nak7r.cloudfront.net"]
     CF -->|"adds x-origin-verify"| URL["Lambda Function URL"]
     URL --> L["Lambda pila-factcheck<br/>apps/api (Hono)"]
     L -->|"cold start"| SSM[("SSM /pila/factcheck/*<br/>origin secret, API tokens,<br/>Jev key, Tavily key")]
+    L --> TR["getTranscript(videoId)<br/>apps/api/src/transcripts<br/>(mock for now: ref/transcript.json)"]
     L --> LIB["@pila/factcheck<br/>factCheck()"]
     LIB --> J["Jev API"]
     LIB --> T["Tavily API"]
@@ -34,11 +36,15 @@ flowchart TD
     A -->|"no"| E401(["401 unauthorized"])
     A -->|"yes"| RL{"under 20 requests/min<br/>for this token + client IP?"}
     RL -->|"no"| E429(["429 rate_limited<br/>Retry-After"])
-    RL -->|"yes"| B{"body <= 2 MB,<br/>valid JSON and Transcript?"}
+    RL -->|"yes"| B{"body <= 16 KB, valid JSON,<br/>11-character YouTube videoId?"}
     B -->|"no"| E400(["400 invalid_json / invalid_request<br/>413 payload_too_large"])
     B -->|"yes"| C{"same request<br/>in cache (6 h)?"}
     C -->|"yes"| HIT(["200 data: FactCheckResult[]<br/>x-pila-cache: hit"])
-    C -->|"no"| RUN["factCheck(transcript, { video, language, signal })<br/>signal: 55 s timeout or client gone"]
+    C -->|"no"| GT["getTranscript(videoId, { signal })<br/>signal: 55 s timeout or client gone"]
+    GT -->|"no captions"| E404(["404 transcript_not_found"])
+    GT -->|"error or bad segments"| E502(["502 transcript_unavailable"])
+    GT -->|"segments"| ST["segmentsToTranscript<br/>ids videoId-0, videoId-1, ..."]
+    ST --> RUN["factCheck(transcript, { video, language, signal })"]
     RUN -->|"ok"| CACHE["cache it if no claim failed"]
     CACHE --> MISS(["200 data: FactCheckResult[]<br/>x-pila-cache: miss"])
     RUN -->|"error"| MAP(["502 / 503 / 504 / 500<br/>safe message, details only in logs"])
@@ -51,13 +57,17 @@ POST /factcheck
 Authorization: Bearer <token>
 Content-Type: application/json
 
-{ "transcript": Transcript, "video": { "title": "...", "channel": "..." }, "language": "en" | "zh" }
+{ "videoId": "OwqIy8Ikv-c", "video": { "title": "...", "channel": "..." }, "language": "en" | "zh" }
 
 200 { "success": true,  "data": FactCheckResult[], "error": null }
 4xx/5xx { "success": false, "data": null, "error": { "code", "message", "requestId" } }
 ```
 
 `GET /health` returns `{ success: true, data: { ok: true }, error: null }` (origin check only, no token).
+
+The transcript function (`GetTranscript` in `apps/api/src/transcripts/provider.ts`) is being built by a
+teammate. Until then `TRANSCRIPT_SOURCE=mock` returns the sample transcript for every video, and
+responses carry `x-pila-transcript-source: mock`.
 
 With `Accept: text/event-stream` the API streams one `result` event per sentence, then `done`
 (or `error`). On Lambda the Function URL is in `BUFFERED` mode, so the events arrive together at
@@ -199,8 +209,9 @@ sequenceDiagram
     participant J as Jev
     participant T as Tavily
 
-    EXT->>API: POST /factcheck (token, transcript, video)
+    EXT->>API: POST /factcheck (token, videoId, video)
     API->>API: origin check, token, rate limit, validate, cache lookup
+    API->>API: getTranscript(videoId) -> segments -> Transcript
     API->>FC: factCheck(transcript, { video, signal })
     par claim detection
         FC->>J: 2 nouls per sentence
@@ -237,6 +248,9 @@ README smoke claim each took about 1-2 s; a repeat request is served from the ca
 | `UpstreamError` | 5xx, network, bad response | that claim fails | if the whole run fails: 502 `upstream_error` |
 | anything else | bug | | 500 `internal_error` |
 
+Transcript function errors (before the library runs): `TranscriptNotFoundError` or no text gives 404
+`transcript_not_found`; any other error or malformed segments gives 502 `transcript_unavailable`.
+
 A failed claim becomes `verdict: "unknown"` with "This claim could not be checked." and the run
 is not cached. A failed video-level search doesn't stop the run.
 
@@ -247,6 +261,7 @@ Retries: Jev 2 (SDK), Tavily 1 (backoff 1 s, or `retry-after` up to 5 s).
 | Step | File |
 | - | - |
 | Lambda entry, SSM secrets | `apps/api/src/lambda.ts` |
+| Transcript function contract, mock, registry | `apps/api/src/transcripts/` |
 | Routes, origin check, auth, rate limit, cache, SSE | `apps/api/src/app.ts` |
 | Config from env | `apps/api/src/env.ts` |
 | HTTP envelope, error mapping | `apps/api/src/http.ts` |

@@ -18,12 +18,18 @@ This is the planned architecture. The modules can be built in parallel using the
 
 **Output:** a `Transcript` for Processing and Overlay.
 
+**Server side:** the hosted API calls a transcript function, `getTranscript(videoId)`, that returns the caption
+segments (`{ text, start, duration }`, as in [`ref/transcript.json`](./ref/transcript.json)) and turns them into a
+`Transcript`. A teammate is building that function; until it ships, the API returns the sample transcript for every
+video (response header `x-pila-transcript-source: mock`). Contract: [`apps/api/src/transcripts/provider.ts`](./apps/api/src/transcripts/provider.ts).
+
 ### 2. Processing
 
 Implemented in [`packages/factcheck`](./packages/factcheck) as `factCheck(transcript, options)` and hosted by
 [`apps/api`](./apps/api) at **`https://d3tuhog92nak7r.cloudfront.net`**. The extension calls
-`POST /factcheck` with `Authorization: Bearer <token>` and `{ transcript, video: { title, channel } }`, and gets
-`{ success, data: FactCheckResult[], error }`. The Jev and Tavily keys stay on the server.
+`POST /factcheck` with `Authorization: Bearer <token>` and `{ videoId, video: { title, channel } }`, and gets
+`{ success, data: FactCheckResult[], error }`. The API fetches the transcript itself. The Jev and Tavily keys stay on
+the server.
 Flow and error codes: [`packages/factcheck/docs/workflow.md`](./packages/factcheck/docs/workflow.md).
 
 1. **Find claims with Jev:** one request asks, for every sentence, whether it is a specific factual claim that can be checked. The top 5 are kept (configurable). Jev has no world knowledge, so it picks *checkable* sentences; it does not judge truth on its own.
@@ -31,7 +37,7 @@ Flow and error codes: [`packages/factcheck/docs/workflow.md`](./packages/factche
 3. **Assess with Jev:** per claim, one request asks for a verdict, what each source says about the claim, and which sentence of each source states its conclusion.
 4. **Decide in code:** trusted fact-checkers win; unclear or inconsistent answers become `unknown`.
 
-**Input:** a `Transcript`, plus the video's `title` and `channel` (they find published reviews of the video, the best evidence). **Output:** one `FactCheckResult` per checked sentence, streamed to `onResult` as each check completes and returned together at the end. Sentences that were not checked produce no result; that does not establish that they are true.
+**Input:** a YouTube video ID (the API loads its `Transcript`), plus the video's `title` and `channel` (they find published reviews of the video, the best evidence). **Output:** one `FactCheckResult` per checked sentence, streamed to `onResult` as each check completes and returned together at the end. Sentences that were not checked produce no result; that does not establish that they are true.
 
 ### 3. Overlay
 

@@ -36,12 +36,14 @@ client ──HTTPS──▶ CloudFront ──adds x-origin-verify──▶ Lambd
 | Method | Path | Auth | Body | Response |
 |---|---|---|---|---|
 | GET | `/health` | — | — | `200 { success: true, data: { ok: true }, error: null }` |
-| POST | `/factcheck` | `Authorization: Bearer <token>` | `{ transcript: Transcript, video?: { title, channel }, language?: "en" \| "zh" }` | `200 { success: true, data: FactCheckResult[], error: null }`, header `x-pila-cache: hit\|miss` |
+| POST | `/factcheck` | `Authorization: Bearer <token>` | `{ videoId: "<11-char YouTube ID>", video?: { title, channel }, language?: "en" \| "zh" }` | `200 { success: true, data: FactCheckResult[], error: null }`, headers `x-pila-cache: hit\|miss`, `x-pila-transcript-source` |
 | OPTIONS | any | — | — | `204`, CORS `*` |
 
 Errors use `{ success: false, data: null, error: { code, message, requestId } }`: `400` invalid input, `401` missing or
-wrong token, `403` missing/wrong `x-origin-verify`, `404` unknown route, `413` body over 2 MB, `429` rate limit
-(`Retry-After`), `502`/`503` Jev or Tavily failure, `504` over 55 s, `500` other. Full flow: `packages/factcheck/docs/workflow.md`.
+wrong token, `403` missing/wrong `x-origin-verify`, `404` unknown route or `transcript_not_found`, `413` body over
+16 KB, `429` rate limit (`Retry-After`), `502` `transcript_unavailable` or Jev/Tavily failure, `503` Jev/Tavily busy or
+out of quota, `504` over 55 s, `500` other. The API loads transcripts itself (`apps/api/src/transcripts`; currently a
+mock that returns `ref/transcript.json` for every video). Full flow: `packages/factcheck/docs/workflow.md`.
 
 ## Rules for `apps/api` on this stack (all implemented)
 
@@ -88,10 +90,9 @@ curl -s https://4qigmpqu4wrhkst6ijpt227whu0xjnlc.lambda-url.us-west-2.on.aws/hea
 curl -s -X POST -H 'content-type: application/json' https://d3tuhog92nak7r.cloudfront.net/factcheck -d '{}'  # 401 (no token)
 curl -s -X POST -H 'content-type: application/json' -H "authorization: Bearer $PILA_API_TOKEN" \
   https://d3tuhog92nak7r.cloudfront.net/factcheck -d '{
-  "video": {"title": "Climate change basics", "channel": "demo"},
-  "transcript": {"videoId": "smoke-1", "sentences": [
-    {"id": "s1", "text": "The Great Wall of China is visible from the Moon with the naked eye.", "startSeconds": 0, "endSeconds": 5}]}}'
-# 200, verdict "misinformation", Snopes source, ~1-9 s (verified 2026-10-17 with apps/api: 1.2 s)
+  "videoId": "OwqIy8Ikv-c",
+  "video": {"title": "Climate Change: What Do Scientists Say?", "channel": "PragerU"}}'
+# 200, up to 5 results for the (mock) Lindzen transcript, ~5-12 s; a repeat is a cache hit (verified 2026-10-17)
 aws logs tail /aws/lambda/pila-factcheck --region us-west-2 --since 10m
 ```
 

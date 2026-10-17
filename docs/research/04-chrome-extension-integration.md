@@ -1,7 +1,8 @@
 # Using the fact-check API from the Chrome extension
 
 > Update 2026-10-17: the extension calls our hosted API (`apps/api`, `https://d3tuhog92nak7r.cloudfront.net`)
-> instead of importing the library, so no Jev or Tavily key ships in the extension. The library-in-service-worker
+> instead of importing the library, so no Jev or Tavily key ships in the extension. The extension sends only the
+> YouTube video ID (plus title and channel); the API loads the transcript itself. The library-in-service-worker
 > notes below still hold (it is tested there), but the wiring is now a `fetch` to `POST /factcheck`.
 
 For the extension team. The library does the fact-checking; the extension gets the
@@ -41,12 +42,12 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
     const res = await fetch(`${API}/factcheck`, {
       method: "POST",
       headers: { "content-type": "application/json", authorization: `Bearer ${apiToken}` },
-      body: JSON.stringify({ transcript: msg.transcript, video: msg.video }),
+      body: JSON.stringify({ videoId: msg.videoId, video: msg.video }),
       signal: AbortSignal.timeout(60_000),
     });
     const { success, data: results, error } = await res.json();
     if (!success) throw Object.assign(new Error(error.message), { name: error.code });
-    await chrome.storage.session.set({ [`results:${msg.transcript.videoId}`]: results });
+    await chrome.storage.session.set({ [`results:${msg.videoId}`]: results });
     sendResponse({ ok: true, results });
   })().catch((err) => sendResponse({ ok: false, error: { name: err.name, message: err.message } }));
   return true; // keep the channel open for the async reply

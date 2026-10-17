@@ -4,6 +4,7 @@ import { createFactChecker } from "@pila/factcheck";
 import { createApp } from "./app.js";
 import { ConfigError, loadConfig } from "./env.js";
 import { createLogger } from "./logger.js";
+import { transcriptProviders } from "./transcripts/index.js";
 
 const DEV_ENV_FILE = new URL("../../../.env", import.meta.url);
 const SHUTDOWN_GRACE_MS = 10_000;
@@ -17,7 +18,9 @@ function main(): void {
   if (!config.tavilyApiKey) logger.warn({}, "TAVILY_API_KEY is empty: using Tavily's rate-limited keyless mode");
 
   const checker = createFactChecker({ typesafeApiKey: config.typesafeApiKey, tavilyApiKey: config.tavilyApiKey });
-  const app = createApp({ checker, config, logger });
+  if (config.transcriptSource === "mock") logger.warn({}, "TRANSCRIPT_SOURCE is mock: every video gets the sample transcript");
+  const transcripts = { get: transcriptProviders[config.transcriptSource], source: config.transcriptSource };
+  const app = createApp({ checker, config, logger, transcripts });
   const server = serve({ fetch: app.fetch, port: config.port, hostname: config.host }, (info) =>
     logger.info({ host: config.host, port: info.port }, "listening"),
   );

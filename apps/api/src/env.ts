@@ -1,3 +1,5 @@
+import { isTranscriptSource, type TranscriptSource, transcriptProviders } from "./transcripts/index.js";
+
 export interface ApiConfig {
   readonly typesafeApiKey: string;
   /** Without it, Tavily's rate-limited keyless mode is used. */
@@ -19,6 +21,8 @@ export interface ApiConfig {
   readonly trustedProxyHops: number;
   /** When set, every request must carry it in `x-origin-verify` (added by CloudFront). */
   readonly originSecret: string | undefined;
+  /** Which transcript function to call; see `src/transcripts/index.ts`. */
+  readonly transcriptSource: TranscriptSource;
   readonly production: boolean;
 }
 
@@ -56,6 +60,10 @@ export function loadConfig(env: Env): ApiConfig {
   const typesafeApiKey = env.TYPESAFE_API_KEY?.trim() ?? "";
   if (!typesafeApiKey) problems.push("TYPESAFE_API_KEY is required");
 
+  const source = env.TRANSCRIPT_SOURCE?.trim() || "mock";
+  const transcriptSource: TranscriptSource = isTranscriptSource(source) ? source : "mock";
+  if (!isTranscriptSource(source)) problems.push(`TRANSCRIPT_SOURCE must be one of: ${Object.keys(transcriptProviders).join(", ")}`);
+
   const production = env.NODE_ENV === "production";
   const apiTokens = list(env.PILA_API_TOKENS);
   if (production && apiTokens.length === 0) problems.push("PILA_API_TOKENS is required in production");
@@ -72,10 +80,12 @@ export function loadConfig(env: Env): ApiConfig {
     cacheMaxEntries: number("CACHE_MAX_ENTRIES", 500, { integer: true }),
     // 55 s: CloudFront and Lambda both cut the connection at 60 s.
     requestTimeoutMs: Math.round(number("REQUEST_TIMEOUT_SECONDS", 55, { min: 0.001 }) * 1000),
-    maxBodyBytes: number("MAX_BODY_BYTES", 2_000_000, { integer: true }),
+    // The body is just a video ID and title/channel now.
+    maxBodyBytes: number("MAX_BODY_BYTES", 16_384, { integer: true }),
     trustProxy: env.TRUST_PROXY?.trim().toLowerCase() === "true",
     trustedProxyHops: number("TRUSTED_PROXY_HOPS", 1, { integer: true }),
     originSecret: env.ORIGIN_VERIFY_SECRET?.trim() || undefined,
+    transcriptSource,
     production,
   };
 
