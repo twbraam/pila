@@ -1,6 +1,6 @@
-# Pila
+# Playback Information Lookup Assistant (PILA)
 
-A planned Chrome extension that checks YouTube captions for potential misinformation and shows evidence links during video playback.
+A Chrome extension that checks YouTube captions for potential misinformation and shows evidence links during video playback.
 
 The **Node.js API server runs Extract and Process together**. `POST /check` accepts a YouTube URL or ID, retrieves existing captions with [`youtube-transcript-plus`](https://github.com/ericmmartin/youtube-transcript-plus), then screens and verifies the transcript with Gemini and Google Search. It returns the top-level result array specified below. Overlay and the WXT extension integration are still planned.
 
