@@ -20,7 +20,7 @@ flowchart LR
     URL --> L["Lambda pila-factcheck<br/>apps/api (Hono)"]
     L -->|"cold start"| SSM[("SSM /pila/factcheck/*<br/>origin secret, API tokens")]
     L --> TR["getTranscript(videoId)<br/>apps/api/src/transcripts<br/>(mock: ref/transcript.json)"]
-    TR --> FC["factCheck(transcript)<br/>apps/api/src/factcheck<br/>(mock: 5 fixed items)"]
+    TR --> FC["factCheck(transcript)<br/>apps/api/src/factcheck<br/>(mock: recorded Jev run, 36 items)"]
 ```
 
 Limits: CloudFront and Lambda cut requests at 60 s, so a run is aborted at 55 s. Lambda reserved
