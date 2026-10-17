@@ -15,12 +15,38 @@
 
 # Mandarin
 
-| Video | Subtitles | Channel · Duration | Specific misinformation | Evidence contradicting it |
-|---|---|---|---|---|
-| [Do We Really Need Nuclear Power? — Szu-Pang Yang, TEDxTaipei 2013](https://www.youtube.com/watch?v=7wFWgopJP5Q) | [JSON](./transcripts/7wFWgopJP5Q.json) | TEDxTaipei · **15:37** | **09:34–09:39:** Claims Taiwan is the world’s only country with nuclear plants in its capital’s metropolitan area. ([filmot.com][1]) | Switzerland’s Mühleberg plant was approximately **14 km from central Bern** and operated from **1972–2019**, including when this talk was delivered. ([bkw.ch][2]) |
-| [Why Sanxingdui and Other Bronze Age Civilizations Disappeared](https://www.youtube.com/watch?v=TGUeqcBXy_A) | [JSON](./transcripts/TGUeqcBXy_A.json) | Wen Zhao Studio · **14:03** | **10:38–10:50:** Says copper ore produces brass without tin, and bronze is made by mixing brass and tin approximately 10:1. ([filmot.com][3]) | Brass is a **copper–zinc** alloy. Traditional tin bronze is **copper–tin**; copper and brass are different materials. ([Periodic Table][4]) |
-| [The Biblical Flood: Its Missing Cause and “Hard Evidence”](https://www.youtube.com/watch?v=BSI8oxcQFfw) | [JSON](./transcripts/BSI8oxcQFfw.json) | Wen Zhao Studio · **13:14** | **10:26–10:48:** Presents a Younger Dryas comet impact as confirmed evidence explaining the catastrophic floods that formed the Channeled Scablands. ([filmot.com][5]) | USGS dates the major Missoula floods to approximately **19,000–15,000 years ago**, before the proposed **12,900-year-old** impact. The video conflates events with incompatible chronologies. ([U.S. Geological Survey][6]) |
+| Video | Channel · Duration | Specific misinformation | Evidence contradicting it |
+|---|---|---|---|
+| 1. [Do We Really Need Nuclear Power?](https://www.youtube.com/watch?v=7wFWgopJP5Q) | TEDxTaipei · **15:37** | **09:34–09:39:** Claims Taiwan is the only country with nuclear plants in its capital’s metropolitan area. | Switzerland’s Mühleberg plant was approximately **14 km from central Bern** and operated from **1972–2019**. ([www.bkw.ch][1]) |
+| 2. [Why Sanxingdui and Other Bronze Age Civilizations Disappeared](https://www.youtube.com/watch?v=TGUeqcBXy_A) | Wen Zhao Studio · **14:03** | **10:38–10:50:** Says copper ore produces brass without tin, and bronze is made by mixing brass and tin. | Brass is a **copper–zinc** alloy. Traditional tin bronze is **copper–tin**; copper and brass are different materials. ([Periodic Table][2]) |
+| 3. [The Biblical Flood: Its Missing Cause and “Hard Evidence”](https://www.youtube.com/watch?v=BSI8oxcQFfw) | Wen Zhao Studio · **13:14** | **10:26–10:48:** Presents a Younger Dryas comet impact as confirmed evidence explaining the Scablands-forming floods. | USGS dates the major Missoula floods to approximately **19,000–15,000 years ago**, preceding the proposed **12,900-year-old** impact. ([U.S. Geological Survey][3]) |
+| 4. [How to Lower Cholesterol and Triglycerides](https://www.youtube.com/watch?v=ClM0Qy-_5A4) | Taiwan Teacher Wu’s Nutrition Channel · **1:02:08** | **48:11–48:18:** Repeatedly states that the brain uses **only glucose** for energy. | Human fasting experiments demonstrated that ketone bodies—β-hydroxybutyrate and acetoacetate—can become the brain’s predominant fuel. ([PubMed][4]) |
+| 5. [How to Choose Quality Protein: Essential Health Knowledge, Part 4](https://www.youtube.com/watch?v=ELOhvTr_qx8) | Taiwan Teacher Wu’s Nutrition Channel · **53:18** | **24:51–24:58:** Describes prostate inflammation and enlargement progressing into prostate cancer. | The National Cancer Institute states that benign prostate enlargement and prostatitis are **not risk factors for prostate cancer**. ([NCI][5]) |
+| 6. [You Are Actually Protein-Deficient, Part 2](https://www.youtube.com/watch?v=GplLNj6M2h0) | Taiwan Teacher Wu’s Nutrition Channel · **1:16:29** | **11:14–11:18:** Claims vitamin C is completely destroyed above **60 °C**. | Controlled cooking experiments found substantial vitamin C remaining after boiling and stir-frying. Broccoli boiled for five minutes retained approximately **67%** of its vitamin C. ([PMC][6]) |
+| 7. [Hypertension Series, Part 3: Eggs and Lowering Cholesterol](https://www.youtube.com/watch?v=waT8Wfb0Qr0) | Taiwan Teacher Wu’s Nutrition Channel · **6:09** | **01:11–01:29:** Claims eating eggs has no relationship with blood cholesterol and that eggs lower cholesterol. | A randomized crossover feeding trial using **0, 1, 2, or 4 eggs daily** found dose-dependent increases in total and LDL cholesterol, with individual variation. ([PubMed][7]) |
+| 8. [Great Yu’s Flood Control, the Xia Dynasty, and Giants](https://www.youtube.com/watch?v=mDMj14oEwOM) | Wen Zhao Studio · **15:32** | **03:53–03:57:** States that Heinrich Schliemann excavated **King Agamemnon’s tomb**. | Greece’s National Archaeological Museum explains that these burials belong to rulers from the **16th century BCE**, at least four centuries before the period associated with the Trojan War. Schliemann’s identification was mistaken. ([National Archaeological Museum][8]) |
+| 9. [Colonizing Mars: The Missing Final Step](https://www.youtube.com/watch?v=w19zc9SUS2Y) | Wen Zhao Studio · **14:47** | **11:30–11:37:** Suggests Mars’s core is solid and non-flowing, using this to explain its absent global magnetic field. | Mars Global Surveyor measurements had already ruled out an entirely solid core in **2003**: at least its outer portion must be liquid. This evidence predates the video. ([NASA Jet Propulsion Laboratory (JPL)][9]) |
+| 10. [Where Did Atlantis’s Survivors Go?](https://www.youtube.com/watch?v=ZhvMVo_jD78) | Wen Zhao Studio · **15:11** | **02:51–03:05:** Claims Edfu Temple’s builder is unknown and that Ptolemy III performed its last restoration. | Egypt’s Ministry of Tourism and Antiquities identifies **Ptolemy III as the ruler who began construction in 237 BCE**; the temple was completed under **Ptolemy XII in 57 BCE**. ([Ministry of Tourism and Antiquities][10]) |
 
+[1]: https://www.bkw.ch/fileadmin/user_upload/03_Energie/03_05_Energieproduktion/Stilllegung_Kernkraftwerk_Muehleberg/Teilbericht_2_-_Umweltvertraeglichkeitsbericht_v1.0.pdf?utm_source=chatgpt.com "3 Standort und Umgebung"
+
+[2]: https://periodic-table.rsc.org/element/29/copper%23?utm_source=chatgpt.com "Copper - Element information, properties and uses"
+
+[3]: https://www.usgs.gov/publications/megafloods-and-clovis-cache-wenatchee-washington?utm_source=chatgpt.com "Megafloods and Clovis cache at Wenatchee, Washington"
+
+[4]: https://pubmed.ncbi.nlm.nih.gov/6061736/?utm_source=chatgpt.com "Brain metabolism during fasting"
+
+[5]: https://www.cancer.gov/types/prostate/understanding-prostate-changes?utm_source=chatgpt.com "Understanding Prostate Changes"
+
+[6]: https://pmc.ncbi.nlm.nih.gov/articles/PMC2722699/?utm_source=chatgpt.com "Effects of different cooking methods on health-promoting compounds of broccoli"
+
+[7]: https://pubmed.ncbi.nlm.nih.gov/8148356/?utm_source=chatgpt.com "A dose-response study of the effects of dietary cholesterol on fasting and postprandial lipid and lipoprotein metabolism in healthy young men"
+
+[8]: https://www.namuseum.gr/en/monthly_artefact/pages-from-the-mycenae-excavation-diary-of-panayotis-stamatakis/?utm_source=chatgpt.com "Pages from the Mycenae excavation diary of Panayotis Stamatakis"
+
+[9]: https://www.jpl.nasa.gov/news/scientists-say-mars-has-a-liquid-iron-core/?utm_source=chatgpt.com "Scientists Say Mars Has a Liquid Iron Core"
+
+[10]: https://egymonuments.gov.eg/monuments/temple-of-edfu/?utm_source=chatgpt.com "Edfu Temple - Discover Egypt's Monuments"
 [1]: https://filmot.com/sidebyside/7wFWgopJP5Q/zh-TW/zh-TW/Chinese%2B%28Taiwan%29/Chinese%2B%28Taiwan%29/%E6%88%91%E5%80%91%E7%9C%9F%E7%9A%84%E9%9C%80%E8%A6%81%E6%A0%B8%E8%83%BD%E5%97%8E%EF%BC%9F%EF%BC%9A%E6%A5%8A%E6%96%AF%E6%A3%93%2B%28Szu-Pang%2BYang%29%2Bat%2BTEDxTaipei%2B2013/TEDxTaipei?utm_source=chatgpt.com "我們真的需要核能嗎？：楊斯棓 (Szu-Pang Yang) at TEDxTaipei 2013 TEDxTaipei Chinese (Taiwan) Chinese (Taiwan)"
 
 [2]: https://www.bkw.ch/fileadmin/user_upload/03_Energie/03_05_Energieproduktion/Stilllegung_Kernkraftwerk_Muehleberg/Teilbericht_2_-_Umweltvertraeglichkeitsbericht_v1.0.pdf?utm_source=chatgpt.com "3 Standort und Umgebung"
