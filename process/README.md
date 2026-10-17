@@ -11,12 +11,14 @@ import { processTranscript } from './process';
 import { extractTranscript } from './extract';
 
 const transcript = await extractTranscript('OwqIy8Ikv-c', { lang: 'en' });
-const results = await processTranscript(transcript);
+const results = await processTranscript(transcript, { language: 'en' });
 ```
 
 Set `GEMINI_API_KEY` in the server environment or root `.env`. Entry points load `.env` without overriding existing environment variables. Library callers load their own environment or supply `apiKey` through `ProcessOptions`.
 
-`ProcessOptions` also accepts `screenModel`, `verifyModel`, `threshold`, `timeoutMs`, `signal`, and an injectable `fetch` for offline tests. The default screening cutoff is 2, exclusive. Lower diagnostic cutoffs can check more sentences, but the public output still excludes scores of 2 or less. The default processing timeout is 180 seconds; the HTTP endpoint shares its 180-second deadline across extraction and processing. Signals propagate to every provider call.
+`ProcessOptions` also accepts `screenModel`, `verifyModel`, `language`, `threshold`, `timeoutMs`, `signal`, and an injectable `fetch` for offline tests. The default screening cutoff is 2, exclusive. Lower diagnostic cutoffs can check more sentences, but the public output still excludes scores of 2 or less. The default processing timeout is 180 seconds; the HTTP endpoint shares its 180-second deadline across extraction and processing. Signals propagate to every provider call.
+
+The server prefers English captions (`en`, then a regional English track) and falls back to the first available track when there is no English track. Explicit request `lang` values take precedence. It passes the selected code through `ProcessOptions.language`, so screening rationales, grounded findings, and the final `explanation` use the subtitle language. JSON keys and verdict labels stay fixed. Library and CLI calls without a language instruct the model to use the subtitle text's language consistently, choosing its predominant language for bilingual input. Original subtitle text is preserved.
 
 ## Screen, ground, judge
 
@@ -48,7 +50,7 @@ Every result has exactly five fields:
 - `timestamp`: original sentence `start`, in seconds.
 - `sentence`: original sentence `text`.
 - `score`: finite number on the original 0–5 screening scale, strictly greater than 2 and at most 5.
-- `explanation`: nonempty evidence-based reason from the verifier.
+- `explanation`: nonempty evidence-based reason from the verifier, in the selected subtitle language.
 - `sources`: at least one HTTP(S) URL cited for this sentence.
 
 No reportable problems produces `[]`. Failures remain non-2xx errors; incomplete processing never becomes a partial successful response. The server validates the contract and original text/timestamp association before replying.

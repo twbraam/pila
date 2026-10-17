@@ -8,6 +8,8 @@ export interface ProcessOptions {
   screenModel?: string;
   verifyModel?: string;
   threshold?: number;
+  /** Selected subtitle track's BCP 47 code; controls generated explanation language. */
+  language?: string;
   timeoutMs?: number;
   signal?: AbortSignal;
   fetch?: typeof fetch;
@@ -30,6 +32,8 @@ export function resolveOptions(options: ProcessOptions = {}) {
   if (!Number.isFinite(threshold) || threshold < 0 || threshold > 5) {
     throw new TypeError('threshold must be between 0 and 5.');
   }
+  const language = options.language === undefined ? undefined : Intl.getCanonicalLocales(options.language)[0];
+  if (options.language !== undefined && !language) throw new TypeError('language must be a BCP 47 language code.');
   const timeoutMs = options.timeoutMs ?? DEFAULT_TIMEOUT_MS;
   if (!Number.isSafeInteger(timeoutMs) || timeoutMs <= 0 || timeoutMs > 2_147_483_647) {
     throw new TypeError('timeoutMs must be an integer between 1 and 2147483647.');
@@ -37,7 +41,9 @@ export function resolveOptions(options: ProcessOptions = {}) {
   const timeout = AbortSignal.timeout(timeoutMs);
   const signal = options.signal ? AbortSignal.any([options.signal, timeout]) : timeout;
   signal.throwIfAborted();
-  return { apiKey, screenModel, verifyModel, threshold, timeoutMs, signal, fetch: options.fetch ?? fetch };
+  return { apiKey, screenModel, verifyModel, threshold, timeoutMs, signal, fetch: options.fetch ?? fetch,
+    ...(language ? { language } : {}),
+  };
 }
 
 export function thinkingConfig(model: string, screening = false) {

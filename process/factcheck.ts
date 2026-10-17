@@ -2,6 +2,7 @@ import { assertTranscript, type Transcript, type TranscriptSentence } from '../s
 import { resolveOptions, thinkingConfig, type ProcessOptions } from './config';
 import { clock, generate, textOf, type Source } from './gemini';
 import { parseNotes } from './grounding';
+import { explanationLanguage } from './language';
 export { clock, generate, textOf, type Source } from './gemini';
 export { parseNotes } from './grounding';
 
@@ -87,7 +88,7 @@ const JUDGING_SCHEMA = {
   required: ["lines", "messageAssessment"],
 };
 
-function overviewPrompt(numbered: string[]): string {
+function overviewPrompt(numbered: string[], language?: string): string {
   return `Below is the full transcript of a video (speech-to-text), one numbered line each with its timestamp. Read all of it and describe what the video is trying to deliver.
 
 Return JSON with:
@@ -99,11 +100,13 @@ Return JSON with:
 
 Describe only what the video says. Do not judge whether it is true.
 
+${explanationLanguage(language)}
+
 Transcript:
 ${numbered.join("\n")}`;
 }
 
-function groundingPrompt(numbered: string[], overview: Overview): string {
+function groundingPrompt(numbered: string[], overview: Overview, language?: string): string {
   const today = new Date().toISOString().slice(0, 10);
   const key = overview.keyClaims.map((c) => `- ${c}`).join("\n");
   return `Today's date is ${today}. Below is the full transcript of a video (speech-to-text, so judge the intended meaning). Each line is "<id>: [timestamp] text". Use the whole transcript as context for each line.
@@ -117,11 +120,13 @@ Use Google Search to check the factual claims. Check the key claims first, then 
 If you find no reliable source either way, write: <id>: NO SOURCES FOUND
 Skip lines with no factual claim (opinion, greeting, filler). Output nothing else.
 
+${explanationLanguage(language)}
+
 Transcript:
 ${numbered.join("\n")}`;
 }
 
-function judgingPrompt(numbered: string[], notes: Notes, overview: Overview): string {
+function judgingPrompt(numbered: string[], notes: Notes, overview: Overview, language?: string): string {
   const findings = [...notes].map(([id, n]) => `${id}: ${n.notes}`).join("\n");
   return `You are a fact-checker. For each numbered transcript line, issue a verdict using ONLY the search findings below.
 
@@ -134,6 +139,8 @@ Only use not_truth when the findings clearly contradict the line. When unsure, u
 Give each reason in one or two sentences stating the specific facts from the findings that support or contradict the line (names, numbers, dates), not a generic "sources agree".
 
 Also write messageAssessment: two or three sentences on whether the video's main message ("${overview.mainMessage}") holds up given the findings. Name the not_truth lines (by id) that weaken it, or say that nothing found contradicts it. Use only the findings.
+
+${explanationLanguage(language)}
 
 Transcript:
 ${numbered.join("\n")}
@@ -184,7 +191,7 @@ export function parseJudging(text: string): {
  */
 export async function factCheck(transcript: Transcript, options: ProcessOptions = {}): Promise<FactCheckResult> {
   assertTranscript(transcript);
-  const { apiKey, verifyModel, signal, fetch } = resolveOptions(options);
+  const { apiKey, verifyModel, signal, fetch, language } = resolveOptions(options);
   const segments = transcript.sentences;
   const transport = { model: verifyModel, signal, fetch };
   const noThinking = { thinkingConfig: thinkingConfig(verifyModel) };
@@ -196,7 +203,7 @@ export async function factCheck(transcript: Transcript, options: ProcessOptions 
   // Stage 0: overview of the whole text.
   const o = await generate(
     {
-      contents: [{ parts: [{ text: overviewPrompt(numbered) }] }],
+      contents: [{ parts: [{ text: overviewPrompt(numbered, language) }] }],
       generationConfig: {
         temperature: 0,
         maxOutputTokens: 4096,
@@ -215,7 +222,7 @@ export async function factCheck(transcript: Transcript, options: ProcessOptions 
   // Stage 1: Google grounding.
   const g = await generate(
     {
-      contents: [{ parts: [{ text: groundingPrompt(numbered, overview) }] }],
+      contents: [{ parts: [{ text: groundingPrompt(numbered, overview, language) }] }],
       tools: [{ google_search: {} }],
       generationConfig: { temperature: 0, maxOutputTokens: 32768, ...noThinking },
     },
@@ -238,7 +245,7 @@ export async function factCheck(transcript: Transcript, options: ProcessOptions 
   if (notes.size > 0) {
     const j = await generate(
       {
-        contents: [{ parts: [{ text: judgingPrompt(numbered, notes, overview) }] }],
+        contents: [{ parts: [{ text: judgingPrompt(numbered, notes, overview, language) }] }],
         generationConfig: {
           temperature: 0,
           maxOutputTokens: 32768,

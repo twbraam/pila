@@ -64,7 +64,7 @@ curl --fail-with-body http://127.0.0.1:3000/check \
   -d '{"url":"https://www.youtube.com/watch?v=7wFWgopJP5Q","lang":"zh-TW"}'
 ```
 
-`lang` is optional. When omitted, Extract selects the first available caption track; when supplied, it requests that exact language without translation or fallback. The request accepts only `url` and optional `lang`.
+`lang` is optional. When omitted, Extract prefers `en`, then the first regional English track (such as `en-US`), then the first available track if no English track exists. When supplied, it requests that exact language without translation or fallback. The request accepts only `url` and optional `lang`. Process writes `explanation` in the selected subtitle track's language, including its regional script and spelling. Caption text is preserved as supplied by YouTube.
 
 The server runs caption extraction, suspicion screening, Google Search grounding for flagged sentences, then evidence-based judging. HTTP **200** contains the [server → Overlay result array](#output-contract-server--overlay), including `[]` when no sentences are reportable. `/check` keeps the transcript in memory and can be repeated regardless of files already saved by `/extract`.
 
@@ -107,7 +107,7 @@ The server fetches the captions and writes `examples/transcripts/<videoId>.json`
 
 This is the **extraction-only endpoint**. Use `POST /check` for the complete Extract → Process → Overlay response.
 
-`lang` is optional. When omitted, the server uses YouTube's first available caption track; when supplied, it requests that exact language. Use `zh-TW` or `zh-Hant` for videos offering those Traditional Chinese tracks. No translation or script conversion is performed.
+`lang` is optional. When omitted, the server prefers English (`en`, then a regional English track), falling back to the first available track if English is absent; when supplied, it requests that exact language. Use `zh-TW` or `zh-Hant` for videos offering those Traditional Chinese tracks. No translation or script conversion is performed.
 
 **Existing files are never replaced:** the server returns HTTP **409** before fetching if the destination exists, and exclusive file creation also prevents concurrent requests from replacing each other's output. Failed extraction creates no transcript. Clients cannot choose output paths.
 
@@ -216,7 +216,7 @@ For older `{ text, start, duration }[]` downloads, supply the video ID separatel
 
 ### Limitations
 
-- Videos need an accessible caption track in the requested language. Missing/disabled captions, an unavailable language, a removed video, HTTP 429, and timeouts are errors. There is no audio transcription fallback or automatic language fallback.
+- Videos need an accessible caption track in the requested language. Missing/disabled captions, an unavailable language, a removed video, HTTP 429, and timeouts are errors. There is no audio transcription fallback. Automatic server selection prefers English, but an explicitly requested unavailable language remains an error.
 - The package uses YouTube's unofficial API. YouTube can block requests or change the endpoints, so availability can vary by video and network. Extract makes no automatic retries.
 - Caption quality, punctuation, duplicate/rolling caption text, and coarse timing are inherited from YouTube. Extract normalizes boundaries and whitespace; it does not correct or deduplicate speech.
 - The entire transcript is held in memory and returned once extraction succeeds. The 30-second request timeout applies regardless of video duration.
@@ -263,7 +263,7 @@ The shared output contract is implemented in [`shared/overlay-results.ts`](./sha
 | `timestamp` | `number` | Start time in seconds from the beginning of the video, taken from the original transcript sentence's `start`. |
 | `sentence` | `string` | Original transcript sentence text, taken from `text`. |
 | `score` | `number` | Original suspicion rating on a 0–5 scale, strictly greater than 2; fractional values are retained. |
-| `explanation` | `string` | Evidence-based reason from the verifier explaining the problem. |
+| `explanation` | `string` | Evidence-based reason from the verifier, written in the selected subtitle track's language. |
 | `sources` | `string[]` | At least one HTTP(S) source URL cited for this sentence. |
 
 Each result has exactly these five fields. `explanation` is the verifier's evidence-based reason, not the screening rationale. The response has no wrapper object, and Overlay does not need the internal `Transcript`, sentence IDs, or server file paths. The client associates the response with the video it requested and uses `timestamp` for playback. Return results in nondecreasing timestamp order. A successful check with no reportable results returns `[]`; extraction or processing failures must remain errors.

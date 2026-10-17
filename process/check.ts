@@ -4,6 +4,7 @@ import { clock, generate, textOf, type Source } from './gemini';
 import { parseNotes } from './grounding';
 import { VERDICTS, type Verdict } from './factcheck';
 import { screen, type ScreenTarget } from './screen';
+import { explanationLanguage } from './language';
 
 type Notes = ReturnType<typeof parseNotes>;
 type Verdicts = Map<number, { verdict: Verdict; reason: string }>;
@@ -51,7 +52,7 @@ const JUDGING_SCHEMA = {
   },
 };
 
-function groundingPrompt(numbered: string[], targets: ScreenTarget[], ids: number[]): string {
+function groundingPrompt(numbered: string[], targets: ScreenTarget[], ids: number[], language?: string): string {
   const today = new Date().toISOString().slice(0, 10);
   const hints = ids.map((i) => `${i}: ${targets[i]!.explanation}`).join("\n");
   return `Today's date is ${today}. Below is the full transcript of a video (speech-to-text, so judge the intended meaning). Each line is "<id>: [timestamp] text". Use the whole transcript as context.
@@ -64,11 +65,13 @@ For each flagged line, write ONE line in exactly this form:
 If you find no reliable source either way, write: <id>: NO SOURCES FOUND
 Do not write anything for other lines. Output nothing else.
 
+${explanationLanguage(language)}
+
 Transcript:
 ${numbered.join("\n")}`;
 }
 
-function judgingPrompt(numbered: string[], notes: Notes): string {
+function judgingPrompt(numbered: string[], notes: Notes, language?: string): string {
   const findings = [...notes].map(([id, n]) => `${id}: ${n.notes}`).join("\n");
   return `You are a fact-checker. For each line in the search findings below, issue a verdict using ONLY those findings.
 
@@ -79,6 +82,8 @@ Verdicts:
 Only use not_truth when the findings clearly contradict the line. When unsure, use unchecked.
 
 Give each reason in one or two sentences stating the specific facts from the findings that support or contradict the line (names, numbers, dates), not a generic "sources agree".
+
+${explanationLanguage(language)}
 
 Transcript, for context:
 ${numbered.join("\n")}
@@ -150,7 +155,7 @@ export function assemble(targets: ScreenTarget[], notes: Notes, verdicts: Verdic
 export async function check(transcript: Transcript, options: ProcessOptions = {}): Promise<CheckResult> {
   assertTranscript(transcript);
   const resolved = resolveOptions(options);
-  const { apiKey, threshold, verifyModel, signal, fetch } = resolved;
+  const { apiKey, threshold, verifyModel, signal, fetch, language } = resolved;
   const segments = transcript.sentences;
   const transport = { model: verifyModel, signal, fetch };
   const noThinking = { thinkingConfig: thinkingConfig(verifyModel) };
@@ -172,7 +177,7 @@ export async function check(transcript: Transcript, options: ProcessOptions = {}
     // Step 2: Google grounding, flagged sentences only.
     const g = await generate(
       {
-        contents: [{ parts: [{ text: groundingPrompt(numbered, screened.targets, ids) }] }],
+        contents: [{ parts: [{ text: groundingPrompt(numbered, screened.targets, ids, language) }] }],
         tools: [{ google_search: {} }],
         generationConfig: { temperature: 0, maxOutputTokens: 32768, ...noThinking },
       },
@@ -191,7 +196,7 @@ export async function check(transcript: Transcript, options: ProcessOptions = {}
     if (notes.size > 0) {
       const j = await generate(
         {
-          contents: [{ parts: [{ text: judgingPrompt(numbered, notes) }] }],
+          contents: [{ parts: [{ text: judgingPrompt(numbered, notes, language) }] }],
           generationConfig: {
             temperature: 0,
             maxOutputTokens: 32768,

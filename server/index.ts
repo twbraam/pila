@@ -12,7 +12,7 @@ interface ServerOptions {
   outputDirectory: string;
   extract?: typeof extractTranscript;
   languages?: typeof listLanguages;
-  process?: (transcript: Transcript, options: { signal: AbortSignal }) => Promise<OverlayResults>;
+  process?: (transcript: Transcript, options: { signal: AbortSignal; language: string }) => Promise<OverlayResults>;
   processOptions?: ProcessOptions;
 }
 
@@ -96,7 +96,12 @@ export function createPilaServer(options: ServerOptions) {
       });
       const extractCaptions = async () => {
         const signal = AbortSignal.any([disconnected.signal, AbortSignal.timeout(30_000)]);
-        const lang = input.lang ?? (await languages(videoId, { signal }))[0]?.languageCode;
+        let lang = input.lang;
+        if (!lang) {
+          const tracks = await languages(videoId, { signal });
+          lang = (tracks.find(track => track.languageCode.toLowerCase() === 'en') ??
+            tracks.find(track => /^en-/i.test(track.languageCode)) ?? tracks[0])?.languageCode;
+        }
         signal.throwIfAborted();
         if (!lang) throw new HttpError(422, 'captions_unavailable', 'No caption track is available.');
         const transcript = await extract(input.url, { lang, signal });
@@ -112,8 +117,8 @@ export function createPilaServer(options: ServerOptions) {
         // Resolve credentials before fetching captions; /extract remains usable without a key.
         const processingOptions = options.process ? { signal: disconnected.signal }
           : resolveOptions({ ...options.processOptions, signal: disconnected.signal });
-        const { transcript } = await extractCaptions();
-        const results = await (options.process ?? processTranscript)(transcript, processingOptions);
+        const { transcript, lang } = await extractCaptions();
+        const results = await (options.process ?? processTranscript)(transcript, { ...processingOptions, language: lang });
         disconnected.signal.throwIfAborted();
         assertOverlayResults(results);
         // Defend the handoff even when a replacement processor is injected.
