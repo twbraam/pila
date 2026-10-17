@@ -2,7 +2,7 @@
 
 A planned Chrome extension that checks YouTube captions for potential misinformation and shows evidence links during video playback.
 
-The **Extract module is implemented as a TypeScript/Node.js HTTP endpoint, CLI, and library**. Extract and Process share the root package configuration and must run on the **same Node.js server**. Process includes a working Jev screening CLI; evidence checking, Process integration into the server, Overlay, and the WXT extension integration remain planned. The completed server will extract captions, process them, and return the result array specified below to Overlay. Extract uses [`youtube-transcript-plus`](https://github.com/ericmmartin/youtube-transcript-plus) to retrieve existing YouTube captions; it does not transcribe audio or require Gemini credentials.
+The **Extract module is implemented as a TypeScript/Node.js HTTP endpoint, CLI, and library**. Extract and Process must run on the **same server**, using the root package configuration. Process, its integration into the server, Overlay, and the WXT extension integration are still planned. The completed server will extract captions, process them, and return the result array specified below to Overlay. Extract uses [`youtube-transcript-plus`](https://github.com/ericmmartin/youtube-transcript-plus) to retrieve existing YouTube captions; it does not transcribe audio or require Gemini credentials.
 
 ## Project layout
 
@@ -11,13 +11,13 @@ extract/                  Caption extraction, JSON CLI, and its tests
   main.ts                 CLI entry point
   index.ts                Reusable Extract API
   tests/                  Offline tests and simulated YouTube responses
-process/                  Jev preprocessing and screening CLI
+process/                  Process step (implementation planned)
 server/                   Shared HTTP server and endpoint tests
 shared/
   transcript.ts           Shared Transcript types and runtime validation
   transcript.schema.json  Internal Extract → Process JSON contract
-  overlay-results.ts      Server → Overlay types and validation (TODO)
-  overlay-results.schema.json  Portable server → Overlay contract (TODO)
+  overlay-results.ts      Server → Overlay types and runtime validation
+  overlay-results.schema.json  Portable server → Overlay JSON contract
 examples/                 Example videos and transcript fixtures
 package.json              Shared dependencies and commands
 tsconfig.json             Shared TypeScript configuration
@@ -32,13 +32,12 @@ Extract retrieves the whole video's caption track and assembles caption fragment
 ```mermaid
 flowchart LR
     A["YouTube URL or ID"] --> B
-    subgraph Server["Same Node.js server; Process integration TODO"]
+    subgraph Server["Same Node.js server"]
         B["Extract: fetch captions"] --> C["Assemble timed sentences"]
         C --> D["Internal Transcript"]
-        D --> E["Process: Jev screening"]
-        E --> H["Evidence checking (TODO)"]
+        D --> E["Process: Jev + Tavily (TODO)"]
     end
-    H --> F["JSON result array (TODO)"]
+    E --> F["JSON result array (TODO)"]
     F --> G["Overlay during playback (planned)"]
 ```
 
@@ -67,7 +66,7 @@ curl --fail-with-body http://127.0.0.1:3000/extract \
 
 The server fetches the captions and writes `examples/transcripts/<videoId>.json` using the shared `Transcript` contract. The client receives HTTP **201** with `videoId`, the selected `language`, the saved `file` path, and `sentenceCount`. Only JSON is saved.
 
-This is the **current extraction-only endpoint**. It does not run Process or return the [server → Overlay response](#output-contract-server--overlay). The output shape is documented; its shared validator, Process integration, and returning that array are still TODO.
+This is the **current extraction-only endpoint**. It does not run Process or return the [server → Overlay response](#output-contract-server--overlay). The shared output contract is implemented; integrating Process and returning that result array is still TODO.
 
 `lang` is optional. When omitted, the server uses YouTube's first available caption track; when supplied, it requests that exact language. Use `zh-TW` or `zh-Hant` for videos offering those Traditional Chinese tracks. No translation or script conversion is performed.
 
@@ -183,35 +182,20 @@ For older `{ text, start, duration }[]` downloads, supply the video ID separatel
 - Caption quality, punctuation, duplicate/rolling caption text, and coarse timing are inherited from YouTube. Extract normalizes boundaries and whitespace; it does not correct or deduplicate speech.
 - The entire transcript is held in memory and returned once extraction succeeds. The 30-second request timeout applies regardless of video duration.
 
-## 2. Processing
+## 2. Processing (planned)
 
-[`process/`](./process/README.md) runs alongside Extract and consumes the shared `Transcript` contract. Its screening CLI automatically selects English or Traditional Chinese prompts and batches target sentences with surrounding context. Oversized Chinese entries are split into smaller targets while retaining their source IDs and original time ranges. Jev rates each target independently and saves ranked concerns.
+The implementation belongs in [`process/`](./process/README.md), alongside Extract on the same server. It imports its input contract from `shared/`. The server will run Extract and then Process before returning the result array to the client; the extension will not orchestrate these steps separately.
 
-The planned server integration will run Extract and then Process before returning the result array to the client; the extension will not orchestrate these steps separately. The screening CLI's saved scores are internal review candidates, not the evidence-backed Overlay response.
+For every sentence in the transcript:
 
-```bash
-# Prepare only
-npm run preprocess -- examples/transcripts/OwqIy8Ikv-c.json
-
-# Screen with Jev (requires API credentials)
-npm run jev -- examples/transcripts/OwqIy8Ikv-c.json
-
-# Chinese transcripts select zh-TW prompts automatically
-npm run jev -- examples/transcripts/7wFWgopJP5Q.json
-```
-
-See [JEV.md](./JEV.md) for JSON prompts, score criteria, options, API reuse, and the `results/` layout. The module also exports callable functions; a server handler need not spawn the CLI. Internal fractional screening scores prioritize review and are not the final integer Overlay scores.
-
-The complete processing pipeline is:
-
-1. **Screen with Jev (implemented):** identify statements that need fact-checking. A candidate proceeds to evidence checking; otherwise, continue with the next sentence.
-2. **Find and assess evidence (TODO):** use Tavily to search for evidence links, then use Jev to assess the statement and produce an integer score with source URLs. The final score meanings and reporting criteria will be specified separately.
+1. **Detect with Jev:** identify statements that need fact-checking. A candidate proceeds to evidence checking; otherwise, continue with the next sentence.
+2. **Find and assess evidence:** use Tavily to search for evidence links, then use Jev to assess the statement and produce a score with source URLs. The meaning of each score and the scoring/reporting criteria will be specified later.
 
 **Input:** the internal `Transcript`. **Output:** the array defined below. A skipped sentence produces no result; that does not establish that it is true.
 
 ### Output contract: server → Overlay
 
-The completed server must return a **top-level JSON array** with the structure below. Shared types, schema, and runtime validation are planned for `shared/overlay-results.ts` and `shared/overlay-results.schema.json`; those files are not yet present.
+The shared output contract is implemented in [`shared/overlay-results.ts`](./shared/overlay-results.ts), with a portable [JSON Schema](./shared/overlay-results.schema.json). The completed server must return a **top-level JSON array** with this structure:
 
 ```json
 [
@@ -233,9 +217,9 @@ The completed server must return a **top-level JSON array** with the structure b
 
 Each result has exactly these four fields; `explanation` is no longer part of the contract. The response has no wrapper object, and Overlay does not need the internal `Transcript`, sentence IDs, or server file paths. The client associates the response with the video it requested and uses `timestamp` for playback. Return results in nondecreasing timestamp order. A successful check with no reportable results returns `[]`; extraction or processing failures must remain errors.
 
-The planned `OverlayResult`, `OverlayResults`, and `assertOverlayResults()` must enforce the exact fields, finite nonnegative timestamps, nonempty sentence text, integer scores from 0 through 3, HTTP(S) source URLs, and chronological order. The contract permits an empty `sources` array and does not assign score meanings.
+`OverlayResult` and `OverlayResults` provide the TypeScript types. `assertOverlayResults()` validates the exact fields, finite nonnegative timestamps, nonempty sentence text, integer scores from 0 through 3, HTTP(S) source URLs, and chronological order. The contract permits an empty `sources` array and does not assign score meanings.
 
-**Process TODO:** implement the shared result types/schema/validator and their tests; define final scoring criteria; add evidence checking and field mapping to the existing screening code; and integrate Process into the server with integration tests. Split targets must map back to their original source sentence text and start time. The screening implementation exists; the final response and combined endpoint remain pending.
+**Process TODO:** define the scoring criteria, implement evidence checking and the field mapping in `process/`, integrate Process into the existing server so it returns this array after Extract and Process finish, and add server integration tests. The shared contract and its tests are implemented; Process and the combined endpoint remain pending.
 
 ## 3. Overlay (planned)
 
@@ -252,7 +236,7 @@ npm run typecheck
 npm test
 ```
 
-Existing tests run offline and cover sentence assembly, source timing validation, the internal transcript contract, URL handling, cancellation, CLI behavior, and HTTP requests to a local test server with simulated caption providers. Server → Overlay contract tests are still TODO. They verify that existing files and concurrent requests cannot overwrite transcripts. Live retrieval depends on YouTube and is checked separately.
+Tests run offline and cover sentence assembly, source timing validation, the internal transcript contract, the server → Overlay contract (including scores, source URLs, and ordering), URL handling, cancellation, CLI behavior, and HTTP requests to a local test server with simulated caption providers. They verify that existing files and concurrent requests cannot overwrite transcripts. Live retrieval depends on YouTube and is checked separately.
 
 ## Example videos
 

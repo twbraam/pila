@@ -1,44 +1,52 @@
 # Process
 
-Processing shares Extract's Node.js runtime, root dependencies, and TypeScript configuration. Jev screening is implemented; evidence checking and HTTP endpoint integration remain TODO. The planned server runs Extract and then Process before returning results to Overlay.
+The Process step will live here and run on the **same Node.js server as Extract**, sharing the root `package.json` and TypeScript configuration. Its implementation and server integration are **TODO**. The server will run Extract and then Process, and return the completed result array to Overlay.
 
-- `preprocess.ts`: validates the shared transcript, selects English or Traditional Chinese prompts, splits oversized Mandarin entries, and builds context windows.
-- `jev_call.ts`: exports callable processing/API functions and provides the CLI. It records timing and saves ranked concerns with original source IDs and times.
+Input is the whole-video `Transcript` produced by Extract. Import the shared contract directly, so Process does not depend on the caption downloader:
 
-```bash
-npm run preprocess -- examples/transcripts/OwqIy8Ikv-c.json
-npm run jev -- examples/transcripts/OwqIy8Ikv-c.json
-npm run jev -- examples/transcripts/7wFWgopJP5Q.json
+```typescript
+import { assertTranscript } from '../shared/transcript';
+import type { Transcript } from '../shared/transcript';
 ```
 
-Chinese prompts are selected automatically. Importing `jev_call.ts` does not execute the CLI or call the API. A server handler can call its exported functions directly. See [JEV.md](../JEV.md) for usage, prompts, scoring, and saved results.
+Use `assertTranscript()` to validate JSON received across a file or request boundary. The portable schema is [shared/transcript.schema.json](../shared/transcript.schema.json), and a complete input example is [examples/transcripts/OwqIy8Ikv-c.json](../examples/transcripts/OwqIy8Ikv-c.json).
 
-The input is the validated `Transcript` from `shared/transcript.ts`. Current fractional concern scores are internal screening results, **not** the final integer scores below.
+Process is planned to identify statements to check with Jev, retrieve evidence with Tavily, and return scored results. The meaning of each score and the scoring/reporting criteria will be specified later. Skipping a statement does not confirm it.
 
-## Required server → Overlay output
+## Output contract
+
+The shared output contract is implemented in [`shared/overlay-results.ts`](../shared/overlay-results.ts), with a portable [JSON Schema](../shared/overlay-results.schema.json). The server → Overlay response must be a top-level JSON array with exactly these fields per result:
 
 ```json
 [
   {
     "timestamp": 42.5,
-    "sentence": "Original transcript sentence",
+    "sentence": "Sample excerpt from video speech or transcript",
     "score": 2,
     "sources": ["https://factcheck.org/..."]
   }
 ]
 ```
 
-- `timestamp`: original source sentence's `start`, in seconds.
-- `sentence`: original source sentence's complete `text`.
-- `score`: an integer `0 | 1 | 2 | 3`; final meanings/reporting rules are still to be defined.
-- `sources`: HTTP(S) URLs; an empty array is permitted by the proposed contract.
+- `timestamp`: the original sentence's `start`, in seconds from the beginning of the video.
+- `sentence`: the original sentence's `text`.
+- `score`: an integer from 0 through 3 (`0 | 1 | 2 | 3`); meanings will be specified later.
+- `sources`: an array of HTTP(S) source URL strings. The contract permits an empty array.
 
-Return exactly these fields, without a wrapper or the old `explanation` field. Preserve IDs internally, map split targets back to their source sentences, and order results by timestamp. A successful check with no reportable results returns `[]`; extraction and processing failures remain errors.
+Keep the original `videoId` and sentence `id` association internally while processing. Overlay receives the result array for the video it requested, without a wrapper, internal transcript, IDs, or file paths. Return results in nondecreasing timestamp order, or `[]` when a successful check produces no reportable results. Extraction and processing failures must remain errors.
 
-## Remaining work
+Use the shared types and runtime validator at the output boundary:
 
-- Implement `shared/overlay-results.ts`, its JSON Schema, runtime validation, and contract tests. These files are not yet present in the repository.
-- Define final score meanings. Do not silently round fractional screening scores into final Overlay judgments.
-- Add Tavily evidence retrieval and Jev evidence assessment to the existing screening step.
-- Integrate Process into the shared HTTP server. Current `POST /extract` only saves a transcript and returns metadata.
-- Add server integration tests for output shape, source text/timestamps, ordering, scoring, and failures.
+```typescript
+import { assertOverlayResults } from '../shared/overlay-results';
+import type { OverlayResult, OverlayResults } from '../shared/overlay-results';
+```
+
+`assertOverlayResults()` rejects extra or missing fields (including the old `explanation` field), invalid timestamps, blank sentence text, scores outside the integer range 0–3, invalid source URLs, and results out of timestamp order. Contract tests are included in `npm test`; Process itself is still TODO.
+
+## Implementation TODO
+
+- Define score meanings and scoring/reporting criteria for the [server → Overlay contract](../README.md#output-contract-server--overlay).
+- Implement Jev/Tavily checks and map the internal `Transcript` sentences to the required result fields.
+- Integrate Process into the shared server so the client receives the array after both extraction and processing complete. The current `POST /extract` endpoint only saves a transcript and returns metadata; it does not implement this response yet.
+- Add server integration tests for original text/timestamp mapping, scoring, empty results, and failures once Process is implemented.
