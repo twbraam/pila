@@ -20,14 +20,14 @@ This is the planned architecture. The modules can be built in parallel using the
 
 ### 1. Ingestion
 
-A standalone TypeScript CLI (`src/`) that turns a single YouTube video into subtitles using **only Gemini**. There is no captions scraper, so it works the same whether or not the uploader enabled captions.
+A standalone TypeScript CLI (`src/`) that turns a single YouTube video into subtitles using Gemini. There is no captions scraper, so it works the same whether or not the uploader enabled captions.
 
 ```bash
 npm install
 export GEMINI_API_KEY=your_key        # or put it in a .env file
 npm run transcript -- <video-url-or-id> --format srt --out video.srt
 ```
-
+It goes to
 | Option | Description |
 | --- | --- |
 | `--format srt\|vtt\|text\|json` | Output format (default `srt`) |
@@ -65,6 +65,63 @@ sequenceDiagram
 ```
 
 The request asks for JSON with a fixed shape (`responseMimeType: application/json` plus a `responseSchema`), so the reply can be parsed directly with no text cleanup.
+
+#### Transcriber output → Processing input
+
+**Handoff format: one JSON `Transcript` for the whole video, containing complete, timed sentences.** Use `--format json` for this handoff; SRT, VTT and plain text are export formats. The types below define the implementation target for parallel development. The transcriber implementation is not yet checked into this repository, so its runtime output has not been verified against this contract.
+
+```typescript
+export interface TranscriptSentence {
+  id: string;       // Unique within this transcript, e.g. "s0001".
+  text: string;     // Complete sentence, as plain Unicode text.
+  start: number;    // Seconds from the start of the video, inclusive.
+  end: number;      // Seconds from the start of the video, exclusive.
+}
+
+export interface Transcript {
+  videoId: string;  // YouTube video ID, not the full URL.
+  sentences: TranscriptSentence[]; // In playback order.
+}
+```
+
+Example handoff (a shortened mock, with approximate timings):
+
+```json
+{
+  "videoId": "OwqIy8Ikv-c",
+  "sentences": [
+    {
+      "id": "s0001",
+      "text": "I’m an atmospheric physicist.",
+      "start": 2.52,
+      "end": 4.41
+    },
+    {
+      "id": "s0002",
+      "text": "I’ve published more than 200 scientific papers.",
+      "start": 4.41,
+      "end": 7.88
+    }
+  ]
+}
+```
+
+The transcriber owns the conversion from subtitle cues to this handoff:
+
+- Gemini's raw result is an array of `{ start, text }`. Add each cue's `end` from the next cue's `start`; the last cue ends at its own `start + 3`. These are estimated subtitle timings, not word-level alignments.
+- Assemble fragments into complete sentences before handing them to Processing. A sentence spanning several cues starts at the first contributing cue's `start` and ends at the last contributing cue's `end`. If a cue contains several sentences and finer timings are unavailable, those sentences may share its time range.
+- Assign sentence IDs after assembly. Keep the IDs, text and timestamps unchanged while Processing and Overlay use that transcript. IDs are scoped to this transcript; a new transcription may assign different IDs.
+- Emit sentences in nondecreasing `start` order, with nonempty text and finite timestamps satisfying `0 <= start < end`. All timestamps are numeric **seconds**, including fractions, not milliseconds or formatted time strings.
+- Deliver the whole transcript once transcription and sentence assembly succeed. A successful transcription with no speech has `sentences: []`; a transcription failure must be reported separately rather than passed off as an empty transcript.
+
+The existing [sample transcript](./examples/transcripts/transcript.json) is **raw cue data**, not this sentence-level `Transcript`. Its shape is:
+
+```typescript
+type SampleCue = { text: string; start: number; duration: number };
+// The file contains SampleCue[]. Both start and duration are in seconds.
+```
+
+To use that fixture, supply the video ID separately, calculate each cue's `end = start + duration`, then assemble sentences and assign IDs as above. Its text includes Chinese and English separated by `\n`; a line break alone does not mark a new sentence. Processing should consume the normalized `Transcript`, rather than parse subtitle files or infer sentences from raw cues.
 
 ### 2. Processing
 
