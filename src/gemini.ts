@@ -17,7 +17,7 @@ export async function transcribeWithGemini(
 ): Promise<TranscriptSegment[]> {
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
-    throw new Error("GEMINI_API_KEY is not set (needed for the Gemini fallback)");
+    throw new Error("GEMINI_API_KEY is not set");
   }
 
   const res = await fetch(

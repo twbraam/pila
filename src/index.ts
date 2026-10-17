@@ -10,11 +10,9 @@ const USAGE = `Usage: npm run transcript -- <video-url-or-id> [options]
 Options:
   --format srt|vtt|text|json   output format (default: srt)
   --out <file>                 write to a file instead of stdout
-  --lang en                    preferred caption language
-  --no-fallback                don't use Gemini when captions are unavailable
 
 Env:
-  GEMINI_API_KEY   used when the video has no captions (can also go in a .env file)
+  GEMINI_API_KEY   required (can also go in a .env file)
   GEMINI_MODEL     optional, defaults to gemini-2.5-flash`;
 
 // Load .env if present (Node >= 20.12); ignore if missing.
@@ -29,8 +27,6 @@ function flag(args: string[], name: string): string | undefined {
 
 async function main() {
   const args = process.argv.slice(2);
-  const fallback = !args.includes("--no-fallback");
-  const lang = flag(args, "--lang");
   const out = flag(args, "--out");
   const format = (flag(args, "--format") ?? "srt") as Format;
 
@@ -40,7 +36,7 @@ async function main() {
   }
 
   // The target is the first arg that isn't a flag or a flag's value.
-  const valueFlags = new Set(["--lang", "--out", "--format"]);
+  const valueFlags = new Set(["--out", "--format"]);
   const target = args.find(
     (a, i) => !a.startsWith("--") && !valueFlags.has(args[i - 1]),
   );
@@ -49,14 +45,13 @@ async function main() {
     process.exit(1);
   }
 
-  const { segments, source } = await getTranscript(target, lang, { fallback });
-  console.error(`[source: ${source}]`);
+  const { videoId, segments } = await getTranscript(target);
 
   const output = {
     srt: () => toSrt(segments),
     vtt: () => toVtt(segments),
     text: () => toPlainText(segments),
-    json: () => JSON.stringify(segments, null, 2),
+    json: () => JSON.stringify({ videoId, source: "gemini", segments }, null, 2),
   }[format]();
 
   if (out) {

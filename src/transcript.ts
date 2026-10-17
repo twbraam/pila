@@ -1,8 +1,3 @@
-import {
-  YoutubeTranscript,
-  YoutubeTranscriptDisabledError,
-  YoutubeTranscriptNotAvailableError,
-} from "youtube-transcript";
 import { transcribeWithGemini } from "./gemini.js";
 
 export interface TranscriptSegment {
@@ -11,6 +6,11 @@ export interface TranscriptSegment {
   start: number;
   /** Duration in seconds. */
   duration: number;
+}
+
+export interface TranscriptResult {
+  videoId: string;
+  segments: TranscriptSegment[];
 }
 
 /** Accepts a bare video ID or any common YouTube URL and returns the ID. */
@@ -42,51 +42,11 @@ export function extractVideoId(input: string): string {
   return id;
 }
 
-export interface TranscriptResult {
-  segments: TranscriptSegment[];
-  /** "captions" = YouTube's own track; "gemini" = transcribed by Gemini. */
-  source: "captions" | "gemini";
-}
-
 export async function getTranscript(
   videoIdOrUrl: string,
-  lang?: string,
-  opts: { fallback?: boolean } = {},
 ): Promise<TranscriptResult> {
-  const { fallback = true } = opts;
   const videoId = extractVideoId(videoIdOrUrl);
-
-  try {
-    const raw = await YoutubeTranscript.fetchTranscript(
-      videoId,
-      lang ? { lang } : undefined,
-    );
-    // The library reports ms for the newer caption format (seconds for the
-    // classic one); normalize so callers always get seconds.
-    const segments = raw.map((r) => ({
-      text: decodeEntities(r.text),
-      start: r.offset / 1000,
-      duration: r.duration / 1000,
-    }));
-    return { segments, source: "captions" };
-  } catch (err) {
-    const noCaptions =
-      err instanceof YoutubeTranscriptDisabledError ||
-      err instanceof YoutubeTranscriptNotAvailableError;
-    if (!fallback || !noCaptions) throw err;
-
-    console.error("No captions available; falling back to Gemini...");
-    return { segments: await transcribeWithGemini(videoId), source: "gemini" };
-  }
-}
-
-function decodeEntities(s: string): string {
-  return s
-    .replace(/&amp;#39;|&#39;/g, "'")
-    .replace(/&amp;/g, "&")
-    .replace(/&quot;/g, '"')
-    .replace(/&lt;/g, "<")
-    .replace(/&gt;/g, ">");
+  return { videoId, segments: await transcribeWithGemini(videoId) };
 }
 
 export function toPlainText(segments: TranscriptSegment[]): string {
