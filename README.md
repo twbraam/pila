@@ -16,6 +16,10 @@ The POC will fetch the **whole transcript when a user opens a YouTube video**. I
 
 This is the planned architecture. The modules can be built in parallel using the shared data contracts below and mock inputs and outputs.
 
+### Limitations
+
+Because of potential long transcription time, we limit ourselves to videos of at most 10 minutes.
+
 ## Modules
 
 ### 1. Ingestion
