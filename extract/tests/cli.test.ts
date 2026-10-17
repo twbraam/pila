@@ -64,6 +64,21 @@ test('CLI failures write no JSON and preserve an existing destination', async ()
   }
 });
 
+test('CLI refuses to replace an existing file even when extraction succeeds', async () => {
+  const directory = await mkdtemp(join(tmpdir(), 'pila-extract-existing-'));
+  try {
+    const destination = join(directory, 'transcript.json');
+    await writeFile(destination, 'existing transcript', 'utf8');
+    const result = run([VIDEO_ID, '--out', destination]);
+    assert.equal(result.status, 1);
+    assert.equal(result.stdout, '');
+    assert.match(result.stderr, /EEXIST/);
+    assert.equal(await readFile(destination, 'utf8'), 'existing transcript');
+  } finally {
+    await rm(directory, { recursive: true, force: true });
+  }
+});
+
 test('CLI rejects invalid arguments and explains usage', () => {
   for (const args of [[], [VIDEO_ID, VIDEO_ID], ['bad-id'], [VIDEO_ID, '--format', 'srt'], [VIDEO_ID, '--timeout', '0']]) {
     const result = run(args);

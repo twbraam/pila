@@ -2,7 +2,7 @@
 
 A planned Chrome extension that checks YouTube captions for potential misinformation and shows evidence links during video playback.
 
-The **Extract module is implemented as a TypeScript/Node.js CLI and library**. Extract and Process share the same server runtime and root package configuration. Process, Overlay, and the WXT extension integration are planned. Extract uses [`youtube-transcript-plus`](https://github.com/ericmmartin/youtube-transcript-plus) to retrieve existing YouTube captions; it does not transcribe audio or require Gemini credentials.
+The **Extract module is implemented as a TypeScript/Node.js HTTP endpoint, CLI, and library**. Extract and Process share the same server runtime and root package configuration. Process, Overlay, and the WXT extension integration are planned. Extract uses [`youtube-transcript-plus`](https://github.com/ericmmartin/youtube-transcript-plus) to retrieve existing YouTube captions; it does not transcribe audio or require Gemini credentials.
 
 ## Project layout
 
@@ -12,6 +12,7 @@ extract/                  Caption extraction, JSON CLI, and its tests
   index.ts                Reusable Extract API
   tests/                  Offline tests and simulated YouTube responses
 process/                  Process step (implementation planned)
+server/                   Shared HTTP server and endpoint tests
 shared/
   transcript.ts           Shared Transcript types and runtime validation
   transcript.schema.json  Portable JSON output contract
@@ -41,6 +42,33 @@ The planned extension stack is TypeScript + WXT (Manifest V3), with content scri
 
 Requires **Node.js 22 or later**.
 
+### Send a video to the server
+
+Run commands from the repository root:
+
+```bash
+npm install
+npm start
+```
+
+In another terminal, submit a YouTube URL:
+
+```bash
+curl --fail-with-body http://127.0.0.1:3000/extract \
+  -H 'Content-Type: application/json' \
+  -d '{"url":"https://www.youtube.com/watch?v=7wFWgopJP5Q","lang":"zh-TW"}'
+```
+
+The server fetches the captions and writes `examples/transcripts/<videoId>.json` using the shared `Transcript` contract. The client receives HTTP **201** with `videoId`, the selected `language`, the saved `file` path, and `sentenceCount`. Only JSON is saved.
+
+`lang` is optional. When omitted, the server uses YouTube's first available caption track; when supplied, it requests that exact language. Use `zh-TW` or `zh-Hant` for videos offering those Traditional Chinese tracks. No translation or script conversion is performed.
+
+**Existing files are never replaced:** the server returns HTTP **409** before fetching if the destination exists, and exclusive file creation also prevents concurrent requests from replacing each other's output. Failed extraction creates no transcript. Clients cannot choose output paths.
+
+The server listens on `127.0.0.1:3000`. Set `PORT` to change the port and `TRANSCRIPT_DIR` to change the server-owned output directory. `GET /health` checks readiness. Process will be integrated into this same server.
+
+### CLI
+
 ```bash
 npm install
 
@@ -58,7 +86,7 @@ npm run --silent extract -- OwqIy8Ikv-c
 | --- | --- |
 | `<video-url-or-id>` | Required. An 11-character ID or a YouTube `watch`, `youtu.be`, `shorts`, `embed`, or `live` URL. |
 | `--lang`, `-l` | Exact caption language code, such as `en` or `zh-TW`; default `en`. |
-| `--out`, `-o` | Write UTF-8 JSON to this file instead of stdout. Its parent directory must exist. |
+| `--out`, `-o` | Create a UTF-8 JSON file instead of stdout. Its parent directory must exist; existing files are never replaced. |
 | `--timeout` | Whole-request timeout in milliseconds; default `30000`. |
 | `--help`, `-h` | Show usage. |
 
@@ -103,7 +131,7 @@ export interface Transcript {
 }
 ```
 
-A complete [JSON example](./examples/transcripts/extracted.json) was retrieved from `OwqIy8Ikv-c` using the CLI. It contains 36 sentence units. Shortened example (timings rounded here for readability):
+A complete [JSON example](./examples/transcripts/OwqIy8Ikv-c.json) was retrieved from `OwqIy8Ikv-c` using the CLI. It contains 36 sentence units. Shortened example (timings rounded here for readability):
 
 ```json
 {
@@ -173,7 +201,7 @@ npm run typecheck
 npm test
 ```
 
-Tests run offline and cover sentence assembly, source timing validation, the runtime output contract, URL handling, cancellation, and CLI success/failure behavior with simulated YouTube responses. Live retrieval depends on YouTube and is checked separately.
+Tests run offline and cover sentence assembly, source timing validation, the runtime output contract, URL handling, cancellation, CLI behavior, and HTTP requests to a local test server with simulated caption providers. They verify that existing files and concurrent requests cannot overwrite transcripts. Live retrieval depends on YouTube and is checked separately.
 
 ## Example videos
 

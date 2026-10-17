@@ -10,5 +10,5 @@
     "skipLibCheck": true,
     "noEmit": true
   },
-  "include": ["extract/**/*.ts", "process/**/*.ts", "shared/**/*.ts"]
+  "include": ["extract/**/*.ts", "process/**/*.ts", "shared/**/*.ts", "server/**/*.ts"]
 }

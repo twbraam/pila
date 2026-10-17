@@ -9,6 +9,6 @@ import { assertTranscript } from '../shared/transcript';
 import type { Transcript } from '../shared/transcript';
 ```
 
-Use `assertTranscript()` to validate JSON received across a file or request boundary. The portable schema is [shared/transcript.schema.json](../shared/transcript.schema.json), and a complete input example is [examples/transcripts/extracted.json](../examples/transcripts/extracted.json).
+Use `assertTranscript()` to validate JSON received across a file or request boundary. The portable schema is [shared/transcript.schema.json](../shared/transcript.schema.json), and a complete input example is [examples/transcripts/OwqIy8Ikv-c.json](../examples/transcripts/OwqIy8Ikv-c.json).
 
 Process will detect candidate misinformation with Jev, retrieve evidence with Tavily, and emit warnings linked to the original `videoId` and sentence `id`. Preserve the transcript's IDs, text, and timestamps for Overlay. The warning contract will be defined with the Process implementation.

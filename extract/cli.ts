@@ -40,7 +40,7 @@ export async function runExtractCli(args = process.argv.slice(2)): Promise<void>
   });
   const json = `${JSON.stringify(transcript, null, 2)}\n`;
   if (values.out !== undefined) {
-    await writeFile(values.out, json, 'utf8');
+    await writeFile(values.out, json, { encoding: 'utf8', flag: 'wx' });
   } else {
     process.stdout.write(json);
   }

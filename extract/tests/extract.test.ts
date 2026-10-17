@@ -133,7 +133,7 @@ test('extracts one whole transcript with the requested language and abort signal
 });
 
 test('the documented live JSON example is a valid Processing handoff', async () => {
-  const transcript: unknown = JSON.parse(await readFile('examples/transcripts/extracted.json', 'utf8'));
+  const transcript: unknown = JSON.parse(await readFile('examples/transcripts/OwqIy8Ikv-c.json', 'utf8'));
   assertTranscript(transcript);
   assert.equal(transcript.videoId, VIDEO_ID);
   assert.equal(transcript.sentences.length, 36);
