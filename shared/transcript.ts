@@ -6,7 +6,7 @@ export interface TranscriptSentence {
   end: number;
 }
 
-/** The complete Extract -> Processing -> Overlay handoff for one video. */
+/** The internal Extract -> Process handoff for one video. */
 export interface Transcript {
   videoId: string;
   sentences: TranscriptSentence[];

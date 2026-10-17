@@ -4,7 +4,7 @@
   "scripts": {
     "start": "tsx server/main.ts",
     "extract": "tsx extract/main.ts",
-    "test": "node --import tsx --test extract/tests/*.test.ts server/tests/*.test.ts",
+    "test": "node --import tsx --test extract/tests/*.test.ts shared/tests/*.test.ts server/tests/*.test.ts",
     "typecheck": "tsc --noEmit"
   },
   "engines": {
