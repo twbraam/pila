@@ -19,7 +19,7 @@ const isCheckable = (text: string) => /CO2|IPCC|1\.8 degrees/.test(text);
 
 /** Detection: sentences mentioning CO2, IPCC, or 1.8 degrees are claims. Verification: false, Science Feedback refutes. */
 const jev = jevResponder((key, _q, body: JevRequestBody) => {
-  if (key.startsWith("checkable_")) {
+  if (key.startsWith("checkable_") || key.startsWith("suspicious_")) {
     const sentences = (body.state as { sentences: string[] }).sentences;
     return noulAnswer(isCheckable(sentences[Number(key.split("_")[1])]!) ? 0.9 : 0.1);
   }
@@ -225,6 +225,14 @@ describe("factCheck", () => {
     } finally {
       globalThis.reportError = original;
     }
+  });
+
+  it("passes the detailed claim result to onResult as a second argument", async () => {
+    const { checker } = setup();
+    const details: string[] = [];
+    await checker.factCheck(contract, { video, onResult: (_r, detail) => details.push(detail.label) });
+    expect(details.length).toBeGreaterThan(0);
+    expect(details.every((l) => l === "false")).toBe(true);
   });
 
   it("validates the transcript", async () => {

@@ -2,7 +2,10 @@
 export const DEFAULT_MODEL = "jev-1.13.0";
 
 export interface Thresholds {
-  /** Minimum Jev `noul` for a sentence to count as a checkable claim. */
+  /**
+   * Minimum Jev `noul` for a sentence to count as a checkable claim. Checkable sentences are then
+   * ranked by how much they contradict consensus. 0.5 because real claims scored as low as 0.53 live.
+   */
   readonly checkable: number;
   /** Below this verdict confidence the label is `not_sure`. */
   readonly minVerdictConfidence: number;
@@ -13,7 +16,7 @@ export interface Thresholds {
 }
 
 export const DEFAULT_THRESHOLDS: Thresholds = {
-  checkable: 0.7,
+  checkable: 0.5,
   minVerdictConfidence: 0.6,
   trustedStance: 0.8,
   minSearchScore: 0.4,

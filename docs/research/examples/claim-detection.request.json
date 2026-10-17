@@ -53,12 +53,28 @@
         "false": "An opinion, a prediction, a question, an introduction, or too vague to check"
       }
     },
+    "suspicious_0": {
+      "type": "noul",
+      "instructions": "Does `sentences[0]` state something that contradicts established scientific or historical consensus?",
+      "criteria": {
+        "true": "Contradicts what experts and reliable sources generally accept",
+        "false": "Agrees with consensus, is personal, or makes no factual claim"
+      }
+    },
     "checkable_1": {
       "type": "noul",
       "instructions": "Is `sentences[1]` a specific factual claim that could be checked against outside sources?",
       "criteria": {
         "true": "States a checkable fact: a number, an event, a quote, a scientific finding, or a cause and effect",
         "false": "An opinion, a prediction, a question, an introduction, or too vague to check"
+      }
+    },
+    "suspicious_1": {
+      "type": "noul",
+      "instructions": "Does `sentences[1]` state something that contradicts established scientific or historical consensus?",
+      "criteria": {
+        "true": "Contradicts what experts and reliable sources generally accept",
+        "false": "Agrees with consensus, is personal, or makes no factual claim"
       }
     },
     "checkable_2": {
@@ -69,12 +85,28 @@
         "false": "An opinion, a prediction, a question, an introduction, or too vague to check"
       }
     },
+    "suspicious_2": {
+      "type": "noul",
+      "instructions": "Does `sentences[2]` state something that contradicts established scientific or historical consensus?",
+      "criteria": {
+        "true": "Contradicts what experts and reliable sources generally accept",
+        "false": "Agrees with consensus, is personal, or makes no factual claim"
+      }
+    },
     "checkable_3": {
       "type": "noul",
       "instructions": "Is `sentences[3]` a specific factual claim that could be checked against outside sources?",
       "criteria": {
         "true": "States a checkable fact: a number, an event, a quote, a scientific finding, or a cause and effect",
         "false": "An opinion, a prediction, a question, an introduction, or too vague to check"
+      }
+    },
+    "suspicious_3": {
+      "type": "noul",
+      "instructions": "Does `sentences[3]` state something that contradicts established scientific or historical consensus?",
+      "criteria": {
+        "true": "Contradicts what experts and reliable sources generally accept",
+        "false": "Agrees with consensus, is personal, or makes no factual claim"
       }
     },
     "checkable_4": {
@@ -85,12 +117,28 @@
         "false": "An opinion, a prediction, a question, an introduction, or too vague to check"
       }
     },
+    "suspicious_4": {
+      "type": "noul",
+      "instructions": "Does `sentences[4]` state something that contradicts established scientific or historical consensus?",
+      "criteria": {
+        "true": "Contradicts what experts and reliable sources generally accept",
+        "false": "Agrees with consensus, is personal, or makes no factual claim"
+      }
+    },
     "checkable_5": {
       "type": "noul",
       "instructions": "Is `sentences[5]` a specific factual claim that could be checked against outside sources?",
       "criteria": {
         "true": "States a checkable fact: a number, an event, a quote, a scientific finding, or a cause and effect",
         "false": "An opinion, a prediction, a question, an introduction, or too vague to check"
+      }
+    },
+    "suspicious_5": {
+      "type": "noul",
+      "instructions": "Does `sentences[5]` state something that contradicts established scientific or historical consensus?",
+      "criteria": {
+        "true": "Contradicts what experts and reliable sources generally accept",
+        "false": "Agrees with consensus, is personal, or makes no factual claim"
       }
     },
     "checkable_6": {
@@ -101,12 +149,28 @@
         "false": "An opinion, a prediction, a question, an introduction, or too vague to check"
       }
     },
+    "suspicious_6": {
+      "type": "noul",
+      "instructions": "Does `sentences[6]` state something that contradicts established scientific or historical consensus?",
+      "criteria": {
+        "true": "Contradicts what experts and reliable sources generally accept",
+        "false": "Agrees with consensus, is personal, or makes no factual claim"
+      }
+    },
     "checkable_7": {
       "type": "noul",
       "instructions": "Is `sentences[7]` a specific factual claim that could be checked against outside sources?",
       "criteria": {
         "true": "States a checkable fact: a number, an event, a quote, a scientific finding, or a cause and effect",
         "false": "An opinion, a prediction, a question, an introduction, or too vague to check"
+      }
+    },
+    "suspicious_7": {
+      "type": "noul",
+      "instructions": "Does `sentences[7]` state something that contradicts established scientific or historical consensus?",
+      "criteria": {
+        "true": "Contradicts what experts and reliable sources generally accept",
+        "false": "Agrees with consensus, is personal, or makes no factual claim"
       }
     },
     "checkable_8": {
@@ -117,12 +181,28 @@
         "false": "An opinion, a prediction, a question, an introduction, or too vague to check"
       }
     },
+    "suspicious_8": {
+      "type": "noul",
+      "instructions": "Does `sentences[8]` state something that contradicts established scientific or historical consensus?",
+      "criteria": {
+        "true": "Contradicts what experts and reliable sources generally accept",
+        "false": "Agrees with consensus, is personal, or makes no factual claim"
+      }
+    },
     "checkable_9": {
       "type": "noul",
       "instructions": "Is `sentences[9]` a specific factual claim that could be checked against outside sources?",
       "criteria": {
         "true": "States a checkable fact: a number, an event, a quote, a scientific finding, or a cause and effect",
         "false": "An opinion, a prediction, a question, an introduction, or too vague to check"
+      }
+    },
+    "suspicious_9": {
+      "type": "noul",
+      "instructions": "Does `sentences[9]` state something that contradicts established scientific or historical consensus?",
+      "criteria": {
+        "true": "Contradicts what experts and reliable sources generally accept",
+        "false": "Agrees with consensus, is personal, or makes no factual claim"
       }
     },
     "checkable_10": {
@@ -133,12 +213,28 @@
         "false": "An opinion, a prediction, a question, an introduction, or too vague to check"
       }
     },
+    "suspicious_10": {
+      "type": "noul",
+      "instructions": "Does `sentences[10]` state something that contradicts established scientific or historical consensus?",
+      "criteria": {
+        "true": "Contradicts what experts and reliable sources generally accept",
+        "false": "Agrees with consensus, is personal, or makes no factual claim"
+      }
+    },
     "checkable_11": {
       "type": "noul",
       "instructions": "Is `sentences[11]` a specific factual claim that could be checked against outside sources?",
       "criteria": {
         "true": "States a checkable fact: a number, an event, a quote, a scientific finding, or a cause and effect",
         "false": "An opinion, a prediction, a question, an introduction, or too vague to check"
+      }
+    },
+    "suspicious_11": {
+      "type": "noul",
+      "instructions": "Does `sentences[11]` state something that contradicts established scientific or historical consensus?",
+      "criteria": {
+        "true": "Contradicts what experts and reliable sources generally accept",
+        "false": "Agrees with consensus, is personal, or makes no factual claim"
       }
     },
     "checkable_12": {
@@ -149,12 +245,28 @@
         "false": "An opinion, a prediction, a question, an introduction, or too vague to check"
       }
     },
+    "suspicious_12": {
+      "type": "noul",
+      "instructions": "Does `sentences[12]` state something that contradicts established scientific or historical consensus?",
+      "criteria": {
+        "true": "Contradicts what experts and reliable sources generally accept",
+        "false": "Agrees with consensus, is personal, or makes no factual claim"
+      }
+    },
     "checkable_13": {
       "type": "noul",
       "instructions": "Is `sentences[13]` a specific factual claim that could be checked against outside sources?",
       "criteria": {
         "true": "States a checkable fact: a number, an event, a quote, a scientific finding, or a cause and effect",
         "false": "An opinion, a prediction, a question, an introduction, or too vague to check"
+      }
+    },
+    "suspicious_13": {
+      "type": "noul",
+      "instructions": "Does `sentences[13]` state something that contradicts established scientific or historical consensus?",
+      "criteria": {
+        "true": "Contradicts what experts and reliable sources generally accept",
+        "false": "Agrees with consensus, is personal, or makes no factual claim"
       }
     },
     "checkable_14": {
@@ -165,12 +277,28 @@
         "false": "An opinion, a prediction, a question, an introduction, or too vague to check"
       }
     },
+    "suspicious_14": {
+      "type": "noul",
+      "instructions": "Does `sentences[14]` state something that contradicts established scientific or historical consensus?",
+      "criteria": {
+        "true": "Contradicts what experts and reliable sources generally accept",
+        "false": "Agrees with consensus, is personal, or makes no factual claim"
+      }
+    },
     "checkable_15": {
       "type": "noul",
       "instructions": "Is `sentences[15]` a specific factual claim that could be checked against outside sources?",
       "criteria": {
         "true": "States a checkable fact: a number, an event, a quote, a scientific finding, or a cause and effect",
         "false": "An opinion, a prediction, a question, an introduction, or too vague to check"
+      }
+    },
+    "suspicious_15": {
+      "type": "noul",
+      "instructions": "Does `sentences[15]` state something that contradicts established scientific or historical consensus?",
+      "criteria": {
+        "true": "Contradicts what experts and reliable sources generally accept",
+        "false": "Agrees with consensus, is personal, or makes no factual claim"
       }
     },
     "checkable_16": {
@@ -181,12 +309,28 @@
         "false": "An opinion, a prediction, a question, an introduction, or too vague to check"
       }
     },
+    "suspicious_16": {
+      "type": "noul",
+      "instructions": "Does `sentences[16]` state something that contradicts established scientific or historical consensus?",
+      "criteria": {
+        "true": "Contradicts what experts and reliable sources generally accept",
+        "false": "Agrees with consensus, is personal, or makes no factual claim"
+      }
+    },
     "checkable_17": {
       "type": "noul",
       "instructions": "Is `sentences[17]` a specific factual claim that could be checked against outside sources?",
       "criteria": {
         "true": "States a checkable fact: a number, an event, a quote, a scientific finding, or a cause and effect",
         "false": "An opinion, a prediction, a question, an introduction, or too vague to check"
+      }
+    },
+    "suspicious_17": {
+      "type": "noul",
+      "instructions": "Does `sentences[17]` state something that contradicts established scientific or historical consensus?",
+      "criteria": {
+        "true": "Contradicts what experts and reliable sources generally accept",
+        "false": "Agrees with consensus, is personal, or makes no factual claim"
       }
     },
     "checkable_18": {
@@ -197,12 +341,28 @@
         "false": "An opinion, a prediction, a question, an introduction, or too vague to check"
       }
     },
+    "suspicious_18": {
+      "type": "noul",
+      "instructions": "Does `sentences[18]` state something that contradicts established scientific or historical consensus?",
+      "criteria": {
+        "true": "Contradicts what experts and reliable sources generally accept",
+        "false": "Agrees with consensus, is personal, or makes no factual claim"
+      }
+    },
     "checkable_19": {
       "type": "noul",
       "instructions": "Is `sentences[19]` a specific factual claim that could be checked against outside sources?",
       "criteria": {
         "true": "States a checkable fact: a number, an event, a quote, a scientific finding, or a cause and effect",
         "false": "An opinion, a prediction, a question, an introduction, or too vague to check"
+      }
+    },
+    "suspicious_19": {
+      "type": "noul",
+      "instructions": "Does `sentences[19]` state something that contradicts established scientific or historical consensus?",
+      "criteria": {
+        "true": "Contradicts what experts and reliable sources generally accept",
+        "false": "Agrees with consensus, is personal, or makes no factual claim"
       }
     },
     "checkable_20": {
@@ -213,12 +373,28 @@
         "false": "An opinion, a prediction, a question, an introduction, or too vague to check"
       }
     },
+    "suspicious_20": {
+      "type": "noul",
+      "instructions": "Does `sentences[20]` state something that contradicts established scientific or historical consensus?",
+      "criteria": {
+        "true": "Contradicts what experts and reliable sources generally accept",
+        "false": "Agrees with consensus, is personal, or makes no factual claim"
+      }
+    },
     "checkable_21": {
       "type": "noul",
       "instructions": "Is `sentences[21]` a specific factual claim that could be checked against outside sources?",
       "criteria": {
         "true": "States a checkable fact: a number, an event, a quote, a scientific finding, or a cause and effect",
         "false": "An opinion, a prediction, a question, an introduction, or too vague to check"
+      }
+    },
+    "suspicious_21": {
+      "type": "noul",
+      "instructions": "Does `sentences[21]` state something that contradicts established scientific or historical consensus?",
+      "criteria": {
+        "true": "Contradicts what experts and reliable sources generally accept",
+        "false": "Agrees with consensus, is personal, or makes no factual claim"
       }
     },
     "checkable_22": {
@@ -229,12 +405,28 @@
         "false": "An opinion, a prediction, a question, an introduction, or too vague to check"
       }
     },
+    "suspicious_22": {
+      "type": "noul",
+      "instructions": "Does `sentences[22]` state something that contradicts established scientific or historical consensus?",
+      "criteria": {
+        "true": "Contradicts what experts and reliable sources generally accept",
+        "false": "Agrees with consensus, is personal, or makes no factual claim"
+      }
+    },
     "checkable_23": {
       "type": "noul",
       "instructions": "Is `sentences[23]` a specific factual claim that could be checked against outside sources?",
       "criteria": {
         "true": "States a checkable fact: a number, an event, a quote, a scientific finding, or a cause and effect",
         "false": "An opinion, a prediction, a question, an introduction, or too vague to check"
+      }
+    },
+    "suspicious_23": {
+      "type": "noul",
+      "instructions": "Does `sentences[23]` state something that contradicts established scientific or historical consensus?",
+      "criteria": {
+        "true": "Contradicts what experts and reliable sources generally accept",
+        "false": "Agrees with consensus, is personal, or makes no factual claim"
       }
     },
     "checkable_24": {
@@ -245,12 +437,28 @@
         "false": "An opinion, a prediction, a question, an introduction, or too vague to check"
       }
     },
+    "suspicious_24": {
+      "type": "noul",
+      "instructions": "Does `sentences[24]` state something that contradicts established scientific or historical consensus?",
+      "criteria": {
+        "true": "Contradicts what experts and reliable sources generally accept",
+        "false": "Agrees with consensus, is personal, or makes no factual claim"
+      }
+    },
     "checkable_25": {
       "type": "noul",
       "instructions": "Is `sentences[25]` a specific factual claim that could be checked against outside sources?",
       "criteria": {
         "true": "States a checkable fact: a number, an event, a quote, a scientific finding, or a cause and effect",
         "false": "An opinion, a prediction, a question, an introduction, or too vague to check"
+      }
+    },
+    "suspicious_25": {
+      "type": "noul",
+      "instructions": "Does `sentences[25]` state something that contradicts established scientific or historical consensus?",
+      "criteria": {
+        "true": "Contradicts what experts and reliable sources generally accept",
+        "false": "Agrees with consensus, is personal, or makes no factual claim"
       }
     },
     "checkable_26": {
@@ -261,12 +469,28 @@
         "false": "An opinion, a prediction, a question, an introduction, or too vague to check"
       }
     },
+    "suspicious_26": {
+      "type": "noul",
+      "instructions": "Does `sentences[26]` state something that contradicts established scientific or historical consensus?",
+      "criteria": {
+        "true": "Contradicts what experts and reliable sources generally accept",
+        "false": "Agrees with consensus, is personal, or makes no factual claim"
+      }
+    },
     "checkable_27": {
       "type": "noul",
       "instructions": "Is `sentences[27]` a specific factual claim that could be checked against outside sources?",
       "criteria": {
         "true": "States a checkable fact: a number, an event, a quote, a scientific finding, or a cause and effect",
         "false": "An opinion, a prediction, a question, an introduction, or too vague to check"
+      }
+    },
+    "suspicious_27": {
+      "type": "noul",
+      "instructions": "Does `sentences[27]` state something that contradicts established scientific or historical consensus?",
+      "criteria": {
+        "true": "Contradicts what experts and reliable sources generally accept",
+        "false": "Agrees with consensus, is personal, or makes no factual claim"
       }
     },
     "checkable_28": {
@@ -277,12 +501,28 @@
         "false": "An opinion, a prediction, a question, an introduction, or too vague to check"
       }
     },
+    "suspicious_28": {
+      "type": "noul",
+      "instructions": "Does `sentences[28]` state something that contradicts established scientific or historical consensus?",
+      "criteria": {
+        "true": "Contradicts what experts and reliable sources generally accept",
+        "false": "Agrees with consensus, is personal, or makes no factual claim"
+      }
+    },
     "checkable_29": {
       "type": "noul",
       "instructions": "Is `sentences[29]` a specific factual claim that could be checked against outside sources?",
       "criteria": {
         "true": "States a checkable fact: a number, an event, a quote, a scientific finding, or a cause and effect",
         "false": "An opinion, a prediction, a question, an introduction, or too vague to check"
+      }
+    },
+    "suspicious_29": {
+      "type": "noul",
+      "instructions": "Does `sentences[29]` state something that contradicts established scientific or historical consensus?",
+      "criteria": {
+        "true": "Contradicts what experts and reliable sources generally accept",
+        "false": "Agrees with consensus, is personal, or makes no factual claim"
       }
     },
     "checkable_30": {
@@ -293,12 +533,28 @@
         "false": "An opinion, a prediction, a question, an introduction, or too vague to check"
       }
     },
+    "suspicious_30": {
+      "type": "noul",
+      "instructions": "Does `sentences[30]` state something that contradicts established scientific or historical consensus?",
+      "criteria": {
+        "true": "Contradicts what experts and reliable sources generally accept",
+        "false": "Agrees with consensus, is personal, or makes no factual claim"
+      }
+    },
     "checkable_31": {
       "type": "noul",
       "instructions": "Is `sentences[31]` a specific factual claim that could be checked against outside sources?",
       "criteria": {
         "true": "States a checkable fact: a number, an event, a quote, a scientific finding, or a cause and effect",
         "false": "An opinion, a prediction, a question, an introduction, or too vague to check"
+      }
+    },
+    "suspicious_31": {
+      "type": "noul",
+      "instructions": "Does `sentences[31]` state something that contradicts established scientific or historical consensus?",
+      "criteria": {
+        "true": "Contradicts what experts and reliable sources generally accept",
+        "false": "Agrees with consensus, is personal, or makes no factual claim"
       }
     },
     "checkable_32": {
@@ -309,12 +565,28 @@
         "false": "An opinion, a prediction, a question, an introduction, or too vague to check"
       }
     },
+    "suspicious_32": {
+      "type": "noul",
+      "instructions": "Does `sentences[32]` state something that contradicts established scientific or historical consensus?",
+      "criteria": {
+        "true": "Contradicts what experts and reliable sources generally accept",
+        "false": "Agrees with consensus, is personal, or makes no factual claim"
+      }
+    },
     "checkable_33": {
       "type": "noul",
       "instructions": "Is `sentences[33]` a specific factual claim that could be checked against outside sources?",
       "criteria": {
         "true": "States a checkable fact: a number, an event, a quote, a scientific finding, or a cause and effect",
         "false": "An opinion, a prediction, a question, an introduction, or too vague to check"
+      }
+    },
+    "suspicious_33": {
+      "type": "noul",
+      "instructions": "Does `sentences[33]` state something that contradicts established scientific or historical consensus?",
+      "criteria": {
+        "true": "Contradicts what experts and reliable sources generally accept",
+        "false": "Agrees with consensus, is personal, or makes no factual claim"
       }
     },
     "checkable_34": {
@@ -325,12 +597,28 @@
         "false": "An opinion, a prediction, a question, an introduction, or too vague to check"
       }
     },
+    "suspicious_34": {
+      "type": "noul",
+      "instructions": "Does `sentences[34]` state something that contradicts established scientific or historical consensus?",
+      "criteria": {
+        "true": "Contradicts what experts and reliable sources generally accept",
+        "false": "Agrees with consensus, is personal, or makes no factual claim"
+      }
+    },
     "checkable_35": {
       "type": "noul",
       "instructions": "Is `sentences[35]` a specific factual claim that could be checked against outside sources?",
       "criteria": {
         "true": "States a checkable fact: a number, an event, a quote, a scientific finding, or a cause and effect",
         "false": "An opinion, a prediction, a question, an introduction, or too vague to check"
+      }
+    },
+    "suspicious_35": {
+      "type": "noul",
+      "instructions": "Does `sentences[35]` state something that contradicts established scientific or historical consensus?",
+      "criteria": {
+        "true": "Contradicts what experts and reliable sources generally accept",
+        "false": "Agrees with consensus, is personal, or makes no factual claim"
       }
     },
     "checkable_36": {
@@ -341,12 +629,28 @@
         "false": "An opinion, a prediction, a question, an introduction, or too vague to check"
       }
     },
+    "suspicious_36": {
+      "type": "noul",
+      "instructions": "Does `sentences[36]` state something that contradicts established scientific or historical consensus?",
+      "criteria": {
+        "true": "Contradicts what experts and reliable sources generally accept",
+        "false": "Agrees with consensus, is personal, or makes no factual claim"
+      }
+    },
     "checkable_37": {
       "type": "noul",
       "instructions": "Is `sentences[37]` a specific factual claim that could be checked against outside sources?",
       "criteria": {
         "true": "States a checkable fact: a number, an event, a quote, a scientific finding, or a cause and effect",
         "false": "An opinion, a prediction, a question, an introduction, or too vague to check"
+      }
+    },
+    "suspicious_37": {
+      "type": "noul",
+      "instructions": "Does `sentences[37]` state something that contradicts established scientific or historical consensus?",
+      "criteria": {
+        "true": "Contradicts what experts and reliable sources generally accept",
+        "false": "Agrees with consensus, is personal, or makes no factual claim"
       }
     },
     "checkable_38": {
@@ -357,12 +661,28 @@
         "false": "An opinion, a prediction, a question, an introduction, or too vague to check"
       }
     },
+    "suspicious_38": {
+      "type": "noul",
+      "instructions": "Does `sentences[38]` state something that contradicts established scientific or historical consensus?",
+      "criteria": {
+        "true": "Contradicts what experts and reliable sources generally accept",
+        "false": "Agrees with consensus, is personal, or makes no factual claim"
+      }
+    },
     "checkable_39": {
       "type": "noul",
       "instructions": "Is `sentences[39]` a specific factual claim that could be checked against outside sources?",
       "criteria": {
         "true": "States a checkable fact: a number, an event, a quote, a scientific finding, or a cause and effect",
         "false": "An opinion, a prediction, a question, an introduction, or too vague to check"
+      }
+    },
+    "suspicious_39": {
+      "type": "noul",
+      "instructions": "Does `sentences[39]` state something that contradicts established scientific or historical consensus?",
+      "criteria": {
+        "true": "Contradicts what experts and reliable sources generally accept",
+        "false": "Agrees with consensus, is personal, or makes no factual claim"
       }
     }
   }

@@ -1,0 +1,10 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "lib": ["ES2022", "DOM"],
+    "types": ["node"],
+    "customConditions": ["source"],
+    "noEmit": true
+  },
+  "include": ["src", "test", "*.config.ts"]
+}

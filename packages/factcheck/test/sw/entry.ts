@@ -21,7 +21,7 @@ const tests = {
   async offline({ transcript, tavilyFixture }: Args) {
     const { fetch } = fakeFetch({
       [JEV]: jevResponder((key) => {
-        if (key.startsWith("checkable_")) return noulAnswer(key === "checkable_20" ? 0.95 : 0.1);
+        if (key.startsWith("checkable_") || key.startsWith("suspicious_")) return noulAnswer(key.endsWith("_20") ? 0.95 : 0.1);
         if (key.startsWith("verdict")) return choiceAnswer("false", 0.9, VERDICTS);
         if (key.endsWith("_quote")) return choiceAnswer("s0", 0.9, ["s0", "none"]);
         return choiceAnswer("refutes", 0.9, STANCES);

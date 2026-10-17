@@ -20,7 +20,11 @@ This is the planned architecture. The modules can be built in parallel using the
 
 ### 2. Processing
 
-Implemented in [`packages/factcheck`](./packages/factcheck) as `factCheck(transcript, options)`.
+Implemented in [`packages/factcheck`](./packages/factcheck) as `factCheck(transcript, options)` and hosted by
+[`apps/api`](./apps/api) at **`https://d3tuhog92nak7r.cloudfront.net`**. The extension calls
+`POST /factcheck` with `Authorization: Bearer <token>` and `{ transcript, video: { title, channel } }`, and gets
+`{ success, data: FactCheckResult[], error }`. The Jev and Tavily keys stay on the server.
+Flow and error codes: [`packages/factcheck/docs/workflow.md`](./packages/factcheck/docs/workflow.md).
 
 1. **Find claims with Jev:** one request asks, for every sentence, whether it is a specific factual claim that can be checked. The top 5 are kept (configurable). Jev has no world knowledge, so it picks *checkable* sentences; it does not judge truth on its own.
 2. **Find evidence with Tavily:** one search for reviews of the whole video (title + channel + "fact check"), plus one search per claim. Fact-checker domains are preferred; YouTube and copies of the video's own transcript are dropped.
@@ -103,13 +107,14 @@ Ingestion can be developed against sample subtitle data, Processing against fixt
 
 - **TypeScript + WXT (Manifest V3)** — Chrome extension framework.
 - **Content scripts + page-context bridge** — discover subtitles and monitor playback.
-- **Background service worker + Fetch API** — retrieve captions and communicate with Jev and Tavily.
+- **Background service worker + Fetch API** — retrieve captions and call our hosted API.
+- **Hosted API (Hono on AWS Lambda behind CloudFront)** — runs Processing with Jev and Tavily; see [`infra/aws`](./infra/aws/README.md).
 - **Jev + Tavily** — detect potential misinformation, search for evidence, and select a supporting source.
 - **Chrome messaging + storage** — internal communication and settings.
 
 ## Technical Considerations
 
-Caption extraction relies on YouTube's undocumented interfaces and may not work for every video. Missing subtitles or failed checks must not produce misinformation warnings. The extension must handle playback synchronization, seeking, deduplication, and checks that finish after a sentence has played. Changing videos must clear old warnings and ignore results belonging to the previous video. Jev and Tavily credentials must be configured for the POC.
+Caption extraction relies on YouTube's undocumented interfaces and may not work for every video. Missing subtitles or failed checks must not produce misinformation warnings. The extension must handle playback synchronization, seeking, deduplication, and checks that finish after a sentence has played. Changing videos must clear old warnings and ignore results belonging to the previous video. Jev and Tavily credentials live only on the server (AWS SSM); the extension needs only the API token.
 
 ## Example videos
 

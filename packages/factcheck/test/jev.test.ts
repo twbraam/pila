@@ -40,13 +40,26 @@ const jevClient = (fetch: ReturnType<typeof fakeFetch>["fetch"]) =>
   createJevClient({ apiKey: "ts-test", model: "jev-1.13.0", fetch, maxRetries: 0 });
 
 describe("buildDetectionRequest", () => {
-  it("asks one checkable noul per sentence, pointing at it by index", () => {
+  it("asks, for every sentence, whether it is checkable and whether it contradicts consensus", () => {
     const { state, questions } = buildDetectionRequest(sentences);
     expect(state).toEqual({ sentences: sentences.map((s) => s.text) });
-    expect(Object.keys(questions)).toEqual(["checkable_0", "checkable_1", "checkable_2", "checkable_3"]);
+    expect(Object.keys(questions)).toEqual([
+      "checkable_0",
+      "suspicious_0",
+      "checkable_1",
+      "suspicious_1",
+      "checkable_2",
+      "suspicious_2",
+      "checkable_3",
+      "suspicious_3",
+    ]);
     expect(questions.checkable_3).toMatchObject({
       type: "noul",
       instructions: "Is `sentences[3]` a specific factual claim that could be checked against outside sources?",
+    });
+    expect(questions.suspicious_3).toMatchObject({
+      type: "noul",
+      instructions: "Does `sentences[3]` state something that contradicts established scientific or historical consensus?",
     });
   });
 });
@@ -73,24 +86,31 @@ describe("documented examples", () => {
 });
 
 describe("findClaims", () => {
-  const scores = [0.2, 0.9, 0.4, 0.95];
-  const responder = jevResponder((key) => noulAnswer(scores[Number(key.split("_")[1])]!));
+  // Sentence 0 is suspicious but not checkable; 1-3 are checkable with falling suspicion 2 > 1 > 3.
+  const checkable = [0.2, 0.9, 0.6, 0.95];
+  const suspicious = [0.9, 0.3, 0.5, 0.1];
+  const responder = jevResponder((key) => {
+    const [kind, i] = key.split("_") as [string, string];
+    return noulAnswer((kind === "checkable" ? checkable : suspicious)[Number(i)]!);
+  });
+  const options = { threshold: 0.5, maxClaims: 5, maxPerRequest: 150, concurrency: 2 };
 
-  it("keeps sentences above the threshold, best first up to the limit, then in video order", async () => {
+  it("keeps checkable sentences only, with both scores, in video order", async () => {
     const { fetch } = fakeFetch({ [JEV]: responder });
-    const result = await findClaims(jevClient(fetch), sentences, { threshold: 0.7, maxClaims: 5, maxPerRequest: 150, concurrency: 2 });
-    expect(result.claims.map((c) => [c.index, c.checkable])).toEqual([
-      [1, 0.9],
-      [3, 0.95],
+    const result = await findClaims(jevClient(fetch), sentences, options);
+    expect(result.claims.map((c) => [c.index, c.checkable, c.suspicious])).toEqual([
+      [1, 0.9, 0.3],
+      [2, 0.6, 0.5],
+      [3, 0.95, 0.1],
     ]);
     expect(result.inputTokens).toBe(100);
     expect(result.model).toBe("jev-1.13.0");
   });
 
-  it("takes only the top claims when there are more than the limit", async () => {
+  it("takes the most suspicious claims when there are more than the limit", async () => {
     const { fetch } = fakeFetch({ [JEV]: responder });
-    const result = await findClaims(jevClient(fetch), sentences, { threshold: 0.1, maxClaims: 2, maxPerRequest: 150, concurrency: 2 });
-    expect(result.claims.map((c) => c.index)).toEqual([1, 3]);
+    const result = await findClaims(jevClient(fetch), sentences, { ...options, maxClaims: 2 });
+    expect(result.claims.map((c) => c.index)).toEqual([1, 2]);
   });
 
   it("splits long transcripts into several requests and maps answers back", async () => {
@@ -101,7 +121,7 @@ describe("findClaims", () => {
         return noulAnswer(text.includes("CO2") ? 0.95 : 0.1);
       }),
     });
-    const result = await findClaims(jevClient(fetch), sentences, { threshold: 0.7, maxClaims: 5, maxPerRequest: 3, concurrency: 2 });
+    const result = await findClaims(jevClient(fetch), sentences, { threshold: 0.5, maxClaims: 5, maxPerRequest: 3, concurrency: 2 });
     expect(calls).toHaveLength(2);
     expect(result.claims.map((c) => c.index)).toEqual([3]);
     expect(result.inputTokens).toBe(200);
@@ -169,6 +189,37 @@ describe("verifyWithJev", () => {
     expect(result.inputTokens).toBe(100);
   });
 
+  it("adds the previous sentence when the picked quote is too short to stand alone", async () => {
+    const short: Evidence[] = [
+      { source: "SF", url: "https://science.feedback.org/r", text: "Lindzen claims there is no evidence for this. This is false.", trusted: true, score: 0.9 },
+    ];
+    const { fetch } = fakeFetch({
+      [JEV]: jevResponder((key) => {
+        if (key.startsWith("verdict")) return choiceAnswer("false", 0.9, VERDICTS);
+        if (key.endsWith("_quote")) return choiceAnswer("s1", 0.9, ["s0", "s1", "none"]);
+        return choiceAnswer("refutes", 0.9, STANCES);
+      }),
+    });
+    const result = await verifyWithJev(jevClient(fetch), "claim", short);
+    expect(result.sources[0]?.quote).toBe("Lindzen claims there is no evidence for this. This is false.");
+  });
+
+  it("keeps the extended quote within the 300-character cap", async () => {
+    const long: Evidence[] = [
+      { source: "SF", url: "https://science.feedback.org/r", text: `${"Long context ".repeat(30)}end. This is false.`, trusted: true, score: 0.9 },
+    ];
+    const { fetch } = fakeFetch({
+      [JEV]: jevResponder((key) => {
+        if (key.startsWith("verdict")) return choiceAnswer("false", 0.9, VERDICTS);
+        if (key.endsWith("_quote")) return choiceAnswer("s1", 0.9, ["s0", "s1", "none"]);
+        return choiceAnswer("refutes", 0.9, STANCES);
+      }),
+    });
+    const quote = (await verifyWithJev(jevClient(fetch), "claim", long)).sources[0]?.quote ?? "";
+    expect(quote.length).toBeLessThanOrEqual(300);
+    expect(quote.endsWith("This is false.")).toBe(true);
+  });
+
   it("drops a quote with an unexpected answer instead of failing the claim", async () => {
     const { fetch } = fakeFetch({
       [JEV]: jevResponder((key) => {
@@ -195,6 +246,17 @@ describe("splitEvidenceSentences", () => {
       "Third one is here?",
       "這是中文句子。",
     ]);
+  });
+
+  it("skips page furniture: navigation text, markdown headings, and Tavily title lines", () => {
+    const text =
+      "Title: Review - Science Feedback Skip to content Science Feedback Climate # Video from PragerU makes claims. " +
+      "Lindzen claims there is no evidence. This is false, attribution studies show otherwise.";
+    expect(splitEvidenceSentences(text)).toEqual(["Lindzen claims there is no evidence.", "This is false, attribution studies show otherwise."]);
+  });
+
+  it("keeps sentences with a '#' that is not a heading", () => {
+    expect(splitEvidenceSentences("The vaccine ranked # 1 in efficacy trials.")).toEqual(["The vaccine ranked # 1 in efficacy trials."]);
   });
 
   it("caps the number and length of sentences", () => {

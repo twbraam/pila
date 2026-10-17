@@ -49,6 +49,10 @@ function toVerdict(label: Label, misleadingAs: ResultContext["misleadingAs"]): F
   return label === "true" ? "verified" : "unknown";
 }
 
+/** Without a source that backs the label, Overlay would have nothing to link, so report `not_sure`. */
+const backedLabel = (result: ClaimResult, backing: readonly SourceResult[]): Label =>
+  STANCE_FOR[result.label] && backing.length === 0 ? "not_sure" : result.label;
+
 /** Sources that back the label (or, without a label stance, any relevant ones): trusted first, then most confident. */
 function backingSources(result: ClaimResult): SourceResult[] {
   const stance = STANCE_FOR[result.label];
@@ -70,15 +74,18 @@ function explain(result: ClaimResult, best: SourceResult | undefined, language: 
 /** Map one checked claim to the README's `FactCheckResult`. */
 export function toFactCheckResult(result: ClaimResult, ref: SubtitleSentence, context: ResultContext): FactCheckResult {
   const sources = backingSources(result);
+  const label = backedLabel(result, sources);
+  const shown = label === result.label ? result : { ...result, label };
   return {
     videoId: context.videoId,
     sentenceId: ref.id,
     startSeconds: ref.startSeconds,
     endSeconds: ref.endSeconds,
     sentence: ref.text,
-    verdict: toVerdict(result.label, context.misleadingAs),
-    confidence: result.confidence,
-    explanation: explain(result, sources[0], context.language),
+    verdict: toVerdict(label, context.misleadingAs),
+    // A finding nothing backs is no finding: don't report the unbacked label's confidence.
+    confidence: label === result.label ? result.confidence : 0,
+    explanation: explain(shown, sources[0], context.language),
     sources: sources.map((s) => ({ title: s.title || s.source, url: s.url })),
   };
 }

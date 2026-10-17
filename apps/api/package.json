@@ -1,0 +1,34 @@
+{
+  "name": "@pila/api",
+  "version": "0.1.0",
+  "private": true,
+  "description": "HTTP API that runs @pila/factcheck for the Pila Chrome extension",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "tsx watch --conditions=source src/server.ts",
+    "build": "tsc -p tsconfig.build.json",
+    "start": "node dist/server.js",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "build:lambda": "esbuild src/lambda.ts --bundle --platform=node --target=node22 --format=esm --conditions=source --external:@aws-sdk/* --legal-comments=none --banner:js=\"import{createRequire}from'node:module';const require=createRequire(import.meta.url);\" --outfile=dist-lambda/index.mjs && cd dist-lambda && rm -f function.zip && zip -q function.zip index.mjs"
+  },
+  "dependencies": {
+    "@hono/node-server": "^2.1.5",
+    "@pila/factcheck": "*",
+    "hono": "^4.13.13",
+    "pino": "^10.4.0"
+  },
+  "devDependencies": {
+    "@aws-sdk/client-ssm": "^3.1152.0",
+    "@types/node": "^26.6.5",
+    "@vitest/coverage-v8": "^5.0.5",
+    "esbuild": "^0.28.2",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.5"
+  }
+}

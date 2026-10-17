@@ -29,6 +29,8 @@ export interface Sentence {
 export interface Claim extends Sentence {
   /** Jev's probability that the sentence is a checkable factual claim. */
   readonly checkable: number;
+  /** Jev's probability that the sentence contradicts established consensus. Used to rank claims. */
+  readonly suspicious: number;
 }
 
 export interface Evidence {

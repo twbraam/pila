@@ -1,4 +1,8 @@
-# Using the library in the Chrome extension
+# Using the fact-check API from the Chrome extension
+
+> Update 2026-10-17: the extension calls our hosted API (`apps/api`, `https://d3tuhog92nak7r.cloudfront.net`)
+> instead of importing the library, so no Jev or Tavily key ships in the extension. The library-in-service-worker
+> notes below still hold (it is tested there), but the wiring is now a `fetch` to `POST /factcheck`.
 
 For the extension team. The library does the fact-checking; the extension gets the
 transcript, holds the keys, and shows the report.
@@ -18,8 +22,7 @@ Run the library **in the extension's service worker** only.
   "manifest_version": 3,
   "permissions": ["storage", "sidePanel"],
   "host_permissions": [
-    "https://api.typesafe.ai/*",
-    "https://api.tavily.com/*",
+    "https://d3tuhog92nak7r.cloudfront.net/*",
     "https://www.youtube.com/*"
   ]
 }
@@ -29,17 +32,20 @@ Run the library **in the extension's service worker** only.
 
 ```ts
 // background.ts (service worker)
-import { createFactChecker } from "@pila/factcheck";
+const API = "https://d3tuhog92nak7r.cloudfront.net";
 
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
   if (msg?.type !== "check-video") return;
   (async () => {
-    const { typesafeApiKey, tavilyApiKey } = await chrome.storage.local.get(["typesafeApiKey", "tavilyApiKey"]);
-    const checker = createFactChecker({ typesafeApiKey, tavilyApiKey });
-    const results = await checker.factCheck(msg.transcript, {
-      video: msg.video,
-      onResult: (result) => chrome.tabs.sendMessage(sender.tab!.id!, { type: "fact-check-result", result }),
+    const { apiToken } = await chrome.storage.local.get("apiToken");
+    const res = await fetch(`${API}/factcheck`, {
+      method: "POST",
+      headers: { "content-type": "application/json", authorization: `Bearer ${apiToken}` },
+      body: JSON.stringify({ transcript: msg.transcript, video: msg.video }),
+      signal: AbortSignal.timeout(60_000),
     });
+    const { success, data: results, error } = await res.json();
+    if (!success) throw Object.assign(new Error(error.message), { name: error.code });
     await chrome.storage.session.set({ [`results:${msg.transcript.videoId}`]: results });
     sendResponse({ ok: true, results });
   })().catch((err) => sendResponse({ ok: false, error: { name: err.name, message: err.message } }));

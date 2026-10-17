@@ -90,9 +90,13 @@ Full body built from `ref/transcript.json`:
 }
 ```
 
-- One `noul` per sentence, all in one request (TypeSafe's
-  [speculative fan-out](https://docs.typesafe.ai/patterns/fan-out.md) pattern).
-- Code keeps sentences with `noul` >= 0.7 and takes the top K (default 5).
+- Two `noul`s per sentence, all in one request (TypeSafe's
+  [speculative fan-out](https://docs.typesafe.ai/patterns/fan-out.md) pattern): `checkable_i`
+  (above) and `suspicious_i` ("Does `sentences[i]` state something that contradicts established
+  scientific or historical consensus?").
+- Code keeps sentences with `checkable` >= 0.5 and takes the top K (default 5) by `suspicious`.
+  Live on the Lindzen video this put the reviewed false claims first. 40 sentences cost 7.3k input
+  tokens; a 150-sentence batch is about 27k, inside the 64k per-request limit.
 - Only the sentence text goes in the state; start times stay in code. Long transcripts are
   split into requests of 150 sentences.
 - Known gap: sentences that only make sense in context ("This is the group I belong to")

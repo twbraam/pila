@@ -29,17 +29,22 @@ const NO_QUOTE = "none";
 
 const MAX_QUOTE_SENTENCES = 20;
 const MAX_QUOTE_CHARS = 300;
+/** Shorter picks ("This is false.") don't make sense alone, so the sentence before is added. */
+const MIN_STANDALONE_QUOTE_CHARS = 40;
 const SENTENCE_BREAK = /(?<=[.!?])\s+|(?<=[。！？])\s*|\s*\[\.\.\.\]\s*/;
 
 /** At least two words, or four CJK characters, so fragments like "ok." are not offered as quotes. */
 const isSentence = (s: string) => s.split(/\s+/).length >= 2 || countCjk(s) >= 4;
+
+/** Page furniture that Tavily snippets often start with; never a useful quote. */
+const PAGE_FURNITURE = /(^|\s)#{1,6}\s+\p{Lu}|^Title:|Skip to (main )?content/iu;
 
 /** Split a source's text into candidate quotes for Jev to choose from. */
 export function splitEvidenceSentences(text: string): string[] {
   return text
     .split(SENTENCE_BREAK)
     .map((s) => s.trim())
-    .filter(isSentence)
+    .filter((s) => isSentence(s) && !PAGE_FURNITURE.test(s))
     .slice(0, MAX_QUOTE_SENTENCES)
     .map((s) => s.slice(0, MAX_QUOTE_CHARS));
 }
@@ -93,7 +98,14 @@ function readQuote(answers: Readonly<Record<string, unknown>>, i: number, senten
   const options = [...sentences.map((_, j) => `s${j}`), NO_QUOTE];
   try {
     const picked = readChoice(answers[quoteKey(i)], quoteKey(i), options).choice;
-    return picked === NO_QUOTE ? undefined : sentences[Number(picked.slice(1))];
+    if (picked === NO_QUOTE) return undefined;
+    const j = Number(picked.slice(1));
+    const quote = sentences[j];
+    const before = sentences[j - 1];
+    if (!quote || !before || quote.length >= MIN_STANDALONE_QUOTE_CHARS) return quote;
+    // Keep the picked sentence whole; trim the context in front of it to stay within the cap.
+    const room = MAX_QUOTE_CHARS - quote.length - 1;
+    return room > 0 ? `${before.slice(-room)} ${quote}` : quote;
   } catch (error) {
     // The quote only improves the explanation; a malformed answer falls back to the source's first sentence.
     if (error instanceof UpstreamError) return undefined;

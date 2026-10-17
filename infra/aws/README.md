@@ -1,7 +1,8 @@
 # pila factcheck — AWS deployment (POC)
 
-Handoff for whoever ships `apps/api`. The pipe **URL → CloudFront → Lambda → @pila/factcheck** is live and verified
-with a smoke handler (`infra/aws/smoke/handler.ts`). Replace that handler with `apps/api`; nothing else needs to change.
+The pipe **URL → CloudFront → Lambda → @pila/factcheck** is live. Since 2026-10-17 the Lambda runs `apps/api`
+(`apps/api/src/lambda.ts`); it replaced the smoke handler (`infra/aws/smoke/handler.ts`, kept for reference) and
+keeps its contract, plus API tokens.
 
 Account `799870512242`, region `us-west-2`, default AWS profile. Every resource is tagged `project=pila, env=poc`.
 
@@ -25,20 +26,24 @@ client ──HTTPS──▶ CloudFront ──adds x-origin-verify──▶ Lambd
 | SSM (SecureString) | `/pila/factcheck/origin-secret` | value CloudFront sends in `x-origin-verify` |
 | SSM (SecureString) | `/pila/factcheck/typesafe-api-key` | Jev key (copied from repo `.env`) |
 | SSM (SecureString) | `/pila/factcheck/tavily-api-key` | Tavily key (copied from repo `.env`) |
+| SSM (SecureString) | `/pila/factcheck/api-tokens` | comma-separated client tokens for `Authorization: Bearer` (one token, also in repo `.env` as `PILA_API_TOKEN`) |
+| Lambda version | `1` | snapshot of the smoke handler, for rollback |
 | CloudWatch Logs | `/aws/lambda/pila-factcheck` | 7-day retention |
 | ECR | `pila-factcheck` | empty, unused (zip deploy). Keep for a container switch or delete. |
 
-## Contract the smoke handler implements
+## Contract
 
-| Method | Path | Body | Response |
-|---|---|---|---|
-| GET | `/health` | — | `200 { success: true, data: { ok: true }, error: null }` |
-| POST | `/factcheck` | `{ transcript: Transcript, video?: { title, channel } }` | `200 { success, data: FactCheckResult[], error }` |
-| OPTIONS | any | — | `204`, CORS `*` |
+| Method | Path | Auth | Body | Response |
+|---|---|---|---|---|
+| GET | `/health` | — | — | `200 { success: true, data: { ok: true }, error: null }` |
+| POST | `/factcheck` | `Authorization: Bearer <token>` | `{ transcript: Transcript, video?: { title, channel }, language?: "en" \| "zh" }` | `200 { success: true, data: FactCheckResult[], error: null }`, header `x-pila-cache: hit\|miss` |
+| OPTIONS | any | — | — | `204`, CORS `*` |
 
-Errors: `400` invalid input, `403` missing/wrong `x-origin-verify`, `404` unknown route, `502` Jev/Tavily failure, `500` other.
+Errors use `{ success: false, data: null, error: { code, message, requestId } }`: `400` invalid input, `401` missing or
+wrong token, `403` missing/wrong `x-origin-verify`, `404` unknown route, `413` body over 2 MB, `429` rate limit
+(`Retry-After`), `502`/`503` Jev or Tavily failure, `504` over 55 s, `500` other. Full flow: `packages/factcheck/docs/workflow.md`.
 
-## Rules for `apps/api` on this stack
+## Rules for `apps/api` on this stack (all implemented)
 
 1. **Lambda entry**: export `handler` from Hono's `hono/aws-lambda` adapter (`handle(app)`). The event is a Function URL
    event (payload v2: `rawPath`, `requestContext.http.method`).
@@ -57,14 +62,15 @@ Errors: `400` invalid input, `403` missing/wrong `x-origin-verify`, `404` unknow
 ## Build and deploy
 
 ```sh
-# from repo root; swap the entry for apps/api's Lambda entry when ready
-node_modules/.bin/esbuild infra/aws/smoke/handler.ts --bundle --platform=node --target=node22 --format=esm \
-  --external:@aws-sdk/* --outfile=infra/aws/smoke/dist/index.mjs
-(cd infra/aws/smoke/dist && zip -q ../function.zip index.mjs)
+# from repo root
+npm run build:lambda -w @pila/api          # -> apps/api/dist-lambda/index.mjs and function.zip
 aws lambda update-function-code --region us-west-2 --function-name pila-factcheck \
-  --zip-file fileb://infra/aws/smoke/function.zip
+  --zip-file fileb://apps/api/dist-lambda/function.zip
 aws lambda wait function-updated-v2 --region us-west-2 --function-name pila-factcheck
 ```
+
+Rollback to the smoke handler: `aws lambda update-function-code` with `infra/aws/smoke/function.zip`, or point traffic at
+version `1` (the Function URL uses `$LATEST`, so redeploying the old zip is the simplest path).
 
 The bundle must be ESM named `index.mjs` exporting `handler`, or change the Lambda handler setting:
 `aws lambda update-function-configuration --region us-west-2 --function-name pila-factcheck --handler <file>.<export>`.
@@ -79,19 +85,22 @@ Running containers keep the old value until they recycle; force it with any `upd
 ```sh
 curl -s https://d3tuhog92nak7r.cloudfront.net/health                                   # 200
 curl -s https://4qigmpqu4wrhkst6ijpt227whu0xjnlc.lambda-url.us-west-2.on.aws/health    # 403 (bypass blocked)
-curl -s -X POST -H 'content-type: application/json' https://d3tuhog92nak7r.cloudfront.net/factcheck -d '{
+curl -s -X POST -H 'content-type: application/json' https://d3tuhog92nak7r.cloudfront.net/factcheck -d '{}'  # 401 (no token)
+curl -s -X POST -H 'content-type: application/json' -H "authorization: Bearer $PILA_API_TOKEN" \
+  https://d3tuhog92nak7r.cloudfront.net/factcheck -d '{
   "video": {"title": "Climate change basics", "channel": "demo"},
   "transcript": {"videoId": "smoke-1", "sentences": [
     {"id": "s1", "text": "The Great Wall of China is visible from the Moon with the naked eye.", "startSeconds": 0, "endSeconds": 5}]}}'
-# 200, verdict "misinformation", Snopes source, ~9 s
+# 200, verdict "misinformation", Snopes source, ~1-9 s (verified 2026-10-17 with apps/api: 1.2 s)
 aws logs tail /aws/lambda/pila-factcheck --region us-west-2 --since 10m
 ```
 
 ## Cost (POC traffic)
 
 Lambda and CloudFront free tiers cover light use; idle cost is about $0. SSM standard parameters are free.
-The real cost is Jev and Tavily credits: the endpoint is public, so anyone with the URL can spend them.
-Add API tokens (`PILA_API_TOKENS` in `apps/api`) before sharing the URL.
+The real cost is Jev and Tavily credits. `/factcheck` needs a token from `/pila/factcheck/api-tokens`, so the URL
+alone can't spend them. The token ships inside the extension, though, so treat it as a speed bump, not a secret:
+rotate it if it leaks (`put-parameter --overwrite`, then any `update-function-configuration` to recycle containers).
 
 ## Teardown
 
@@ -106,7 +115,7 @@ aws lambda delete-function --region us-west-2 --function-name pila-factcheck
 aws iam delete-role-policy --role-name pila-factcheck-lambda --policy-name read-pila-ssm
 aws iam detach-role-policy --role-name pila-factcheck-lambda --policy-arn arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
 aws iam delete-role --role-name pila-factcheck-lambda
-aws ssm delete-parameters --region us-west-2 --names /pila/factcheck/origin-secret /pila/factcheck/typesafe-api-key /pila/factcheck/tavily-api-key
+aws ssm delete-parameters --region us-west-2 --names /pila/factcheck/origin-secret /pila/factcheck/typesafe-api-key /pila/factcheck/tavily-api-key /pila/factcheck/api-tokens
 aws logs delete-log-group --region us-west-2 --log-group-name /aws/lambda/pila-factcheck
 aws ecr delete-repository --region us-west-2 --repository-name pila-factcheck --force
 ```

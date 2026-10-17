@@ -13,7 +13,7 @@ if (existsSync(envFile)) process.loadEnvFile(envFile);
 const { TYPESAFE_API_KEY, TAVILY_API_KEY } = process.env;
 
 const transcript: TranscriptSegment[] = JSON.parse(
-  readFileSync(new URL("../../../ref/transcript.json", import.meta.url), "utf8"),
+  readFileSync(new URL("../../../examples/transcripts/transcript.json", import.meta.url), "utf8"),
 );
 
 describe.skipIf(!TAVILY_API_KEY)("Tavily (live)", () => {
@@ -34,11 +34,12 @@ describe.skipIf(!TAVILY_API_KEY)("Tavily (live)", () => {
 describe.skipIf(!TYPESAFE_API_KEY)("Jev + Tavily end to end (live)", () => {
   it("labels claims from the Lindzen video as false or misleading", async () => {
     const checker = createFactChecker({ typesafeApiKey: TYPESAFE_API_KEY!, tavilyApiKey: TAVILY_API_KEY });
-    const report = await checker.checkVideo({ video: { channel: "PragerU", title: "Richard Lindzen climate change" }, transcript });
+    const report = await checker.checkVideo({ video: { channel: "PragerU", title: "Climate Change: What Do Scientists Say?" }, transcript });
     expect(report.model).toMatch(/^jev-/);
     expect(report.claims.length).toBeGreaterThan(0);
-    const labels = report.claims.map((c) => c.label);
-    expect(labels.some((l) => l === "false" || l === "misleading")).toBe(true);
-    expect(labels).not.toContain("true");
+    // The video's main false claim (reviewed by Science Feedback) must be picked and flagged.
+    // Other picks can be true: the video also lists real "points of agreement".
+    const co2 = report.claims.find((c) => c.claim.text.includes("no evidence that CO2 emissions are the dominant factor"));
+    expect(co2?.label).toMatch(/^(false|misleading)$/);
   });
 });

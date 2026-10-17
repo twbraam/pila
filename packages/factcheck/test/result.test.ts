@@ -19,7 +19,7 @@ const source = (stance: Stance, overrides: Partial<SourceResult> = {}): SourceRe
 });
 
 const claimResult = (label: Label, sources: SourceResult[], extra: Partial<ClaimResult> = {}): ClaimResult => ({
-  claim: { index: 7, start: 107.8, text: "CO2 is not the dominant factor.", checkable: 0.9 },
+  claim: { index: 7, start: 107.8, text: "CO2 is not the dominant factor.", checkable: 0.9, suspicious: 0.8 },
   label,
   confidence: 0.93,
   sources,
@@ -60,6 +60,17 @@ describe("toFactCheckResult", () => {
     expect(toFactCheckResult(misleading, ref, context).verdict).toBe("unknown");
     expect(toFactCheckResult(misleading, ref, { ...context, misleadingAs: "misinformation" }).verdict).toBe("misinformation");
     expect(toFactCheckResult(misleading, ref, context).explanation).toBe("Science Feedback says this claim is misleading: “This is false.”");
+  });
+
+  it("never reports misinformation or verified without a source that backs it", () => {
+    const unbacked = toFactCheckResult(claimResult("false", [source("not_relevant")]), ref, context);
+    expect(unbacked).toMatchObject({
+      verdict: "unknown",
+      confidence: 0,
+      sources: [],
+      explanation: "The sources found don't clearly confirm or refute this claim.",
+    });
+    expect(toFactCheckResult(claimResult("true", [source("refutes")]), ref, context).verdict).toBe("unknown");
   });
 
   it("explains missing evidence", () => {

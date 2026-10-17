@@ -221,7 +221,7 @@ export function createFactChecker(input: FactCheckerConfig): FactChecker {
         const result = toFactCheckResult(claim, pairs[claim.claim.index]!.ref, context);
         results.push(result);
         try {
-          options.onResult?.(result);
+          options.onResult?.(result, claim);
         } catch (error) {
           reportCallbackError(error);
         }

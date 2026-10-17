@@ -58,13 +58,9 @@ video, which are by far the best evidence.
 
 ### In the extension
 
-Call the library **from the service worker only**. Add both APIs to `host_permissions`:
-
-```json
-{ "host_permissions": ["https://api.typesafe.ai/*", "https://api.tavily.com/*"] }
-```
-
-See `docs/research/04-chrome-extension-integration.md` for message wiring and caching.
+The extension does **not** import this library: it calls the hosted API ([`apps/api`](../../apps/api)), which runs
+it on the server with the keys. Use the library directly only for scripts, tests, and servers. It also runs in an
+MV3 service worker (tested), which is how it would work if a key ever had to live in the extension.
 
 ## Labels (detailed report)
 

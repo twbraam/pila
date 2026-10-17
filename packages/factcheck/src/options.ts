@@ -2,7 +2,7 @@ import * as z from "zod/mini";
 import { DEFAULT_LIMITS, DEFAULT_MODEL, DEFAULT_THRESHOLDS, DEFAULT_TRUSTED_DOMAINS, type Limits, type Thresholds } from "./config.js";
 import { InvalidInputError } from "./errors.js";
 import type { FactCheckResult } from "./contract.js";
-import type { Fetch, Language, ProgressEvent, TranscriptSegment, VideoInfo } from "./types.js";
+import type { ClaimResult, Fetch, Language, ProgressEvent, TranscriptSegment, VideoInfo } from "./types.js";
 
 type Overrides<T> = { readonly [K in keyof T]?: T[K] | undefined };
 
@@ -108,8 +108,11 @@ export interface FactCheckOptions extends RunOptions {
   readonly video?: Pick<VideoInfo, "title" | "channel"> | undefined;
   /** Detected from the transcript when omitted (English first). */
   readonly language?: Language | undefined;
-  /** Called with each result as soon as its sentence is checked. */
-  readonly onResult?: ((result: FactCheckResult) => void) | undefined;
+  /**
+   * Called with each result as soon as its sentence is checked. `detail` is the internal result
+   * (label, every source and stance, `error` when the check failed), for logging and caching.
+   */
+  readonly onResult?: ((result: FactCheckResult, detail: ClaimResult) => void) | undefined;
 }
 
 const text = (max: number) => z.optional(z.string().check(z.maxLength(max)));
