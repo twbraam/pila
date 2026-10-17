@@ -4,6 +4,8 @@
   "scripts": {
     "start": "tsx server/main.ts",
     "extract": "tsx extract/main.ts",
+    "preprocess": "tsx process/preprocess.ts",
+    "jev": "tsx process/jev_call.ts",
     "test": "node --import tsx --test extract/tests/*.test.ts server/tests/*.test.ts",
     "typecheck": "tsc --noEmit"
   },
@@ -11,6 +13,7 @@
     "node": ">=22"
   },
   "dependencies": {
+    "js-tiktoken": "^1.0.21",
     "youtube-transcript-plus": "^2.0.3"
   },
   "devDependencies": {

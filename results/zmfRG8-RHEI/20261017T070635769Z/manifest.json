@@ -1,0 +1,137 @@
+{
+  "videoId": "zmfRG8-RHEI",
+  "source": "/home/hadao/sync/projects/pila/examples/transcripts/zmfRG8-RHEI.json",
+  "sourceSha256": "eebb7c209fd6b296efa2d41662cd3d28fb608fc4cdc3d32173f6b5e391629b24",
+  "sentenceCount": 789,
+  "options": {
+    "transcript": "/home/hadao/sync/projects/pila/examples/transcripts/zmfRG8-RHEI.json",
+    "language": "en",
+    "batchSize": 64,
+    "contextTokens": 4000,
+    "decisionType": "score",
+    "threshold": 2
+  },
+  "status": "completed",
+  "totalRequests": 13,
+  "completedRequests": 13,
+  "apiSeconds": 4.780847975,
+  "requestStats": [
+    {
+      "requestIndex": 0,
+      "apiSeconds": 0.40342667299999996,
+      "targets": 64,
+      "usage": {
+        "input_tokens": 24032,
+        "output_tokens": 1210
+      }
+    },
+    {
+      "requestIndex": 1,
+      "apiSeconds": 0.3458627329999999,
+      "targets": 64,
+      "usage": {
+        "input_tokens": 24178,
+        "output_tokens": 1210
+      }
+    },
+    {
+      "requestIndex": 2,
+      "apiSeconds": 0.34028116100000033,
+      "targets": 64,
+      "usage": {
+        "input_tokens": 24375,
+        "output_tokens": 1210
+      }
+    },
+    {
+      "requestIndex": 3,
+      "apiSeconds": 0.7191329620000005,
+      "targets": 64,
+      "usage": {
+        "input_tokens": 24601,
+        "output_tokens": 1210
+      }
+    },
+    {
+      "requestIndex": 4,
+      "apiSeconds": 0.3850847300000005,
+      "targets": 64,
+      "usage": {
+        "input_tokens": 24301,
+        "output_tokens": 1210
+      }
+    },
+    {
+      "requestIndex": 5,
+      "apiSeconds": 0.33649291400000036,
+      "targets": 64,
+      "usage": {
+        "input_tokens": 24394,
+        "output_tokens": 1210
+      }
+    },
+    {
+      "requestIndex": 6,
+      "apiSeconds": 0.33877837699999963,
+      "targets": 64,
+      "usage": {
+        "input_tokens": 24237,
+        "output_tokens": 1210
+      }
+    },
+    {
+      "requestIndex": 7,
+      "apiSeconds": 0.3638391190000002,
+      "targets": 64,
+      "usage": {
+        "input_tokens": 24442,
+        "output_tokens": 1210
+      }
+    },
+    {
+      "requestIndex": 8,
+      "apiSeconds": 0.3142742420000004,
+      "targets": 64,
+      "usage": {
+        "input_tokens": 24310,
+        "output_tokens": 1210
+      }
+    },
+    {
+      "requestIndex": 9,
+      "apiSeconds": 0.3273146569999999,
+      "targets": 64,
+      "usage": {
+        "input_tokens": 24268,
+        "output_tokens": 1210
+      }
+    },
+    {
+      "requestIndex": 10,
+      "apiSeconds": 0.32993472099999965,
+      "targets": 64,
+      "usage": {
+        "input_tokens": 24518,
+        "output_tokens": 1210
+      }
+    },
+    {
+      "requestIndex": 11,
+      "apiSeconds": 0.3455689570000004,
+      "targets": 64,
+      "usage": {
+        "input_tokens": 24200,
+        "output_tokens": 1210
+      }
+    },
+    {
+      "requestIndex": 12,
+      "apiSeconds": 0.23085672899999918,
+      "targets": 21,
+      "usage": {
+        "input_tokens": 12075,
+        "output_tokens": 393
+      }
+    }
+  ]
+}

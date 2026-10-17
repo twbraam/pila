@@ -2,7 +2,7 @@
 
 A planned Chrome extension that checks YouTube captions for potential misinformation and shows evidence links during video playback.
 
-The **Extract module is implemented as a TypeScript/Node.js HTTP endpoint, CLI, and library**. Extract and Process share the same server runtime and root package configuration. Process, Overlay, and the WXT extension integration are planned. Extract uses [`youtube-transcript-plus`](https://github.com/ericmmartin/youtube-transcript-plus) to retrieve existing YouTube captions; it does not transcribe audio or require Gemini credentials.
+The **Extract module is implemented as a TypeScript/Node.js HTTP endpoint, CLI, and library**. Extract and Process share the same server runtime and root package configuration. Process now includes Jev transcript screening; evidence retrieval, Overlay, and the WXT extension integration are planned. Extract uses [`youtube-transcript-plus`](https://github.com/ericmmartin/youtube-transcript-plus) to retrieve existing YouTube captions; it does not transcribe audio or require Gemini credentials.
 
 ## Project layout
 
@@ -11,7 +11,7 @@ extract/                  Caption extraction, JSON CLI, and its tests
   main.ts                 CLI entry point
   index.ts                Reusable Extract API
   tests/                  Offline tests and simulated YouTube responses
-process/                  Process step (implementation planned)
+process/                  Jev preprocessing and screening CLI
 server/                   Shared HTTP server and endpoint tests
 shared/
   transcript.ts           Shared Transcript types and runtime validation
@@ -32,7 +32,7 @@ flowchart LR
     A["YouTube URL or ID"] --> B["Extract: fetch captions"]
     B --> C["Assemble timed sentences"]
     C --> D["Transcript JSON"]
-    D --> E["Processing: Jev + Tavily (planned)"]
+    D --> E["Processing: Jev screening; evidence stage planned"]
     E --> F["Overlay during playback (planned)"]
 ```
 
@@ -175,16 +175,22 @@ For older `{ text, start, duration }[]` downloads, supply the video ID separatel
 - Caption quality, punctuation, duplicate/rolling caption text, and coarse timing are inherited from YouTube. Extract normalizes boundaries and whitespace; it does not correct or deduplicate speech.
 - The entire transcript is held in memory and returned once extraction succeeds. The 30-second request timeout applies regardless of video duration.
 
-## 2. Processing (planned)
+## 2. Processing
 
-The implementation belongs in [`process/`](./process/README.md), alongside Extract on the same server. It imports its input contract from `shared/`.
+[`process/`](./process/README.md) consumes the shared `Transcript` contract, automatically selects English or Traditional Chinese prompts, and batches target sentences with surrounding context. Oversized Chinese entries are split into smaller targets while retaining their source IDs and original time ranges. Jev rates each target independently; Processing saves ranked concerns with the original sentence IDs and timestamps.
 
-For every sentence in the transcript:
+```bash
+# Prepare only
+npm run preprocess -- examples/transcripts/OwqIy8Ikv-c.json
 
-1. **Detect with Jev:** ask whether the sentence contains misinformation. If no, continue with the next sentence. A yes is a candidate for further checking.
-2. **Find and assess evidence:** use Tavily to search for evidence links, then ask Jev to assess the results and choose the best source supporting the conclusion that the statement is false. If a suitable source is found, emit a warning for Overlay. If no good evidence is found, skip the warning and continue.
+# Screen with Jev (requires API credentials)
+npm run jev -- examples/transcripts/OwqIy8Ikv-c.json
 
-**Input:** a `Transcript`. **Output:** `MisinformationWarning` results as checks complete; the warning contract is still to be implemented. A skipped sentence produces no warning; that does not establish that it is true.
+# Chinese transcripts select zh-TW prompts automatically
+npm run jev -- examples/transcripts/7wFWgopJP5Q.json
+```
+
+See [JEV.md](./JEV.md) for JSON prompts, score criteria, options, and the `results/` layout. A score prioritizes fact-checking; it is not a verified misinformation warning. The later Tavily evidence stage and `MisinformationWarning` output remain planned.
 
 ## 3. Overlay (planned)
 

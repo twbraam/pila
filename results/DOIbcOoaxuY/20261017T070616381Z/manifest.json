@@ -1,0 +1,29 @@
+{
+  "videoId": "DOIbcOoaxuY",
+  "source": "/home/hadao/sync/projects/pila/examples/transcripts/DOIbcOoaxuY.json",
+  "sourceSha256": "b8f162544bf8f7e223541aba7a4d30a90f1932188c37e1cfa1c01ba64f1cc4ba",
+  "sentenceCount": 57,
+  "options": {
+    "transcript": "/home/hadao/sync/projects/pila/examples/transcripts/DOIbcOoaxuY.json",
+    "language": "en",
+    "batchSize": 64,
+    "contextTokens": 4000,
+    "decisionType": "score",
+    "threshold": 2
+  },
+  "status": "completed",
+  "totalRequests": 1,
+  "completedRequests": 1,
+  "apiSeconds": 0.381956079,
+  "requestStats": [
+    {
+      "requestIndex": 0,
+      "apiSeconds": 0.381956079,
+      "targets": 57,
+      "usage": {
+        "input_tokens": 19161,
+        "output_tokens": 1077
+      }
+    }
+  ]
+}
