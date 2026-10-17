@@ -10,6 +10,8 @@ const USAGE = `Usage: npm run transcript -- <video-url-or-id> [options]
 Options:
   --format srt|vtt|text|json   output format (default: srt)
   --out <file>                 write to a file instead of stdout
+  --chunk <seconds>            clip length sent to Gemini (default: 1200)
+  --duration <seconds>         video length; only needed if it can't be read from YouTube
 
 Env:
   GEMINI_API_KEY   required (can also go in a .env file)
@@ -36,7 +38,7 @@ async function main() {
   }
 
   // The target is the first arg that isn't a flag or a flag's value.
-  const valueFlags = new Set(["--out", "--format"]);
+  const valueFlags = new Set(["--out", "--format", "--chunk", "--duration"]);
   const target = args.find(
     (a, i) => !a.startsWith("--") && !valueFlags.has(args[i - 1]),
   );
@@ -45,7 +47,26 @@ async function main() {
     process.exit(1);
   }
 
-  const { videoId, segments } = await getTranscript(target);
+  const num = (name: string) => {
+    const v = flag(args, name);
+    if (v === undefined) return undefined;
+    const n = Number(v);
+    if (!Number.isFinite(n) || n <= 0) {
+      console.error(`${name} must be a positive number of seconds`);
+      process.exit(1);
+    }
+    return n;
+  };
+
+  const started = performance.now();
+  const { videoId, segments } = await getTranscript(target, {
+    chunkSeconds: num("--chunk"),
+    durationSeconds: num("--duration"),
+  });
+  console.error(
+    `Total latency: ${((performance.now() - started) / 1000).toFixed(1)}s ` +
+      `(${segments.length} segments)`,
+  );
 
   const output = {
     srt: () => toSrt(segments),

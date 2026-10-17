@@ -4,7 +4,10 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "transcript": "tsx src/index.ts",
+    "transcript": "tsx src/extract/index.ts",
+    "screen": "tsx src/process/screen-cli.ts",
+    "check": "tsx src/process/check-cli.ts",
+    "factcheck": "tsx src/process/index.ts",
     "build": "tsc",
     "typecheck": "tsc --noEmit"
   },

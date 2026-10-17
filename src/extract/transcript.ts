@@ -44,9 +44,10 @@ export function extractVideoId(input: string): string {
 
 export async function getTranscript(
   videoIdOrUrl: string,
+  opts: { durationSeconds?: number; chunkSeconds?: number } = {},
 ): Promise<TranscriptResult> {
   const videoId = extractVideoId(videoIdOrUrl);
-  return { videoId, segments: await transcribeWithGemini(videoId) };
+  return { videoId, segments: await transcribeWithGemini(videoId, opts) };
 }
 
 export function toPlainText(segments: TranscriptSegment[]): string {
