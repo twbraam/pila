@@ -78,4 +78,4 @@ Caption extraction relies on YouTube's undocumented interfaces and may not work 
 
 ## Example videos
 
-See [example_videos](./example_videos/README.md)
+See [youtube_videos](./examples/youtube_videos.md)
