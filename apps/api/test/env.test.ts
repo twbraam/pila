@@ -1,13 +1,11 @@
 import { describe, expect, it } from "vitest";
 import { ConfigError, loadConfig } from "../src/env.js";
 
-const base = { TYPESAFE_API_KEY: "ts-key" };
+const base = {};
 
 describe("loadConfig", () => {
   it("applies defaults", () => {
     expect(loadConfig(base)).toEqual({
-      typesafeApiKey: "ts-key",
-      tavilyApiKey: undefined,
       host: "0.0.0.0",
       port: 8787,
       apiTokens: [],
@@ -21,6 +19,7 @@ describe("loadConfig", () => {
       trustedProxyHops: 1,
       originSecret: undefined,
       transcriptSource: "mock",
+      factCheckSource: "mock",
       production: false,
     });
   });
@@ -28,7 +27,6 @@ describe("loadConfig", () => {
   it("reads lists, numbers, and flags", () => {
     const config = loadConfig({
       ...base,
-      TAVILY_API_KEY: "tvly-key",
       PORT: "9000",
       PILA_API_TOKENS: " a , b ,,",
       ALLOWED_ORIGINS: "chrome-extension://abc",
@@ -37,7 +35,6 @@ describe("loadConfig", () => {
       ORIGIN_VERIFY_SECRET: "cf",
     });
     expect(config).toMatchObject({
-      tavilyApiKey: "tvly-key",
       port: 9000,
       apiTokens: ["a", "b"],
       allowedOrigins: ["chrome-extension://abc"],
@@ -45,11 +42,6 @@ describe("loadConfig", () => {
       trustProxy: true,
       originSecret: "cf",
     });
-  });
-
-  it("requires the Jev key", () => {
-    expect(() => loadConfig({})).toThrow(ConfigError);
-    expect(() => loadConfig({ TYPESAFE_API_KEY: "  " })).toThrow(/TYPESAFE_API_KEY/);
   });
 
   it("requires API tokens in production", () => {
@@ -61,6 +53,10 @@ describe("loadConfig", () => {
     expect(() => loadConfig({ ...base, TRANSCRIPT_SOURCE: "nope" })).toThrow(/TRANSCRIPT_SOURCE/);
   });
 
+  it("rejects an unknown fact-check source", () => {
+    expect(() => loadConfig({ ...base, FACTCHECK_SOURCE: "nope" })).toThrow(/FACTCHECK_SOURCE/);
+  });
+
   it("rejects bad numbers", () => {
     expect(() => loadConfig({ ...base, PORT: "abc" })).toThrow(/PORT/);
     expect(() => loadConfig({ ...base, RATE_LIMIT_PER_MINUTE: "0" })).toThrow(/RATE_LIMIT_PER_MINUTE/);
@@ -69,7 +65,7 @@ describe("loadConfig", () => {
   it("never puts key values in error messages", () => {
     const error = (() => {
       try {
-        loadConfig({ TYPESAFE_API_KEY: "secret-value", PORT: "x" });
+        loadConfig({ ORIGIN_VERIFY_SECRET: "secret-value", PORT: "x" });
       } catch (e) {
         return e as Error;
       }

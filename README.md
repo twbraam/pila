@@ -19,108 +19,87 @@ This is the planned architecture. The modules can be built in parallel using the
 **Output:** a `Transcript` for Processing and Overlay.
 
 **Server side:** the hosted API calls a transcript function, `getTranscript(videoId)`, that returns the caption
-segments (`{ text, start, duration }`, as in [`ref/transcript.json`](./ref/transcript.json)) and turns them into a
-`Transcript`. A teammate is building that function; until it ships, the API returns the sample transcript for every
-video (response header `x-pila-transcript-source: mock`). Contract: [`apps/api/src/transcripts/provider.ts`](./apps/api/src/transcripts/provider.ts).
+segments (`{ text, start, duration }`, as in [`ref/transcript.json`](./ref/transcript.json)). A teammate is building
+that function; until it ships, the API uses the sample transcript for every video (response header
+`x-pila-transcript-source: mock`). Contract: [`apps/api/src/transcripts/provider.ts`](./apps/api/src/transcripts/provider.ts).
 
 ### 2. Processing
 
-Implemented in [`packages/factcheck`](./packages/factcheck) as `factCheck(transcript, options)` and hosted by
-[`apps/api`](./apps/api) at **`https://d3tuhog92nak7r.cloudfront.net`**. The extension calls
-`POST /factcheck` with `Authorization: Bearer <token>` and `{ videoId, video: { title, channel } }`, and gets
-`{ success, data: FactCheckResult[], error }`. The API fetches the transcript itself. The Jev and Tavily keys stay on
-the server.
-Flow and error codes: [`packages/factcheck/docs/workflow.md`](./packages/factcheck/docs/workflow.md).
+Hosted by [`apps/api`](./apps/api) at **`https://d3tuhog92nak7r.cloudfront.net`**. The extension calls
+`POST /factcheck` with `Authorization: Bearer <token>` and `{ "videoId": "<11-char YouTube ID>" }`, and gets a bare
+`FactCheckItem[]` (below). The API chains two functions:
 
-1. **Find claims with Jev:** one request asks, for every sentence, whether it is a specific factual claim that can be checked. The top 5 are kept (configurable). Jev has no world knowledge, so it picks *checkable* sentences; it does not judge truth on its own.
-2. **Find evidence with Tavily:** one search for reviews of the whole video (title + channel + "fact check"), plus one search per claim. Fact-checker domains are preferred; YouTube and copies of the video's own transcript are dropped.
-3. **Assess with Jev:** per claim, one request asks for a verdict, what each source says about the claim, and which sentence of each source states its conclusion.
-4. **Decide in code:** trusted fact-checkers win; unclear or inconsistent answers become `unknown`.
+1. `getTranscript(videoId)` returns the caption segments (`{ text, start, duration }`, as in
+   [`ref/transcript.json`](./ref/transcript.json)). Contract: [`apps/api/src/transcripts/provider.ts`](./apps/api/src/transcripts/provider.ts).
+2. `factCheck(transcript)` turns them into `FactCheckItem[]`. Contract: [`apps/api/src/factcheck/provider.ts`](./apps/api/src/factcheck/provider.ts).
 
-**Input:** a YouTube video ID (the API loads its `Transcript`), plus the video's `title` and `channel` (they find published reviews of the video, the best evidence). **Output:** one `FactCheckResult` per checked sentence, streamed to `onResult` as each check completes and returned together at the end. Sentences that were not checked produce no result; that does not establish that they are true.
+Teammates are building both. Until they ship, both are **mocks**: every video gets the sample transcript and the same
+five fixed items (response headers `x-pila-transcript-source: mock`, `x-pila-factcheck-source: mock`).
+
+[`packages/factcheck`](./packages/factcheck) is our earlier Jev + Tavily implementation (`FactCheckResult`, see its
+[workflow](./packages/factcheck/docs/workflow.md)). The API no longer calls it.
 
 ### 3. Overlay
 
-- Match warnings to sentences using the video ID and sentence ID.
-- Use the sentence timestamps and current playback position to show the relevant warning.
-- Tell the user **“This statement is probably false”** and display a clickable link to the selected source for more information.
+- Use `timestamp` and the current playback position to show the relevant item.
+- Tell the user **“This statement is probably false”** and display a clickable link to `sources[0]` for more information.
 
-**Input:** the `Transcript`, `FactCheckResult`s from Processing, and the current playback position. Show a warning only for results with `verdict: "misinformation"`; use `sources[0]` as the link and `explanation` as the detail text.
+**Input:** `FactCheckItem[]` from the API and the current playback position. What each `score` means (and which
+scores get a warning) is defined by the fact-check function's owner.
 
 ## Shared Data Contracts
 
-These TypeScript types describe the JSON exchanged between modules. Timestamps are in seconds from the beginning of the video; sentence IDs are unique and stable within a transcript.
+These TypeScript types describe the JSON exchanged between modules. Timestamps are in seconds from the beginning of the video.
 
 ```ts
-type SubtitleSentence = {
-  id: string;
-  text: string;
-  startSeconds: number;
-  endSeconds: number;
+// POST /factcheck response body
+type FactCheckItem = {
+  timestamp: number;   // seconds from the video start
+  sentence: string;    // excerpt from the transcript
+  score: 0 | 1 | 2 | 3;
+  sources: string[];   // http(s) URLs, best first; may be empty
 };
 
-type Transcript = {
+// What getTranscript returns (ref/transcript.json is the segments array)
+type VideoTranscript = {
   videoId: string;
-  sentences: SubtitleSentence[];
-};
-
-type FactCheckResult = {
-  videoId: string;
-  sentenceId: string;
-  startSeconds: number;
-  endSeconds: number;
-  sentence: string;                 // as given in the Transcript
-  verdict: "misinformation" | "verified" | "unknown";
-  confidence: number;               // 0-1
-  explanation: string;              // template + a quote from the best source, e.g.
-                                    // Science Feedback says this claim is false: “…”
-  sources: { title: string; url: string }[];  // best first; empty when nothing relevant was found
+  segments: { text: string; start: number; duration: number }[];
+  language?: "en" | "zh";
 };
 ```
 
-- `misinformation`: a source (usually a fact-checker) says the claim is false.
-- `verified`: a source confirms the claim.
-- `unknown`: no relevant evidence, unclear or conflicting sources, a misleading-but-not-false claim, or a failed check. `explanation` says which.
-- `confidence` is how sure Processing is of its finding. For `unknown` it can be high (for example, a clearly *misleading* claim), so read it together with `explanation`.
-- `explanation`, `sources[].title`, and `sources[].url` contain text from the web. Overlay must render them as plain text (`textContent`), never as HTML, and should only link `https:` URLs.
+- `sentence` and `sources` may contain text from the web. Overlay must render them as plain text (`textContent`),
+  never as HTML, and should only link `https:` URLs. The API rejects non-http(s) URLs.
 
-Example:
+Example (from the mock):
 
 ```json
-{
-  "videoId": "OwqIy8Ikv-c",
-  "sentenceId": "OwqIy8Ikv-c-16",
-  "startSeconds": 104.71,
-  "endSeconds": 111.79,
-  "sentence": "None of these is fully understood, and there is no evidence that CO2 emissions are the dominant factor.",
-  "verdict": "misinformation",
-  "confidence": 0.93,
-  "explanation": "Science Feedback says this claim is false: “In the video, former MIT Professor Richard Lindzen claims “there is no evidence that CO2 emissions are the dominant factor” in climate change. This is false.”",
-  "sources": [
-    {
-      "title": "Video from PragerU makes several incorrect and misleading claims about climate change - Science Feedback",
-      "url": "https://science.feedback.org/review/video-from-prageru-makes-several-incorrect-and-misleading-claims-about-climate-change-richard-lindzen"
-    }
-  ]
-}
+[
+  {
+    "timestamp": 104.71,
+    "sentence": "None of these is fully understood, and there is no evidence that CO2 emissions are the dominant factor.",
+    "score": 3,
+    "sources": [
+      "https://climatefeedback.org/evaluation/video-from-prageru-makes-several-incorrect-and-misleading-claims-about-climate-change-richard-lindzen"
+    ]
+  }
+]
 ```
 
-The example is illustrative; it has not been produced by a live Jev run yet.
-
-Ingestion can be developed against sample subtitle data, Processing against fixture transcripts, and Overlay against fixture transcripts and warnings. This lets each module progress before the others are connected.
+Ingestion can be developed against sample subtitle data, Processing against fixture transcripts, and Overlay against the mock API. This lets each module progress before the others are connected.
 
 ## Tech Stack
 
 - **TypeScript + WXT (Manifest V3)** — Chrome extension framework.
 - **Content scripts + page-context bridge** — discover subtitles and monitor playback.
 - **Background service worker + Fetch API** — retrieve captions and call our hosted API.
-- **Hosted API (Hono on AWS Lambda behind CloudFront)** — runs Processing with Jev and Tavily; see [`infra/aws`](./infra/aws/README.md).
+- **Hosted API (Hono on AWS Lambda behind CloudFront)** — chains the transcript and fact-check functions; see [`infra/aws`](./infra/aws/README.md).
 - **Jev + Tavily** — detect potential misinformation, search for evidence, and select a supporting source.
 - **Chrome messaging + storage** — internal communication and settings.
 
 ## Technical Considerations
 
-Caption extraction relies on YouTube's undocumented interfaces and may not work for every video. Missing subtitles or failed checks must not produce misinformation warnings. The extension must handle playback synchronization, seeking, deduplication, and checks that finish after a sentence has played. Changing videos must clear old warnings and ignore results belonging to the previous video. Jev and Tavily credentials live only on the server (AWS SSM); the extension needs only the API token.
+Caption extraction relies on YouTube's undocumented interfaces and may not work for every video. Missing subtitles or failed checks must not produce misinformation warnings. The extension must handle playback synchronization, seeking, deduplication, and checks that finish after a sentence has played. Changing videos must clear old warnings and ignore results belonging to the previous video. Any service credentials live only on the server (AWS SSM); the extension needs only the API token.
 
 ## Example videos
 

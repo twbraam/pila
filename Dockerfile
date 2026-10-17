@@ -1,6 +1,6 @@
 # API server for @pila/factcheck. Build from the repo root:
 #   docker build -t pila-api .
-#   docker run -p 8787:8787 -e TYPESAFE_API_KEY=... -e TAVILY_API_KEY=... -e PILA_API_TOKENS=... pila-api
+#   docker run -p 8787:8787 -e PILA_API_TOKENS=... pila-api
 
 FROM node:22-slim AS build
 WORKDIR /app

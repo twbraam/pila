@@ -2,7 +2,7 @@
   "name": "@pila/api",
   "version": "0.1.0",
   "private": true,
-  "description": "HTTP API that runs @pila/factcheck for the Pila Chrome extension",
+  "description": "HTTP API for the Pila Chrome extension: YouTube video ID -> transcript -> fact-check items",
   "type": "module",
   "engines": {
     "node": ">=22"

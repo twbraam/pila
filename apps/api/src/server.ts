@@ -1,9 +1,9 @@
 import { existsSync } from "node:fs";
 import { serve } from "@hono/node-server";
-import { createFactChecker } from "@pila/factcheck";
 import { createApp } from "./app.js";
 import { ConfigError, loadConfig } from "./env.js";
-import { createLogger } from "./logger.js";
+import { factCheckProviders } from "./factcheck/index.js";
+import { createLogger, warnAboutMocks } from "./logger.js";
 import { transcriptProviders } from "./transcripts/index.js";
 
 const DEV_ENV_FILE = new URL("../../../.env", import.meta.url);
@@ -15,12 +15,11 @@ function main(): void {
   if (process.env.NODE_ENV !== "production" && existsSync(DEV_ENV_FILE)) process.loadEnvFile(DEV_ENV_FILE);
   const config = loadConfig(process.env);
   if (config.apiTokens.length === 0) logger.warn({}, "PILA_API_TOKENS is empty: the API accepts requests without a token");
-  if (!config.tavilyApiKey) logger.warn({}, "TAVILY_API_KEY is empty: using Tavily's rate-limited keyless mode");
 
-  const checker = createFactChecker({ typesafeApiKey: config.typesafeApiKey, tavilyApiKey: config.tavilyApiKey });
-  if (config.transcriptSource === "mock") logger.warn({}, "TRANSCRIPT_SOURCE is mock: every video gets the sample transcript");
   const transcripts = { get: transcriptProviders[config.transcriptSource], source: config.transcriptSource };
-  const app = createApp({ checker, config, logger, transcripts });
+  const factCheck = { run: factCheckProviders[config.factCheckSource], source: config.factCheckSource };
+  warnAboutMocks(logger, { transcripts: transcripts.source, factCheck: factCheck.source });
+  const app = createApp({ config, logger, transcripts, factCheck });
   const server = serve({ fetch: app.fetch, port: config.port, hostname: config.host }, (info) =>
     logger.info({ host: config.host, port: info.port }, "listening"),
   );

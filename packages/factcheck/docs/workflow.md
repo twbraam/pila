@@ -1,26 +1,26 @@
 # Workflow: from the extension to a verdict
 
-How a YouTube transcript becomes `FactCheckResult[]`. Matches the code as of 2026-10-17:
-`apps/api` (the hosted API) and `packages/factcheck` (the library it runs). Defaults come from
-`packages/factcheck/src/config.ts` and `apps/api/src/env.ts`.
+Matches the code as of 2026-10-17.
+
+> **Change (2026-10-17):** the hosted API (`apps/api`) no longer runs this library. It chains a teammate's
+> transcript function and a teammate's fact-check function, and returns `FactCheckItem[]`
+> (`{ timestamp, sentence, score: 0-3, sources: string[] }`). Both are mocks for now. Sections 0-1 describe the API;
+> sections 2-6 describe this library (`packages/factcheck`), kept as a reference implementation.
 
 Diagrams are Mermaid. They render on GitHub and in the IntelliJ Markdown preview.
 
 ## 0. System
 
-The extension never holds the Jev or Tavily keys. It sends a YouTube video ID to our API; the API
-loads the transcript, then runs the library.
+The extension sends a YouTube video ID to our API; the API loads the transcript, then fact-checks it.
 
 ```mermaid
 flowchart LR
     EXT["Chrome extension<br/>service worker"] -->|"POST /factcheck { videoId }<br/>Authorization: Bearer token"| CF["CloudFront<br/>d3tuhog92nak7r.cloudfront.net"]
     CF -->|"adds x-origin-verify"| URL["Lambda Function URL"]
     URL --> L["Lambda pila-factcheck<br/>apps/api (Hono)"]
-    L -->|"cold start"| SSM[("SSM /pila/factcheck/*<br/>origin secret, API tokens,<br/>Jev key, Tavily key")]
-    L --> TR["getTranscript(videoId)<br/>apps/api/src/transcripts<br/>(mock for now: ref/transcript.json)"]
-    L --> LIB["@pila/factcheck<br/>factCheck()"]
-    LIB --> J["Jev API"]
-    LIB --> T["Tavily API"]
+    L -->|"cold start"| SSM[("SSM /pila/factcheck/*<br/>origin secret, API tokens")]
+    L --> TR["getTranscript(videoId)<br/>apps/api/src/transcripts<br/>(mock: ref/transcript.json)"]
+    TR --> FC["factCheck(transcript)<br/>apps/api/src/factcheck<br/>(mock: 5 fixed items)"]
 ```
 
 Limits: CloudFront and Lambda cut requests at 60 s, so a run is aborted at 55 s. Lambda reserved
@@ -38,45 +38,37 @@ flowchart TD
     RL -->|"no"| E429(["429 rate_limited<br/>Retry-After"])
     RL -->|"yes"| B{"body <= 16 KB, valid JSON,<br/>11-character YouTube videoId?"}
     B -->|"no"| E400(["400 invalid_json / invalid_request<br/>413 payload_too_large"])
-    B -->|"yes"| C{"same request<br/>in cache (6 h)?"}
-    C -->|"yes"| HIT(["200 data: FactCheckResult[]<br/>x-pila-cache: hit"])
+    B -->|"yes"| C{"videoId<br/>in cache (6 h)?"}
+    C -->|"yes"| HIT(["200 FactCheckItem[]<br/>x-pila-cache: hit"])
     C -->|"no"| GT["getTranscript(videoId, { signal })<br/>signal: 55 s timeout or client gone"]
-    GT -->|"no captions"| E404(["404 transcript_not_found"])
-    GT -->|"error or bad segments"| E502(["502 transcript_unavailable"])
-    GT -->|"segments"| ST["segmentsToTranscript<br/>ids videoId-0, videoId-1, ..."]
-    ST --> RUN["factCheck(transcript, { video, language, signal })"]
-    RUN -->|"ok"| CACHE["cache it if no claim failed"]
-    CACHE --> MISS(["200 data: FactCheckResult[]<br/>x-pila-cache: miss"])
-    RUN -->|"error"| MAP(["502 / 503 / 504 / 500<br/>safe message, details only in logs"])
+    GT -->|"no captions or no text"| E404(["404 transcript_not_found"])
+    GT -->|"error, bad segments, other video"| E502(["502 transcript_unavailable"])
+    GT -->|"segments"| RUN["factCheck({ videoId, segments }, { signal })"]
+    RUN -->|"items"| V{"items valid?<br/>score 0-3, http(s) URLs"}
+    V -->|"yes"| MISS(["200 FactCheckItem[]<br/>x-pila-cache: miss"])
+    V -->|"no"| E502F(["502 factcheck_failed"])
+    RUN -->|"error"| E502F
+    RUN -->|"55 s"| E504(["504 timeout"])
 ```
-
-Request and response:
 
 ```text
 POST /factcheck
 Authorization: Bearer <token>
 Content-Type: application/json
 
-{ "videoId": "OwqIy8Ikv-c", "video": { "title": "...", "channel": "..." }, "language": "en" | "zh" }
+{ "videoId": "OwqIy8Ikv-c" }
 
-200 { "success": true,  "data": FactCheckResult[], "error": null }
-4xx/5xx { "success": false, "data": null, "error": { "code", "message", "requestId" } }
+200 [ { "timestamp": 104.71, "sentence": "...", "score": 3, "sources": ["https://..."] } ]
+4xx/5xx { "error": { "code", "message", "requestId" } }
 ```
 
-`GET /health` returns `{ success: true, data: { ok: true }, error: null }` (origin check only, no token).
-
-The transcript function (`GetTranscript` in `apps/api/src/transcripts/provider.ts`) is being built by a
-teammate. Until then `TRANSCRIPT_SOURCE=mock` returns the sample transcript for every video, and
-responses carry `x-pila-transcript-source: mock`.
-
-With `Accept: text/event-stream` the API streams one `result` event per sentence, then `done`
-(or `error`). On Lambda the Function URL is in `BUFFERED` mode, so the events arrive together at
-the end; use plain JSON there. Streaming works when running the server locally or in Docker.
+`GET /health` returns `{ ok: true }` (origin check only, no token). Contracts and how to plug in the real
+functions: [`apps/api/README.md`](../../../apps/api/README.md).
 
 The cache and rate limit are in memory, per Lambda container (up to 5), so limits are about 5x
 looser than configured. Fine for the POC.
 
-## 2. `factCheck` pipeline
+## 2. Library: `factCheck` pipeline
 
 ```mermaid
 flowchart TD

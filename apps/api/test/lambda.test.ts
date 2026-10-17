@@ -1,6 +1,6 @@
-import type { FactCheckOptions, FactCheckResult, Transcript } from "@pila/factcheck";
 import type { LambdaEvent } from "hono/aws-lambda";
 import { describe, expect, it, vi } from "vitest";
+import type { FactCheckItem } from "../src/factcheck/index.js";
 import { createLambdaHandler, type LambdaSecrets, loadSsmSecrets } from "../src/lambda.js";
 
 const ssmSend = vi.hoisted(() => vi.fn());
@@ -13,24 +13,9 @@ vi.mock("@aws-sdk/client-ssm", () => ({
   },
 }));
 
-const secrets: LambdaSecrets = { originSecret: "cf-secret", typesafeApiKey: "ts", tavilyApiKey: "tvly", apiTokens: "ext-token" };
+const secrets: LambdaSecrets = { originSecret: "cf-secret", apiTokens: "ext-token" };
 
-const transcript: Transcript = {
-  videoId: "v1",
-  sentences: [{ id: "s1", text: "The Great Wall is visible from the Moon.", startSeconds: 0, endSeconds: 5 }],
-};
-
-const result: FactCheckResult = {
-  videoId: "v1",
-  sentenceId: "s1",
-  startSeconds: 0,
-  endSeconds: 5,
-  sentence: "The Great Wall is visible from the Moon.",
-  verdict: "misinformation",
-  confidence: 0.9,
-  explanation: "Snopes says this claim is false.",
-  sources: [{ title: "Snopes", url: "https://www.snopes.com/x" }],
-};
+const items: FactCheckItem[] = [{ timestamp: 0, sentence: "The Great Wall is visible from the Moon.", score: 3, sources: ["https://www.snopes.com/x"] }];
 
 /**
  * A Lambda Function URL event (payload v2), as CloudFront forwards it. Cast because Hono types it
@@ -62,12 +47,9 @@ const event = (method: string, path: string, headers: Record<string, string> = {
 const logger = { info: vi.fn(), warn: vi.fn(), error: vi.fn() };
 
 const setup = (loadSecrets = vi.fn(async () => secrets)) => {
-  const factCheck = vi.fn(async (_t: Transcript, o?: FactCheckOptions) => {
-    o?.onResult?.(result, { claim: { index: 0, start: 0, text: "x", checkable: 1, suspicious: 1 }, label: "false", confidence: 0.9, sources: [] });
-    return [result];
-  });
+  const factCheck = vi.fn(async () => items);
   const getTranscript = vi.fn(async (videoId: string) => ({ videoId, segments: [{ text: "The Great Wall is visible from the Moon.", start: 0, duration: 5 }] }));
-  const handler = createLambdaHandler({ loadSecrets, env: {}, logger, createChecker: () => ({ factCheck }), getTranscript });
+  const handler = createLambdaHandler({ loadSecrets, env: {}, logger, factCheck, getTranscript });
   return { handler, loadSecrets, factCheck, getTranscript };
 };
 
@@ -78,15 +60,15 @@ describe("Lambda handler", () => {
     const { handler } = setup();
     const ok = await handler(event("GET", "/health", origin));
     expect(ok.statusCode).toBe(200);
-    expect(JSON.parse(ok.body)).toEqual({ success: true, data: { ok: true }, error: null });
+    expect(JSON.parse(ok.body)).toEqual({ ok: true });
     expect((await handler(event("GET", "/health"))).statusCode).toBe(403);
   });
 
-  it("runs /factcheck with a valid token and returns FactCheckResult[]", async () => {
+  it("runs /factcheck with a valid token and returns the items", async () => {
     const { handler, factCheck, getTranscript } = setup();
     const res = await handler(event("POST", "/factcheck", { ...origin, authorization: "Bearer ext-token", "content-type": "application/json" }, { videoId: "dQw4w9WgXcQ" }));
     expect(res.statusCode).toBe(200);
-    expect(JSON.parse(res.body)).toEqual({ success: true, data: [result], error: null });
+    expect(JSON.parse(res.body)).toEqual(items);
     expect(getTranscript).toHaveBeenCalledWith("dQw4w9WgXcQ", expect.anything());
     expect(factCheck).toHaveBeenCalledOnce();
   });
@@ -97,17 +79,23 @@ describe("Lambda handler", () => {
     expect(res.statusCode).toBe(401);
   });
 
-  it("labels an injected transcript function as custom", async () => {
+  it("labels injected functions as custom", async () => {
     const { handler } = setup();
     const res = await handler(event("POST", "/factcheck", { ...origin, authorization: "Bearer ext-token", "content-type": "application/json" }, { videoId: "dQw4w9WgXcQ" }));
     expect(res.headers?.["x-pila-transcript-source"]).toBe("custom");
+    expect(res.headers?.["x-pila-factcheck-source"]).toBe("custom");
   });
 
-  it("warns at startup when the mock transcript is in use", async () => {
+  it("uses the mocks by default and warns about them at startup", async () => {
     logger.warn.mockClear();
-    const handler = createLambdaHandler({ loadSecrets: async () => secrets, env: {}, logger, createChecker: () => ({ factCheck: vi.fn() }) });
-    await handler(event("GET", "/health", origin));
-    expect(JSON.stringify(logger.warn.mock.calls)).toContain("mock");
+    const handler = createLambdaHandler({ loadSecrets: async () => secrets, env: {}, logger });
+    const res = await handler(event("POST", "/factcheck", { ...origin, authorization: "Bearer ext-token", "content-type": "application/json" }, { videoId: "dQw4w9WgXcQ" }));
+    expect(res.statusCode).toBe(200);
+    expect(res.headers?.["x-pila-transcript-source"]).toBe("mock");
+    expect(res.headers?.["x-pila-factcheck-source"]).toBe("mock");
+    const warned = JSON.stringify(logger.warn.mock.calls);
+    expect(warned).toContain("TRANSCRIPT_SOURCE is mock");
+    expect(warned).toContain("FACTCHECK_SOURCE is mock");
   });
 
   it("loads secrets once per container", async () => {
@@ -123,7 +111,7 @@ describe("Lambda handler", () => {
     const failed = await handler(event("GET", "/health", origin));
     expect(failed.statusCode).toBe(500);
     expect(failed.body).not.toContain("secret details");
-    expect(JSON.parse(failed.body)).toMatchObject({ success: false, data: null, error: { code: "unavailable" } });
+    expect(JSON.parse(failed.body)).toMatchObject({ error: { code: "unavailable" } });
     expect(failed.headers?.["access-control-allow-origin"]).toBe("*");
     expect((await handler(event("GET", "/health", origin))).statusCode).toBe(200);
   });
@@ -137,19 +125,17 @@ describe("Lambda handler", () => {
 describe("loadSsmSecrets", () => {
   const param = (name: string, value: string) => ({ Name: `/pila/factcheck/${name}`, Value: value });
 
-  it("reads the four parameters with decryption", async () => {
-    ssmSend.mockResolvedValueOnce({
-      Parameters: [param("origin-secret", "o"), param("typesafe-api-key", "t"), param("tavily-api-key", "v"), param("api-tokens", "a,b")],
-    });
-    expect(await loadSsmSecrets()).toEqual({ originSecret: "o", typesafeApiKey: "t", tavilyApiKey: "v", apiTokens: "a,b" });
+  it("reads the origin secret and API tokens with decryption", async () => {
+    ssmSend.mockResolvedValueOnce({ Parameters: [param("origin-secret", "o"), param("api-tokens", "a,b")] });
+    expect(await loadSsmSecrets()).toEqual({ originSecret: "o", apiTokens: "a,b" });
     expect(ssmSend.mock.calls[0]?.[0].input).toEqual({
-      Names: ["/pila/factcheck/origin-secret", "/pila/factcheck/typesafe-api-key", "/pila/factcheck/tavily-api-key", "/pila/factcheck/api-tokens"],
+      Names: ["/pila/factcheck/origin-secret", "/pila/factcheck/api-tokens"],
       WithDecryption: true,
     });
   });
 
   it("names the missing parameters, without any values", async () => {
-    ssmSend.mockResolvedValueOnce({ Parameters: [param("typesafe-api-key", "secret-value")] });
+    ssmSend.mockResolvedValueOnce({ Parameters: [param("unrelated", "secret-value")] });
     const error = await loadSsmSecrets().catch((e: Error) => e);
     expect(String(error)).toContain("origin-secret, api-tokens");
     expect(String(error)).not.toContain("secret-value");

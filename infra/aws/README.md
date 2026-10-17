@@ -24,8 +24,8 @@ client ──HTTPS──▶ CloudFront ──adds x-origin-verify──▶ Lambd
 | Function URL | `https://4qigmpqu4wrhkst6ijpt227whu0xjnlc.lambda-url.us-west-2.on.aws/` | auth `NONE`; the handler rejects requests without the right `x-origin-verify` (403) |
 | IAM role | `pila-factcheck-lambda` | `AWSLambdaBasicExecutionRole` + inline `read-pila-ssm` (`ssm:GetParameter(s)` on `/pila/factcheck/*`) |
 | SSM (SecureString) | `/pila/factcheck/origin-secret` | value CloudFront sends in `x-origin-verify` |
-| SSM (SecureString) | `/pila/factcheck/typesafe-api-key` | Jev key (copied from repo `.env`) |
-| SSM (SecureString) | `/pila/factcheck/tavily-api-key` | Tavily key (copied from repo `.env`) |
+| SSM (SecureString) | `/pila/factcheck/typesafe-api-key` | Jev key; not read by the API since the fact-check function moved to a teammate (keep for now) |
+| SSM (SecureString) | `/pila/factcheck/tavily-api-key` | Tavily key; not read by the API (keep for now) |
 | SSM (SecureString) | `/pila/factcheck/api-tokens` | comma-separated client tokens for `Authorization: Bearer` (one token, also in repo `.env` as `PILA_API_TOKEN`) |
 | Lambda version | `1` | snapshot of the smoke handler, for rollback |
 | CloudWatch Logs | `/aws/lambda/pila-factcheck` | 7-day retention |
@@ -35,15 +35,15 @@ client ──HTTPS──▶ CloudFront ──adds x-origin-verify──▶ Lambd
 
 | Method | Path | Auth | Body | Response |
 |---|---|---|---|---|
-| GET | `/health` | — | — | `200 { success: true, data: { ok: true }, error: null }` |
-| POST | `/factcheck` | `Authorization: Bearer <token>` | `{ videoId: "<11-char YouTube ID>", video?: { title, channel }, language?: "en" \| "zh" }` | `200 { success: true, data: FactCheckResult[], error: null }`, headers `x-pila-cache: hit\|miss`, `x-pila-transcript-source` |
+| GET | `/health` | — | — | `200 { ok: true }` |
+| POST | `/factcheck` | `Authorization: Bearer <token>` | `{ videoId: "<11-char YouTube ID>" }` | `200 FactCheckItem[]` (`{ timestamp, sentence, score: 0-3, sources: string[] }`), headers `x-pila-cache: hit\|miss`, `x-pila-transcript-source`, `x-pila-factcheck-source` |
 | OPTIONS | any | — | — | `204`, CORS `*` |
 
-Errors use `{ success: false, data: null, error: { code, message, requestId } }`: `400` invalid input, `401` missing or
-wrong token, `403` missing/wrong `x-origin-verify`, `404` unknown route or `transcript_not_found`, `413` body over
-16 KB, `429` rate limit (`Retry-After`), `502` `transcript_unavailable` or Jev/Tavily failure, `503` Jev/Tavily busy or
-out of quota, `504` over 55 s, `500` other. The API loads transcripts itself (`apps/api/src/transcripts`; currently a
-mock that returns `ref/transcript.json` for every video). Full flow: `packages/factcheck/docs/workflow.md`.
+Errors use `{ error: { code, message, requestId } }`: `400` invalid input, `401` missing or wrong token, `403`
+missing/wrong `x-origin-verify`, `404` unknown route or `transcript_not_found`, `413` body over 16 KB, `429` rate limit
+(`Retry-After`), `502` `transcript_unavailable` or `factcheck_failed`, `504` over 55 s, `500` other. The API chains a
+transcript function (`apps/api/src/transcripts`) and a fact-check function (`apps/api/src/factcheck`); both are
+currently mocks that return the same data for every video. Details: `apps/api/README.md`.
 
 ## Rules for `apps/api` on this stack (all implemented)
 
@@ -89,10 +89,8 @@ curl -s https://d3tuhog92nak7r.cloudfront.net/health                            
 curl -s https://4qigmpqu4wrhkst6ijpt227whu0xjnlc.lambda-url.us-west-2.on.aws/health    # 403 (bypass blocked)
 curl -s -X POST -H 'content-type: application/json' https://d3tuhog92nak7r.cloudfront.net/factcheck -d '{}'  # 401 (no token)
 curl -s -X POST -H 'content-type: application/json' -H "authorization: Bearer $PILA_API_TOKEN" \
-  https://d3tuhog92nak7r.cloudfront.net/factcheck -d '{
-  "videoId": "OwqIy8Ikv-c",
-  "video": {"title": "Climate Change: What Do Scientists Say?", "channel": "PragerU"}}'
-# 200, up to 5 results for the (mock) Lindzen transcript, ~5-12 s; a repeat is a cache hit (verified 2026-10-17)
+  https://d3tuhog92nak7r.cloudfront.net/factcheck -d '{"videoId": "OwqIy8Ikv-c"}'
+# 200, the 5 mock items, ~0.5 s; a repeat is a cache hit (verified 2026-10-17)
 aws logs tail /aws/lambda/pila-factcheck --region us-west-2 --since 10m
 ```
 
