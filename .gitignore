@@ -16,3 +16,6 @@ playwright-report/
 .idea/
 .vscode/
 .DS_Store
+
+# Built by npm run build:sw-test
+packages/factcheck/test/sw/extension/sw.js

@@ -25,15 +25,14 @@
 
 ## Cost and limits
 
-- Tavily free plan: 1,000 credits/month per key, ~80-160 videos. Development keys: 100
+- Tavily free plan: 1,000 credits/month per key, ~80 videos (12 credits each). Development keys: 100
   requests/minute. Cache reports per video.
 - Jev: well under $0.01 per video. One TypeSafe org rate limit is shared by teammates.
 
 ## Open questions
 
-1. **Repo layout**: npm workspaces monorepo (`packages/factcheck` + `apps/extension`),
-   or the library alone in this repo?
-2. **Transcript source**: will the extension team always pass title and channel?
-   Search quality depends on them.
-3. **Default K** (claims per video): 5 keeps cost and time low. Enough for the demo?
-4. **Label set**: `true`, `false`, `misleading`, `insufficient_evidence`, `not_sure`. OK?
+Decided 2026-10-17: npm workspaces monorepo; the extension team always passes title and
+channel; default 5 claims per video.
+
+1. **Label set**: `true`, `false`, `misleading`, `insufficient_evidence`, `not_sure`. OK?
+2. **Thresholds** are untuned guesses until the Jev eval runs (needs the Jev key).

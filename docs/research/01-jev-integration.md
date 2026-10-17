@@ -73,14 +73,14 @@ Full body built from `ref/transcript.json`:
   "model": "jev-1.13.0",
   "state": {
     "sentences": [
-      { "start": 2.52, "text": "I’m an atmospheric physicist." },
-      { "start": 7.88, "text": "For 30 years I taught at MIT, during which time the climate has changed remarkably little." }
+      "I’m an atmospheric physicist.",
+      "For 30 years I taught at MIT, during which time the climate has changed remarkably little."
     ]
   },
   "questions": {
     "checkable_0": {
       "type": "noul",
-      "instructions": "Is `sentences[0].text` a specific factual claim that could be checked against outside sources?",
+      "instructions": "Is `sentences[0]` a specific factual claim that could be checked against outside sources?",
       "criteria": {
         "true": "States a checkable fact: a number, an event, a quote, a scientific finding, or a cause and effect",
         "false": "An opinion, a prediction, a question, an introduction, or too vague to check"
@@ -93,6 +93,8 @@ Full body built from `ref/transcript.json`:
 - One `noul` per sentence, all in one request (TypeSafe's
   [speculative fan-out](https://docs.typesafe.ai/patterns/fan-out.md) pattern).
 - Code keeps sentences with `noul` >= 0.7 and takes the top K (default 5).
+- Only the sentence text goes in the state; start times stay in code. Long transcripts are
+  split into requests of 150 sentences.
 - Known gap: sentences that only make sense in context ("This is the group I belong to")
   can't be searched. Jev can't rewrite them. For v1, drop them. Option for later: an extra
   `noul` "Can this be understood without the rest of the video?"
@@ -135,12 +137,15 @@ curl https://api.typesafe.ai/v1/systemone \
 
 ## Combining the answers in code
 
-Jev gives probabilities; our code makes the final call. Starting rules:
+Jev gives probabilities; our code makes the final call. Rules as built (`src/verdict.ts`):
 
 1. No evidence left after filtering -> **insufficient_evidence** (skip the Jev call).
-2. `verdict` and `verdict_reversed` disagree, or `verdict.confidence` < 0.6 -> **not_sure**.
-3. A trusted fact-checker source (domain on our list) has stance `refutes` with
-   confidence >= 0.8 -> **false**, even if weaker sources disagree.
+2. Trusted sources (domain on our list) with stance confidence >= 0.8:
+   - some refute and some support -> **not_sure**
+   - some refute -> **false** (or **misleading** if Jev's verdict is misleading)
+   - some support -> **true** (or **misleading** if Jev's verdict is misleading)
+   These win over Jev's overall verdict.
+3. `verdict` and `verdict_reversed` disagree, or `verdict.confidence` < 0.6 -> **not_sure**.
 4. Otherwise -> `verdict.choice`.
 5. Always return each source's stance and URL, so the UI can show *why*.
 

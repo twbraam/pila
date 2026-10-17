@@ -1,6 +1,7 @@
 # Research: YouTube fact-check library (Jev + Tavily)
 
-Status: research spike, updated 2026-10-17. Nothing is built yet.
+Status: updated 2026-10-17. The library is built: `packages/factcheck` (`@pila/factcheck`).
+This folder keeps the research; the package README has the usage docs.
 
 ## Goal
 
@@ -36,7 +37,7 @@ Examples (`examples/`):
 
 | File | What it is |
 | - | - |
-| `claim-detection.request.json` | Jev request built from `ref/transcript.json`: 40 sentences, one "is this checkable?" question each |
+| `claim-detection.request.json` | Jev request built by the library from `ref/transcript.json`: 40 sentences, one "is this checkable?" question each |
 | `youtube-claim-verification.request.json` | Jev request for one claim from the video, with real Tavily evidence |
 | `claim-verification.request.json` | The team's Morris Chang reference payload, cleaned up |
 | `tavily-search.response.json` | Real Tavily response used above (test fixture) |
@@ -56,8 +57,12 @@ Examples (`examples/`):
   `chrome-extension://` origin (tested). Jev's SDK `@typesafe-ai/sdk` runs in a service
   worker; Tavily's SDK `@tavily/core` depends on `axios` and `https-proxy-agent`
   (Node-only), so call Tavily with plain `fetch`.
-- **Cost per 5-minute video:** ~6-12 Tavily credits (free tier: 1,000/month) and well
-  under $0.01 of Jev. Expected time: ~5-10 s, mostly Tavily (~2.6 s per search).
+- **Cost per 5-minute video:** 12 Tavily credits (6 advanced searches; free tier: 1,000/month)
+  and well under $0.01 of Jev. Expected time: ~5-10 s, mostly Tavily (~2.6 s per search).
+- **Per-claim search needs care** (tested live): plain claim queries scored too low or
+  returned the video itself and copies of its transcript. Fixed with advanced search, the
+  channel name in the query, excluding YouTube, and dropping transcript copies.
+  See [02](./02-tavily-evidence-search.md#live-test-per-claim-search).
 
 ## Pipeline
 

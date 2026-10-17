@@ -1,6 +1,6 @@
 # Library design
 
-A proposal for review. Names and defaults are open to change.
+Built in `packages/factcheck`. This page records the design; see the package README for usage.
 
 ## Runtime rules
 
@@ -10,7 +10,9 @@ The library must run unchanged in a Chrome MV3 service worker and in Node 22+.
   `URL`, `crypto.randomUUID`.
 - No Node built-ins (`fs`, `path`, `process.env`), no `window`, no DOM.
 - Keys are passed in. The library never reads env vars or `chrome.storage`.
-- Dependencies: `@typesafe-ai/sdk` (zero deps) and `zod` (input validation). Tavily via `fetch`.
+- Dependencies: `@typesafe-ai/sdk` (zero deps) and `zod/mini` (input validation). Tavily via `fetch`.
+  `zod/mini` instead of full `zod`: the full build added 454 KB minified; the whole library is
+  now 56 KB minified.
 - `fetch` is injectable, for tests and for the extension to add logging.
 - Never log keys, and never put them in error messages.
 
@@ -21,9 +23,9 @@ import { createFactChecker } from "@pila/factcheck";
 
 const checker = createFactChecker({
   typesafeApiKey: "...",
-  tavilyApiKey: "tvly-...",
+  tavilyApiKey: "tvly-...",     // optional: keyless mode without it
   model: "jev-1.13.0",          // default
-  // optional: fetch, domains, thresholds, maxClaims, concurrency
+  // optional: fetch, maxRetries, trustedDomains, thresholds, limits
 });
 
 const report = await checker.checkVideo(
@@ -41,9 +43,9 @@ one step at a time:
 
 ```ts
 toSentences(transcript, language): Sentence[]                  // pure, no network
-checker.findClaims(sentences, opts?): Promise<Claim[]>         // Jev x1
-checker.searchEvidence(claim, video?): Promise<Evidence[]>     // Tavily x1
-checker.verifyClaim(claim, evidence): Promise<ClaimResult>     // Jev x1
+checker.findClaims(sentences, opts?): Promise<Claim[]>         // Jev x1 per 150 sentences
+checker.searchEvidence(query, opts?): Promise<Evidence[]>      // Tavily x1
+checker.verifyClaim(claim, evidence, opts?): Promise<ClaimResult> // Jev x1
 ```
 
 ## Types
@@ -88,10 +90,11 @@ type VideoReport = {
      `Intl.Segmenter(lang, { granularity: "sentence" })`, then a max length.
 2. **`findClaims`**: one Jev request, a `noul` per sentence. Keep `noul >= 0.7`, top K
    by score (K default 5).
-3. **`searchEvidence`**: one video-level search (once per video) + one per claim, in
-   parallel with a concurrency limit (default 4). Filter, de-duplicate, cap, mark trusted.
-4. **`verifyClaim`**: one Jev request per claim, in parallel. Evidence = the claim's
-   results + relevant video-level reviews (at most 5 sources).
+3. **Evidence**: one video-level search, run in parallel with step 2, + one per claim
+   (concurrency limit 4). Filter by score, drop YouTube and transcript copies, de-duplicate,
+   cap length, mark trusted.
+4. **`verifyClaim`**: one Jev request per claim. Evidence = the claim's results interleaved
+   with video-level results (so neither crowds out the other), trusted first, at most 5.
 5. **Combine** with the rules in [01](./01-jev-integration.md#combining-the-answers-in-code).
 
 ## Errors
@@ -103,29 +106,39 @@ Typed errors so the UI can show a clear message:
 | `InvalidInputError` | Bad transcript or empty video | "This video has no usable transcript" |
 | `AuthError` (`service: "jev" \| "tavily"`) | 401 | "Check your Jev / Tavily API key" |
 | `RateLimitError` | 429 after retries | "Too many requests, try again in a minute" |
-| `QuotaError` | Tavily 432/433 | "Tavily credits used up" |
+| `QuotaError` | Tavily 432/433 (stops the run) | "Tavily credits used up" |
 | `UpstreamError` | 5xx, 529, timeouts | "Service unavailable, try again" |
 
 If one claim fails, the report still returns the other claims, and the failed one gets
-an `error` field. The whole call fails only on bad input or bad keys.
+label `not_sure` and an `error` field. The whole call fails only on bad input, bad keys, or
+cancellation, or used-up Tavily credits. A failed video-level search doesn't stop the run;
+it is reported in `videoSearchError`.
 
-## Repo layout (proposal)
+## Repo layout
 
 ```
 packages/factcheck/           # @pila/factcheck, this team
   src/
     index.ts                  # public exports
     transcript.ts             # toSentences
+    checker.ts                # createFactChecker: the pipeline
+    options.ts                # config + input validation
+    jev/client.ts             # SDK wrapper, error mapping
     jev/detect.ts             # claim-detection request + parsing
     jev/verify.ts             # verification request + parsing
+    jev/answers.ts            # answer validation
     tavily.ts                 # fetch client + result mapping
+    echo.ts                   # transcript-copy filter
+    queries.ts                # search queries
     verdict.ts                # combine rules
     errors.ts
-    config.ts                 # defaults: model, thresholds, domain list
-  test/
-  scripts/check-video.ts      # CLI: node scripts/check-video.ts ref/transcript.json
+    config.ts                 # defaults: model, thresholds, domain lists
+  test/                       # Vitest unit tests, contract tests, sw/ (Playwright)
+  scripts/check-video.ts      # CLI
 apps/extension/               # extension team (WXT), imports @pila/factcheck
 ```
 
-npm workspaces, so the extension imports the library from source with no publishing.
-Build with `tsup` (ESM + `.d.ts`). The CLI script is the quickest demo and smoke test.
+npm workspaces, so the extension depends on `"@pila/factcheck": "*"` with no publishing.
+Built with plain `tsc` (ESM + `.d.ts`); the extension's bundler (WXT/Vite) bundles it.
+The library build uses TypeScript's `WebWorker` lib, so DOM or `window` use fails to compile.
+The CLI script is the quickest demo and smoke test.

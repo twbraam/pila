@@ -1,6 +1,7 @@
 # Testing
 
-Target: 80%+ coverage on `packages/factcheck/src`. Vitest for everything in the library.
+Target: 80%+ coverage on `packages/factcheck/src`, enforced by `npm run test:coverage`.
+Commands are in the package README.
 
 ## 1. Unit tests (no network)
 
@@ -39,27 +40,27 @@ of YouTube videos, with a verdict per claim. That gives us labeled data.
 - Run in English mode and Chinese mode. Re-run when questions, thresholds, domains, or
   the model version change.
 
-## 4. Service-worker smoke test (Playwright)
+## 4. Service-worker smoke test (Playwright) — built
 
-Proves the library really runs where the extension will use it.
+Proves the library really runs where the extension will use it (`test/sw/`).
 
-- A tiny test extension in `packages/factcheck/test/sw-extension/` whose service worker
-  imports the built library and calls `checkVideo` with a fake transcript.
-- Load it in Playwright's bundled Chromium (branded Chrome removed the side-load flags):
+- `test/sw/entry.ts` is bundled with esbuild into a tiny MV3 test extension
+  (`test/sw/extension/`), loaded into Playwright's bundled Chromium (branded Chrome removed
+  the side-load flags):
 
 ```ts
 const context = await chromium.launchPersistentContext("", {
   channel: "chromium",
   args: [`--disable-extensions-except=${ext}`, `--load-extension=${ext}`],
 });
-let [sw] = context.serviceWorkers();
-if (!sw) sw = await context.waitForEvent("serviceworker");
-await context.route("https://api.typesafe.ai/**", (r) => r.fulfill({ json: jevFixture }));
-await context.route("https://api.tavily.com/**", (r) => r.fulfill({ json: tavilyFixture }));
-const report = await sw.evaluate(() => self.runSmokeTest());
+const worker = context.serviceWorkers()[0] ?? (await context.waitForEvent("serviceworker"));
+await worker.evaluate(([name, args]) => globalThis.factcheckTests[name](args), ["offline", args]);
 ```
 
-- Catches Node-only code slipping into the bundle. Stubbed APIs, so it runs offline and free.
+- Three checks: the full pipeline with a fake `fetch` (stubbed APIs); real Jev with a bad
+  key must give `AuthError` 401 (the request leaves the worker and errors map); real
+  keyless Tavily search must return results.
+- Catches Node-only code slipping into the bundle.
 
 ## For the hackathon
 

@@ -1,0 +1,7 @@
+{
+  "manifest_version": 3,
+  "name": "pila factcheck service-worker smoke test",
+  "version": "0.0.1",
+  "background": { "service_worker": "sw.js", "type": "module" },
+  "host_permissions": ["https://api.typesafe.ai/*", "https://api.tavily.com/*"]
+}
