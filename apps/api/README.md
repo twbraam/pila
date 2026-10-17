@@ -1,5 +1,9 @@
 # @pila/api
 
+> **Removed 2026-10-17:** after the demo, the AWS stack (CloudFront, Lambda, IAM role, SSM parameters, logs, ECR) was
+> deleted. The URLs below no longer work; they are kept as a record. To bring it back, follow `infra/aws/README.md`
+> (recreate the resources, then build and deploy `apps/api`).
+
 The hosted API for the Pila extension. Given a YouTube video ID, it chains two functions, both owned by
 teammates: **transcript** (video ID → caption segments) and **fact check** (segments → `FactCheckItem[]`).
 Until they ship, both are mocks.

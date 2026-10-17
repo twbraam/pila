@@ -1,5 +1,9 @@
 # Using the fact-check API from the Chrome extension
 
+> **Removed 2026-10-17:** after the demo, the AWS stack (CloudFront, Lambda, IAM role, SSM parameters, logs, ECR) was
+> deleted. The URLs below no longer work; they are kept as a record. To bring it back, follow `infra/aws/README.md`
+> (recreate the resources, then build and deploy `apps/api`).
+
 > Update 2026-10-17: the extension calls our hosted API (`apps/api`, `https://d3tuhog92nak7r.cloudfront.net`)
 > instead of importing the library, so no Jev or Tavily key ships in the extension. The extension sends only the
 > YouTube video ID (plus title and channel); the API loads the transcript itself. The library-in-service-worker

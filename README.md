@@ -50,8 +50,9 @@ The planned extension stack is TypeScript + WXT (Manifest V3), with content scri
 
 ## Hosted API (mock)
 
-[`apps/api`](./apps/api/README.md) is deployed at **`https://d3tuhog92nak7r.cloudfront.net`** so Overlay can be
-built now. `POST /factcheck` with `Authorization: Bearer <token>` and `{ "videoId": "<11-char YouTube ID>" }`
+[`apps/api`](./apps/api/README.md) was deployed at `https://d3tuhog92nak7r.cloudfront.net` for the demo (**removed
+2026-10-17**; see [`infra/aws`](./infra/aws/README.md) to redeploy) so Overlay could be
+built against it. `POST /factcheck` with `Authorization: Bearer <token>` and `{ "videoId": "<11-char YouTube ID>" }`
 returns the server → Overlay array defined below (top-level array, exactly `timestamp`, `sentence`, `score`,
 `sources`). Errors are `{ "error": { "code", "message", "requestId" } }` with a 4xx/5xx status.
 

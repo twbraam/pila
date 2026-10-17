@@ -1,5 +1,9 @@
 # Workflow: from the extension to a verdict
 
+> **Removed 2026-10-17:** after the demo, the AWS stack (CloudFront, Lambda, IAM role, SSM parameters, logs, ECR) was
+> deleted. The URLs below no longer work; they are kept as a record. To bring it back, follow `infra/aws/README.md`
+> (recreate the resources, then build and deploy `apps/api`).
+
 Matches the code as of 2026-10-17.
 
 > **Change (2026-10-17):** the hosted API (`apps/api`) no longer runs this library. It chains a teammate's

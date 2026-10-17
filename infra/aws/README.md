@@ -1,6 +1,10 @@
 # pila factcheck — AWS deployment (POC)
 
-The pipe **URL → CloudFront → Lambda → @pila/factcheck** is live. Since 2026-10-17 the Lambda runs `apps/api`
+> **Removed 2026-10-17:** after the demo, the AWS stack (CloudFront, Lambda, IAM role, SSM parameters, logs, ECR) was
+> deleted. The URLs below no longer work; they are kept as a record. To bring it back, follow `infra/aws/README.md`
+> (recreate the resources, then build and deploy `apps/api`).
+
+The pipe **URL → CloudFront → Lambda → @pila/factcheck** was live until the teardown. Since 2026-10-17 the Lambda runs `apps/api`
 (`apps/api/src/lambda.ts`); it replaced the smoke handler (`infra/aws/smoke/handler.ts`, kept for reference) and
 keeps its contract, plus API tokens.
 
