@@ -1,0 +1,42 @@
+{
+  "query": "clouds absorb energy evidence",
+  "follow_up_questions": null,
+  "answer": null,
+  "images": [],
+  "results": [
+    {
+      "url": "https://ntrs.nasa.gov/api/citations/19970023923/downloads/19970023923.pdf",
+      "title": "5.2 SOLAR ABSORPTION IN CLOUDY ATMOSPHERES l",
+      "content": "In light of this accumulating evidence that inferred cloud absorption, based on both spectral and broadband measurements, differs significantly from theory, it is perhaps appropriate to revisit the problem of spectral absorption of solar radiation in cloudy atmospheres.\nThe theoretical computations that have been used to compute spectral absorption are discussed in Section 2. [...] This is the absorption of reflected energy at wavenumbers that still carry sufficient energy down to the level of the cloud and in which there is some vapor absorption.\nThese are the weaker water vapor bands at larger wavenumbers.\nThere is a deple-tion in below cloud absorption but the integrated effect is one of enhanced column absorption as evident from the value of R.\nThe effect of increased droplet absorption is felt only within the cloud. [...] However, there is a long history of apparent discrepancies between theo-retically obtained cloud radiative properties in the near-infrared and values inferred from measurements (Twomey and Cocks 1982, Stephens and Tsay 1990).\nInvariably, the measurements have implied that clouds, or cloudy atmospheres, absorb more solar radiation than indicated by computations based on the known properties.\nRecent results have piqued renewed interest in this problem.",
+      "score": 0.6682966,
+      "raw_content": null,
+      "id": "75ffc2-00"
+    },
+    {
+      "url": "https://isccp.giss.nasa.gov/role.html",
+      "title": "ISCCP: Cloud Climatology",
+      "content": "from storm clouds, whose tops are especially high and cold. Such clouds, which are particularly good absorbers of thermal radiation, could more than make up for their tendency to block sunshine. In that case the warming would be intensified. Observations have shown, however, that warmer temperatures seems to create less dense, low-level clouds instead. The evidence we have so far suggests that this effect occurs because, as temperature increases, the air near the surface becomes drier, causing [...] Thus it is ironic that when it comes to forecasting the climate several decades ahead, clouds mainly obscure our vision. Their most important roles in climate are to modulate Earth's basic radiation balance and to produce precipitation. The law of conservation of energy requires that the energy absorbed by the Earth from the sun balance the energy radiated by the Earth back into space. Clouds both reflect incoming sunlight and inhibit the radiation of heat radiation from the surface, thereby [...] and higher, reflect little sunlight, but they are so cold that they absorb most of the thermal radiation that comes their way. Hence they warm more than they cool. The net cooling effect of clouds is the sum of a large number of such specific effects, many of which cancel one another.",
+      "score": 0.635879,
+      "raw_content": null,
+      "id": "4795f7-01"
+    },
+    {
+      "url": "https://science.nasa.gov/earth/earth-observatory/clouds-and-global-warming-44250",
+      "title": "Clouds and Global Warming - NASA Science",
+      "content": "High clouds are much colder than low clouds and the surface. They radiate less energy to space than low clouds do. The high clouds in this image are radiating significantly less thermal energy than anything else in the image. Because high clouds absorb energy so efficiently, they have the potential to raise global temperatures. In a world with high clouds, much of the energy that would otherwise escape to space is captured in the atmosphere. High clouds make the world a warmer place. If more [...] Clouds impact temperatures in other ways as well. They also reflect energy, shading and cooling the Earth. On balance, scientists aren’t entirely sure what effect clouds will have on global warming. Most climate models predict that clouds will amplify global warming slightly. Some observations of clouds support model predictions, but direct observational evidence is still limited. Clouds remain the biggest source of uncertainty (apart from human decisions to control greenhouse gas emissions) in [...] Clouds emit energy in proportion to their temperature. Low, warm clouds emit more thermal energy than high, cold clouds. This image illustrates that low clouds emit about the same amount of thermal energy as Earth’s surface does. This is most clearly seen over the Pacific Ocean. The water is nearly white, while the low marine clouds are pale gray, only slightly cooler. This means that a world without low clouds loses about the same amount of energy to space as a world with low clouds.",
+      "score": 0.5968332,
+      "raw_content": null,
+      "id": "028d8c-02"
+    },
+    {
+      "url": "https://www.ipcc.ch/report/ar6/wg1/downloads/faqs/IPCC_AR6_WGI_FAQ_Chapter_07.pdf",
+      "title": "AR6 FAQ 7.1",
+      "content": "tend to reﬂect incoming solar energy back to space, creating a cooling effect by preventing this energy from reaching and warming the Earth. On the other hand, higher clouds tend to trap (i.e., absorb and then emit at a lower temperature) some of the energy leaving the Earth, leading to a warming effect. On average, clouds reﬂect back more incoming energy than the amount of outgoing energy they trap, resulting in an overall net cooling effect on the present climate. Human activities since the",
+      "score": 0.5174983,
+      "raw_content": null,
+      "id": "e424e3-03"
+    }
+  ],
+  "response_time": 1.77,
+  "request_id": "04525375-2b33-48fc-acf4-4a1189c8f253"
+}

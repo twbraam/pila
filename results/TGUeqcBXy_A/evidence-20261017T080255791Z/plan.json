@@ -1,0 +1,74 @@
+{
+  "groups": [
+    {
+      "id": "g-2ea93b0a93fd",
+      "query": "三星 堆 錫礦 在 的 地區 就是 錫 了 就像 是 青銅 evidence",
+      "claims": [
+        {
+          "videoId": "TGUeqcBXy_A",
+          "language": "zh-TW",
+          "sentenceId": "s0012",
+          "targetId": "s0012::part-2",
+          "partIndex": 2,
+          "partCount": 3,
+          "timestampPrecision": "source_sentence",
+          "text": "離三星堆最近的是雲南錫礦 但是它是在三星堆文明消失之後500年才被開採的 那麼看來看去 在阿富汗北部 巴達赫尚（Badakhshan）地區的錫礦 就是那個時代離三星堆最近的錫產地了 就像20世紀中東的石油 錫礦是全球青銅文明的國家命脈 那麼三星堆當時最有可能就是從阿富汗進口錫 再加上前面所說的 三星堆通過古代南方絲綢之路和地中海維持著緊密的貿易聯繫 於是我們就可以設想 三星堆文明它的發展脈絡 它是從地中海進口銅 從富汗取得錫 再通過南方絲綢之路運進四川 當地中海青銅文明被摧毀以後 整個貿易體系也就崩潰了 三星堆文明所在的古蜀地區它就缺少貨源 就缺少了青銅原料 因此 就不得不省下一些 所以也就不得不節省一些做小一點的銅像 貿易體系的崩潰也導致蜀地的絲綢缺少買家 三星堆的財源就受到了影響 ",
+          "start": 593.18,
+          "end": 795.6370000000001,
+          "screeningType": "score",
+          "suspicionScore": 2.32,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        },
+        {
+          "videoId": "TGUeqcBXy_A",
+          "language": "zh-TW",
+          "sentenceId": "s0012",
+          "targetId": "s0012::part-1",
+          "partIndex": 1,
+          "partCount": 3,
+          "timestampPrecision": "source_sentence",
+          "text": "你還別說 真扯得上關係 這裡的關鍵在於三星堆和地中海兩個地區 它所使用的青銅來自同一個礦源 請大家記住這一點 三星堆出土的青銅製品當中含鋅量很少 但是 有一定比例的鉛 地中海地區的銅礦也是有少量的鉛 同時基本不含鋅 而四川出土的銅礦恰恰是不含鉛的 中原地區的銅礦又是鋅含量比較高的 這也就是說三星堆所冶煉的青銅的成分它更接近地中海 大家清楚這一點了 那談到青銅製品 就涉及到一項非常重要的資源 就是錫礦 如果沒有錫的話 銅礦石它只能夠冶煉出黃銅 但加入錫以後就可以增加硬度 冶煉出青銅 通常配比是黃銅和錫的比例10:1 青銅就可以鍛造成各種各樣的有殺傷力的武器 毫不誇張的說 錫在當時就像今天汽油在整個工業社會當中一樣重要 是關鍵的戰略資源 公元前1200年前 四川和中原地區要知道都沒有錫礦 ",
+          "start": 593.18,
+          "end": 795.6370000000001,
+          "screeningType": "score",
+          "suspicionScore": 2.14,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.32
+    },
+    {
+      "id": "g-cbf44db44761",
+      "query": "地中海 沿岸 的 海盜 他所 劫掠 過 那些 名 都 化 爲 evidence",
+      "claims": [
+        {
+          "videoId": "TGUeqcBXy_A",
+          "language": "zh-TW",
+          "sentenceId": "s0010",
+          "targetId": "s0010::part-2",
+          "partIndex": 2,
+          "partCount": 2,
+          "timestampPrecision": "source_sentence",
+          "text": "地中海沿岸的海盜他所劫掠過的那些名都 都化爲灰燼 希臘是退回到了小型村落的時代 不再有像樣的宮殿 城市也衰落 手工藝品大量減少 所以沿著地中海這樣一個繁榮的貿易體 互相依存的這個經濟網絡就徹底瓦解崩潰了 青銅時代就這樣落下了帷幕 其後幾百年 被稱之爲黑暗時代 也非常缺少歷史記錄 大約要到400年以後記錄才更加豐富 這時候人們已經迎來了鐵器時代 現在考古發現青銅文明終結的那個時代 在土耳其、希臘、敘利亞的土層裡面都有很多被火燒過的痕跡 可見這些海盜的破壞力爆表啊！",
+          "start": 427.52,
+          "end": 543.4830000000001,
+          "screeningType": "score",
+          "suspicionScore": 2.02,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.02
+    }
+  ],
+  "pending": [],
+  "eligibleTargets": 3
+}

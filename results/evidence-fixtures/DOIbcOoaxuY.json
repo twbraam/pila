@@ -1,0 +1,51 @@
+{
+  "videoId": "DOIbcOoaxuY",
+  "language": "en",
+  "videoUrl": "https://www.youtube.com/watch?v=DOIbcOoaxuY",
+  "transcriptSource": "examples/transcripts/DOIbcOoaxuY.json",
+  "screeningSource": "results/DOIbcOoaxuY/20261017T070616381Z/results.json",
+  "evidenceSource": "results/DOIbcOoaxuY/evidence-20261017T080230365Z/evidence.json",
+  "maxSearches": 3,
+  "eligibleClaims": 4,
+  "assessments": [
+    {
+      "videoId": "DOIbcOoaxuY",
+      "sentenceId": "s0021",
+      "targetId": "s0021",
+      "text": "Nor can scientists today.",
+      "start": 102.84,
+      "end": 104.84,
+      "screeningScore": 2.23,
+      "evidenceStatus": "insufficient_evidence",
+      "citations": []
+    },
+    {
+      "videoId": "DOIbcOoaxuY",
+      "sentenceId": "s0055",
+      "targetId": "s0055",
+      "text": "So, two serious doubts about modern Darwinian theory: The Cambrian Explosion—the sudden appearance of new animals, which evolutionary theory has failed to explain; and the DNA enigma—the implausibility of random mutations producing the information needed to build new forms of animal life.",
+      "start": 303.99,
+      "end": 323.12,
+      "screeningScore": 2.23,
+      "evidenceStatus": "insufficient_evidence",
+      "citations": []
+    },
+    {
+      "videoId": "DOIbcOoaxuY",
+      "sentenceId": "s0015",
+      "targetId": "s0015",
+      "text": "These novel animal forms—exhibiting proto-types of most animal body designs we see today—emerged in the fossil record without evidence of earlier ancestors.",
+      "start": 77.7,
+      "end": 87.75999999999999,
+      "screeningScore": 2.13,
+      "evidenceStatus": "insufficient_evidence",
+      "citations": []
+    }
+  ],
+  "pending": [
+    {
+      "targetId": "s0054",
+      "reason": "search_budget"
+    }
+  ]
+}

@@ -1,0 +1,119 @@
+{
+  "status": "completed",
+  "videoId": "qZN2jt2cCU4",
+  "directory": "/home/hadao/sync/projects/pila/results/qZN2jt2cCU4/evidence-20261017T080323128Z",
+  "searchCalls": 3,
+  "cacheHits": 0,
+  "jevCalls": 3,
+  "groups": [
+    {
+      "id": "g-87f4198c5261",
+      "query": "compared water h20 carbon dioxide co2 minor contributor warming earth evidence",
+      "targetIds": [
+        "s0033"
+      ],
+      "cacheHit": false
+    },
+    {
+      "id": "g-90b240a2a363",
+      "query": "don’t work know evidence",
+      "targetIds": [
+        "s0017",
+        "s0019"
+      ],
+      "cacheHit": false
+    },
+    {
+      "id": "g-2815d556da41",
+      "query": "that’s why over last years climate prediction after another based computer models evidence",
+      "targetIds": [
+        "s0042"
+      ],
+      "cacheHit": false
+    }
+  ],
+  "assessments": [
+    {
+      "videoId": "qZN2jt2cCU4",
+      "sentenceId": "s0033",
+      "targetId": "s0033",
+      "text": "Compared to water, H20, carbon dioxide, CO2 is a minor contributor to the warming of the earth.",
+      "start": 172.44,
+      "end": 180.88,
+      "screeningScore": 2.56,
+      "evidenceStatus": "needs_review",
+      "citations": [
+        {
+          "id": "E1",
+          "url": "https://science.nasa.gov/earth/earth-observatory/the-carbon-cycle",
+          "title": "The Carbon Cycle - NASA Science",
+          "publisher": "nasa.gov",
+          "tier": "primary",
+          "excerpt": "Because scientists know which wavelengths of energy each greenhouse gas absorbs, and the concentration of the gases in the atmosphere, they can calculate how much each gas contributes to warming the planet. Carbon dioxide causes about 20 percent of Earth’s greenhouse effect; water vapor accounts for about 50 percent; and clouds account for 25 percent. The rest is caused by small particles (aerosols) and minor greenhouse gases like methane. [...] So while carbon dioxide contributes less to the overall greenhouse effect than water vapor, scientists have found that carbon dioxide is the gas that sets the temperature. Carbon dioxide controls the amount of water vapor in the atmosphere and thus the size of the greenhouse effect. [...] Carbon dioxide, on the other hand, remains a gas at a wider range of atmospheric temperatures than water. Carbon dioxide molecules provide the initial greenhouse heating needed to maintain water vapor concentrations. When carbon dioxide concentrations drop, Earth cools, some water vapor falls out of the atmosphere, and the greenhouse warming caused by water vapor drops. Likewise, when carbon dioxide concentrations rise, air temperatures go up, and more water vapor evaporates into the",
+          "excerptTruncated": false,
+          "publicationDateEstimate": null,
+          "retrievedAt": "2026-10-17T08:03:24.997Z",
+          "quality": "direct_evidence",
+          "relation": "supports",
+          "relationProbability": 0.77,
+          "sourceQualityProbability": 0.96
+        }
+      ]
+    },
+    {
+      "videoId": "qZN2jt2cCU4",
+      "sentenceId": "s0017",
+      "targetId": "s0017",
+      "text": "And I know they don’t work.",
+      "start": 78.5,
+      "end": 80.42,
+      "screeningScore": 2.34,
+      "evidenceStatus": "insufficient_evidence",
+      "citations": []
+    },
+    {
+      "videoId": "qZN2jt2cCU4",
+      "sentenceId": "s0019",
+      "targetId": "s0019",
+      "text": "They don’t work now.",
+      "start": 82.18,
+      "end": 83.86000000000001,
+      "screeningScore": 2.19,
+      "evidenceStatus": "insufficient_evidence",
+      "citations": []
+    },
+    {
+      "videoId": "qZN2jt2cCU4",
+      "sentenceId": "s0042",
+      "targetId": "s0042",
+      "text": "That’s why, over the last 30 years, one climate prediction after another – based on computer models – has been wrong.",
+      "start": 235.82,
+      "end": 243.28,
+      "screeningScore": 2.3,
+      "evidenceStatus": "insufficient_evidence",
+      "citations": []
+    }
+  ],
+  "pending": [
+    {
+      "targetId": "s0046",
+      "reason": "search_budget"
+    },
+    {
+      "targetId": "s0045",
+      "reason": "search_budget"
+    },
+    {
+      "targetId": "s0039",
+      "reason": "search_budget"
+    },
+    {
+      "targetId": "s0043",
+      "reason": "search_budget"
+    },
+    {
+      "targetId": "s0018",
+      "reason": "search_budget"
+    }
+  ]
+}

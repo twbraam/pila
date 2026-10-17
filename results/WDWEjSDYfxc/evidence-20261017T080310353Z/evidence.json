@@ -1,0 +1,32 @@
+{
+  "status": "completed",
+  "videoId": "WDWEjSDYfxc",
+  "directory": "/home/hadao/sync/projects/pila/results/WDWEjSDYfxc/evidence-20261017T080310353Z",
+  "searchCalls": 1,
+  "cacheHits": 0,
+  "jevCalls": 1,
+  "groups": [
+    {
+      "id": "g-4018f0a0bf19",
+      "query": "other words fossil fuels 100 percent organic produced solar energy evidence",
+      "targetIds": [
+        "s0014"
+      ],
+      "cacheHit": false
+    }
+  ],
+  "assessments": [
+    {
+      "videoId": "WDWEjSDYfxc",
+      "sentenceId": "s0014",
+      "targetId": "s0014",
+      "text": "In other words, fossil fuels are 100 percent organic and were produced with solar energy.",
+      "start": 86.21,
+      "end": 97.82000000000001,
+      "screeningScore": 2.06,
+      "evidenceStatus": "insufficient_evidence",
+      "citations": []
+    }
+  ],
+  "pending": []
+}

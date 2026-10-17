@@ -1,0 +1,92 @@
+{
+  "videoId": "3PWtaackIJU",
+  "language": "en",
+  "videoUrl": "https://www.youtube.com/watch?v=3PWtaackIJU",
+  "transcriptSource": "examples/transcripts/3PWtaackIJU.json",
+  "screeningSource": "results/3PWtaackIJU/20261017T070615516Z/results.json",
+  "evidenceSource": "results/3PWtaackIJU/evidence-20261017T080208478Z/evidence.json",
+  "maxSearches": 3,
+  "eligibleClaims": 3,
+  "assessments": [
+    {
+      "videoId": "3PWtaackIJU",
+      "sentenceId": "s0006",
+      "targetId": "s0006",
+      "text": "Yes, sea levels are rising, but the rise is not accelerating—if anything, two recent papers, one by Chinese scientists published in January 2014, and the other by U.S. scientists published in May 2013, have shown a small decline in the rate of sea-level increase.",
+      "start": 28.82,
+      "end": 46.22,
+      "screeningScore": 2.37,
+      "evidenceStatus": "contradicted",
+      "citations": [
+        {
+          "id": "E1",
+          "url": "https://www.ipcc.ch/srocc/chapter/chapter-4-sea-level-rise-and-implications-for-low-lying-islands-coasts-and-communities",
+          "title": "Chapter 4: Sea Level Rise and Implications for Low-Lying Islands, Coasts and Communities — Special Report on the Ocean and Cryosphere in a Changing Climate",
+          "publisher": "ipcc.ch",
+          "tier": "primary",
+          "excerpt": "Scientific evidence about SLR is clear: GMSL rose by 1.5 mm yr-1 during the period 1901–1990, accelerating to 3.6 mm yr-1 during the period 2005–2015. It is likely to rise 0.61–1.10 m by 2100 if global GHG emissions are not mitigated (RCP8.5). However, a rise of two or more metres cannot be ruled out. It could rise to more than 3 m by 2300, depending on the level of GHG emissions and the response of the AIS, which are both highly uncertain. Even if efforts to mitigate emissions are very [...] Section 4.2 demonstrates that sea level is rising and accelerating over time, and that it will continue to rise throughout the 21st century and for centuries beyond. It also shows that ESL events that are historically rare, will become common by 2100 under all emission scenarios, leading to severe flooding in the absence of ambitious adaptation efforts (high confidence). In both RCP2.6 and RCP8.5 emission scenarios, many low-lying coastal areas at all latitudes will experience such events [...] Global mean sea level (GMSL) is rising (virtually certain1) and accelerating (high confidence2). The sum of glacier and ice sheet contributions is now the dominant source of GMSL rise (very high confidence). GMSL from tide gauges and altimetry observations increased from 1.4 mm yr–1 over the period 1901–1990 to 2.1 mm yr–1 over the period 1970–2015 to 3.2 mm yr–1 over the period 1993–2015 to 3.6 mm yr–1 over the period 2006–2015 (high confidence). The dominant cause of GMSL rise since 1970 is",
+          "excerptTruncated": false,
+          "publicationDateEstimate": null,
+          "retrievedAt": "2026-10-17T08:02:12.282Z",
+          "quality": "direct_evidence",
+          "relation": "contradicts",
+          "relationProbability": 0.97,
+          "sourceQualityProbability": 0.98
+        },
+        {
+          "id": "E2",
+          "url": "https://www.ipcc.ch/report/ar6/wg1/chapter/chapter-9",
+          "title": "Chapter 9: Ocean, Cryosphere and Sea Level Change | Climate Change 2021: The Physical Science Basis",
+          "publisher": "ipcc.ch",
+          "tier": "primary",
+          "excerpt": "Feng, J. et al., 2019: Acceleration of the Extreme Sea Level Rise Along the Chinese Coast. Earth and Space Science, 6(10), 1942–1956, doi: 10.1029/2019ea000653.\n\nFeng, W., M. Zhong, and H.Z. Xu, 2012: Sea level variations in the South China Sea inferred from satellite gravity, altimetry, and oceanographic data. Science China Earth Sciences, 55(10), 1696–1701, doi: 10.1007/s11430-012-4394-3. [...] Across the globe, sea level is rising, and the rate of increase has accelerated. Sea level increased by about 4 mm per year from 2006 to 2018, which was more than double the average rate over the 20th century. Rise during the early 1900s was due to natural factors, such as glaciers catching up to warming that occurred in the Northern Hemisphere during the 1800s. However, since at least 1970, human activities have been the dominant cause of global average sea level rise, and they will continue [...] Yu, Y.Q., H.L. Liu, and P.F. Lin, 2012: A quasi-global 1/10° eddy-resolving ocean general circulation model and its preliminary results. Chinese Science Bulletin, 57(30), 3908–3916, doi: 10.1007/s11434-012-5234-8.\n\nYuan, N. et al., 2017: Increase of the Antarctic Sea Ice Extent is highly significant only in the Ross Sea. Scientific Reports, 7, 41096, doi: 10.1038/srep41096.",
+          "excerptTruncated": false,
+          "publicationDateEstimate": null,
+          "retrievedAt": "2026-10-17T08:02:12.282Z",
+          "quality": "direct_evidence",
+          "relation": "contradicts",
+          "relationProbability": 0.89,
+          "sourceQualityProbability": 0.88
+        },
+        {
+          "id": "E3",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9058818",
+          "title": "Climate change and its impact on biodiversity and human welfare",
+          "publisher": "nih.gov",
+          "tier": "primary",
+          "excerpt": "century (OXFAM International 2021). Precise data gathered from satellite radar measurements reveal an accelerating rise of 7.5 cm from 1993 to 2017, an average of 31 mm per decade (WCRP Global Sea Level Budget Group 2018). [...] coastal states are threatened if rising sea is unchecked. Recently more than 100 Aquatic Science Societies representing over 80,000 scientists from seven continents sounded climate alarm (Bonar 2021). They have highlighted the effects of climate change on marine and aquatic ecosystems and have called on the world leaders and public to undertake mitigation measures to protect and sustain aquatic systems and theirs services. [...] - Overshooting 1.5 °C will be disastrous. It will have devastating effects on ecosystems, communities and economies. By 2040 there could be global food shortages, the inundation of coastal cities and a refugee crisis unlike the world has ever seen.\n- Even 1.5 °C warming would rise sea levels by 26–77 cm by 2100; 2 °C would add another 10 cm which would affect another 10 million people living in coastal regions.",
+          "excerptTruncated": false,
+          "publicationDateEstimate": null,
+          "retrievedAt": "2026-10-17T08:02:12.282Z",
+          "quality": "secondary_summary",
+          "relation": "contradicts",
+          "relationProbability": 0.8,
+          "sourceQualityProbability": 0.94
+        }
+      ]
+    },
+    {
+      "videoId": "3PWtaackIJU",
+      "sentenceId": "s0001",
+      "targetId": "s0001",
+      "text": "Carbons emissions are rising—and faster than most scientists predicted.",
+      "start": 2.08,
+      "end": 6.2,
+      "screeningScore": 2.23,
+      "evidenceStatus": "insufficient_evidence",
+      "citations": []
+    },
+    {
+      "videoId": "3PWtaackIJU",
+      "sentenceId": "s0007",
+      "targetId": "s0007",
+      "text": "We are often being told that we’re seeing more and more droughts, but a study published in March 2014 in the journal Nature actually shows a decrease in the world’s surface that has been afflicted by droughts since 1982.",
+      "start": 46.22,
+      "end": 59.660000000000004,
+      "screeningScore": 2.03,
+      "evidenceStatus": "insufficient_evidence",
+      "citations": []
+    }
+  ],
+  "pending": []
+}

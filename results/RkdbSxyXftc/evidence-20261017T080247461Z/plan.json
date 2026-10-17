@@ -1,0 +1,146 @@
+{
+  "groups": [
+    {
+      "id": "g-7a78ed343f8a",
+      "query": "course caused humans evidence",
+      "claims": [
+        {
+          "videoId": "RkdbSxyXftc",
+          "sentenceId": "s0011",
+          "text": "And, of course, not one of them was caused by humans.",
+          "start": 38.04,
+          "end": 44.2,
+          "screeningType": "score",
+          "suspicionScore": 2.75,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.75
+    },
+    {
+      "id": "g-c22f362ecc93",
+      "query": "significant warming trend 21st century evidence",
+      "claims": [
+        {
+          "videoId": "RkdbSxyXftc",
+          "sentenceId": "s0027",
+          "text": "And, there has been no significant warming trend in the 21st century.",
+          "start": 156.87,
+          "end": 168.51,
+          "screeningType": "score",
+          "suspicionScore": 2.7,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.7
+    },
+    {
+      "id": "g-0b76931c7976",
+      "query": "contrary media headlines trend over past couple decades essentially flat evidence",
+      "claims": [
+        {
+          "videoId": "RkdbSxyXftc",
+          "sentenceId": "s0028",
+          "text": "Contrary to media headlines, the trend over the past couple of decades has been essentially flat.",
+          "start": 163.23,
+          "end": 173.87,
+          "screeningType": "score",
+          "suspicionScore": 2.45,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.45
+    },
+    {
+      "id": "g-97dd09d2a6dd",
+      "query": "temperatures carbon dioxide levels show strong correlation evidence",
+      "claims": [
+        {
+          "videoId": "RkdbSxyXftc",
+          "sentenceId": "s0021",
+          "text": "Temperatures and carbon dioxide levels do not show a strong correlation.",
+          "start": 95.18,
+          "end": 101.4,
+          "screeningType": "score",
+          "suspicionScore": 2.41,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.41
+    },
+    {
+      "id": "g-e3711622508c",
+      "query": "fact over long time spans periods hundreds millions years often completely out evidence",
+      "claims": [
+        {
+          "videoId": "RkdbSxyXftc",
+          "sentenceId": "s0022",
+          "text": "In fact, over very long time spans -- periods of hundreds of millions of years -- they are often completely out of sync with each other.",
+          "start": 95.18,
+          "end": 109.6,
+          "screeningType": "score",
+          "suspicionScore": 2.35,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.35
+    },
+    {
+      "id": "g-f9da0899fac3",
+      "query": "mean spirited because call someone climate change denier intentionally link people deny evidence",
+      "claims": [
+        {
+          "videoId": "RkdbSxyXftc",
+          "sentenceId": "s0040",
+          "text": "And it&#39;s mean-spirited because to call someone a climate change denier is to intentionally link them to people who deny the Holocaust.",
+          "start": 229.41,
+          "end": 242.84,
+          "screeningType": "score",
+          "suspicionScore": 2.12,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.12
+    },
+    {
+      "id": "g-1ed3dea63196",
+      "query": "about percent co2 emissions human sources occurred during period net warming evidence",
+      "claims": [
+        {
+          "videoId": "RkdbSxyXftc",
+          "sentenceId": "s0030",
+          "text": "About 25 percent of all the CO2 emissions from human sources have occurred during this period of no net warming.",
+          "start": 173.87,
+          "end": 188.39999999999998,
+          "screeningType": "score",
+          "suspicionScore": 2.06,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.06
+    }
+  ],
+  "pending": [],
+  "eligibleTargets": 7
+}

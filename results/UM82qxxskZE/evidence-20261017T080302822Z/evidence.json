@@ -1,0 +1,326 @@
+{
+  "status": "completed",
+  "videoId": "UM82qxxskZE",
+  "directory": "/home/hadao/sync/projects/pila/results/UM82qxxskZE/evidence-20261017T080302822Z",
+  "searchCalls": 3,
+  "cacheHits": 0,
+  "jevCalls": 3,
+  "groups": [
+    {
+      "id": "g-77e288df6da6",
+      "query": "rule transitional fossils evidence",
+      "targetIds": [
+        "s0588"
+      ],
+      "cacheHit": false
+    },
+    {
+      "id": "g-4339b395bcb9",
+      "query": "real flood destroyed world produced evidence",
+      "targetIds": [
+        "s1097"
+      ],
+      "cacheHit": false
+    },
+    {
+      "id": "g-0812d01db41f",
+      "query": "means formation schnebly hill area had form matter hours there’s knife edge evidence",
+      "targetIds": [
+        "s0338",
+        "s0333"
+      ],
+      "cacheHit": false
+    }
+  ],
+  "assessments": [
+    {
+      "videoId": "UM82qxxskZE",
+      "sentenceId": "s0588",
+      "targetId": "s0588",
+      "text": "The rule is there are no transitional fossils.",
+      "start": 3258.709,
+      "end": 3261.042,
+      "screeningScore": 2.82,
+      "evidenceStatus": "contradicted",
+      "citations": [
+        {
+          "id": "E1",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4340927",
+          "title": "Transition of Eocene Whales from Land to Sea: Evidence from Bone Microstructure",
+          "publisher": "nih.gov",
+          "tier": "primary",
+          "excerpt": "Many amniote groups (e.g. sauropterygians, squamates, cetaceans, sirenians, pinnipeds) made the evolutionary transition from a fully terrestrial to a semi- to fully aquatic life. This required major morphological and physiological changes that are best developed in the most specialized aquatic forms, like extant cetaceans and sirenians, which now live totally independent of the terrestrial environment. Several lineages are known with transitional fossil forms, but it remains difficult to [...] The fossils analyzed here are rare and parts of exceptionally complete skeletons, meaning that destructive sampling was precluded. No permits were required for the described study. Osteological cross sections were obtained from microscale computed tomography (CT), allowing non-destructive imaging of the three-dimensional outer and inner structure of the samples. Both conventional and synchrotron X-ray micro-CT (see Table 1) were used: (1) high-resolution computed tomography (GEphoenix∣X-ray [...] Here we focus on the transition of cetaceans from land to sea. Cetaceans arose in the early Eocene (about 50 Myr ago), when the earliest fossils are known in Indo-Pakistan. ‘Archaic’ or ‘primitive’ cetaceans, called archaeocetes, include five families illustrating various modes of adaptation to an aquatic life (Fig. 1). The degree of aquatic adaptation and swimming modes of these taxa are debated (e.g. [1–11]). Here we address the lifestyle of early cetaceans by analysis of microanatomical",
+          "excerptTruncated": false,
+          "publicationDateEstimate": null,
+          "retrievedAt": "2026-10-17T08:03:05.220Z",
+          "quality": "direct_evidence",
+          "relation": "contradicts",
+          "relationProbability": 0.84,
+          "sourceQualityProbability": 0.98
+        },
+        {
+          "id": "E4",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12292216",
+          "title": "Exploring the Causes of the Cambrian Explosion Based on the Evolution Mechanism of Genome Sequences",
+          "publisher": "nih.gov",
+          "tier": "primary",
+          "excerpt": "found in late Devonian strata around 380 Ma. They have both fish and amphibian characteristics and are considered to be transitional species between fish and tetrapods. So paleontological evidence suggests that amphibians originated around 380–360 Ma. The origin time we gave is 391–363 Ma, which is in the Devonian period. For reptiles, scientists discovered fossil footprints dating back 318 Ma that belong to Hylonomus lyelli [30,31], a small lizard-like animal from the Carboniferous period. [...] We found that regardless of animals or plants, there is such a rule for the transition of evolution mode in the phase transition region: starting from δTA1 > 1 and δCG1 < 1, going through the intermediate process of δTA1 > 1 and δCG1 > 1, and finally reaching the evolution state of δCG1 > 1 and δTA1 < 1 (Figure 1A,C). According to the definition of independent selection intensity (see “Section 2”), when δCG1 ≠ 1 or δTA1 ≠ 1, the distribution location of the 8-mer spectrum in CG1 or TA1 subsets",
+          "excerptTruncated": false,
+          "publicationDateEstimate": null,
+          "retrievedAt": "2026-10-17T08:03:05.220Z",
+          "quality": "direct_evidence",
+          "relation": "contradicts",
+          "relationProbability": 0.78,
+          "sourceQualityProbability": 0.84
+        }
+      ]
+    },
+    {
+      "videoId": "UM82qxxskZE",
+      "sentenceId": "s1097",
+      "targetId": "s1097",
+      "text": "There was a real Flood that destroyed the world and produced all of this.",
+      "start": 6033.389,
+      "end": 6039.005,
+      "screeningScore": 2.78,
+      "evidenceStatus": "insufficient_evidence",
+      "citations": []
+    },
+    {
+      "videoId": "UM82qxxskZE",
+      "sentenceId": "s0338",
+      "targetId": "s0338",
+      "text": "So that means that this Schnebly Hill Formation in this area had to form in a matter of hours.",
+      "start": 1941,
+      "end": 1947.083,
+      "screeningScore": 2.73,
+      "evidenceStatus": "insufficient_evidence",
+      "citations": []
+    },
+    {
+      "videoId": "UM82qxxskZE",
+      "sentenceId": "s0333",
+      "targetId": "s0333",
+      "text": "There’s that knife edge boundary and there’s no evidence of erosion there, which means that the Hermit Formation was rapidly deposited and then immediately the Coconino was deposited on top of it.",
+      "start": 1900.083,
+      "end": 1912.042,
+      "screeningScore": 2.21,
+      "evidenceStatus": "insufficient_evidence",
+      "citations": []
+    }
+  ],
+  "pending": [
+    {
+      "targetId": "s0582",
+      "reason": "candidate_budget"
+    },
+    {
+      "targetId": "s0953",
+      "reason": "candidate_budget"
+    },
+    {
+      "targetId": "s0400",
+      "reason": "candidate_budget"
+    },
+    {
+      "targetId": "s0580",
+      "reason": "candidate_budget"
+    },
+    {
+      "targetId": "s0242",
+      "reason": "candidate_budget"
+    },
+    {
+      "targetId": "s0491",
+      "reason": "candidate_budget"
+    },
+    {
+      "targetId": "s0707",
+      "reason": "candidate_budget"
+    },
+    {
+      "targetId": "s0865",
+      "reason": "candidate_budget"
+    },
+    {
+      "targetId": "s1096",
+      "reason": "candidate_budget"
+    },
+    {
+      "targetId": "s0866",
+      "reason": "candidate_budget"
+    },
+    {
+      "targetId": "s0961",
+      "reason": "candidate_budget"
+    },
+    {
+      "targetId": "s0449",
+      "reason": "candidate_budget"
+    },
+    {
+      "targetId": "s0523",
+      "reason": "candidate_budget"
+    },
+    {
+      "targetId": "s0340",
+      "reason": "candidate_budget"
+    },
+    {
+      "targetId": "s0494",
+      "reason": "candidate_budget"
+    },
+    {
+      "targetId": "s0529",
+      "reason": "candidate_budget"
+    },
+    {
+      "targetId": "s0099",
+      "reason": "candidate_budget"
+    },
+    {
+      "targetId": "s1094",
+      "reason": "search_budget"
+    },
+    {
+      "targetId": "s0399",
+      "reason": "search_budget"
+    },
+    {
+      "targetId": "s0672",
+      "reason": "search_budget"
+    },
+    {
+      "targetId": "s0524",
+      "reason": "search_budget"
+    },
+    {
+      "targetId": "s0014",
+      "reason": "search_budget"
+    },
+    {
+      "targetId": "s1095",
+      "reason": "search_budget"
+    },
+    {
+      "targetId": "s0188",
+      "reason": "search_budget"
+    },
+    {
+      "targetId": "s0579",
+      "reason": "search_budget"
+    },
+    {
+      "targetId": "s1001",
+      "reason": "search_budget"
+    },
+    {
+      "targetId": "s0785",
+      "reason": "search_budget"
+    },
+    {
+      "targetId": "s0490",
+      "reason": "search_budget"
+    },
+    {
+      "targetId": "s0908",
+      "reason": "search_budget"
+    },
+    {
+      "targetId": "s0591",
+      "reason": "search_budget"
+    },
+    {
+      "targetId": "s0705",
+      "reason": "search_budget"
+    },
+    {
+      "targetId": "s0590",
+      "reason": "search_budget"
+    },
+    {
+      "targetId": "s0589",
+      "reason": "search_budget"
+    },
+    {
+      "targetId": "s0702",
+      "reason": "search_budget"
+    },
+    {
+      "targetId": "s1048",
+      "reason": "search_budget"
+    },
+    {
+      "targetId": "s0249",
+      "reason": "search_budget"
+    },
+    {
+      "targetId": "s0354",
+      "reason": "search_budget"
+    },
+    {
+      "targetId": "s0414",
+      "reason": "search_budget"
+    },
+    {
+      "targetId": "s1100",
+      "reason": "search_budget"
+    },
+    {
+      "targetId": "s1093",
+      "reason": "search_budget"
+    },
+    {
+      "targetId": "s0581",
+      "reason": "search_budget"
+    },
+    {
+      "targetId": "s0021",
+      "reason": "search_budget"
+    },
+    {
+      "targetId": "s0900",
+      "reason": "search_budget"
+    },
+    {
+      "targetId": "s0819",
+      "reason": "search_budget"
+    },
+    {
+      "targetId": "s1049",
+      "reason": "search_budget"
+    },
+    {
+      "targetId": "s0792",
+      "reason": "search_budget"
+    },
+    {
+      "targetId": "s0926",
+      "reason": "search_budget"
+    },
+    {
+      "targetId": "s1025",
+      "reason": "search_budget"
+    },
+    {
+      "targetId": "s0087",
+      "reason": "search_budget"
+    },
+    {
+      "targetId": "s0204",
+      "reason": "search_budget"
+    },
+    {
+      "targetId": "s0837",
+      "reason": "search_budget"
+    },
+    {
+      "targetId": "s0897",
+      "reason": "search_budget"
+    },
+    {
+      "targetId": "s0288",
+      "reason": "search_budget"
+    }
+  ]
+}

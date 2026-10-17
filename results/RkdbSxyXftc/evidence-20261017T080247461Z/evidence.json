@@ -1,0 +1,119 @@
+{
+  "status": "completed",
+  "videoId": "RkdbSxyXftc",
+  "directory": "/home/hadao/sync/projects/pila/results/RkdbSxyXftc/evidence-20261017T080247461Z",
+  "searchCalls": 3,
+  "cacheHits": 0,
+  "jevCalls": 3,
+  "groups": [
+    {
+      "id": "g-7a78ed343f8a",
+      "query": "course caused humans evidence",
+      "targetIds": [
+        "s0011"
+      ],
+      "cacheHit": false
+    },
+    {
+      "id": "g-c22f362ecc93",
+      "query": "significant warming trend 21st century evidence",
+      "targetIds": [
+        "s0027"
+      ],
+      "cacheHit": false
+    },
+    {
+      "id": "g-0b76931c7976",
+      "query": "contrary media headlines trend over past couple decades essentially flat evidence",
+      "targetIds": [
+        "s0028"
+      ],
+      "cacheHit": false
+    }
+  ],
+  "assessments": [
+    {
+      "videoId": "RkdbSxyXftc",
+      "sentenceId": "s0011",
+      "targetId": "s0011",
+      "text": "And, of course, not one of them was caused by humans.",
+      "start": 38.04,
+      "end": 44.2,
+      "screeningScore": 2.75,
+      "evidenceStatus": "insufficient_evidence",
+      "citations": []
+    },
+    {
+      "videoId": "RkdbSxyXftc",
+      "sentenceId": "s0027",
+      "targetId": "s0027",
+      "text": "And, there has been no significant warming trend in the 21st century.",
+      "start": 156.87,
+      "end": 168.51,
+      "screeningScore": 2.7,
+      "evidenceStatus": "contradicted",
+      "citations": [
+        {
+          "id": "E1",
+          "url": "https://science.nasa.gov/climate-change/evidence",
+          "title": "Evidence - NASA Science",
+          "publisher": "nasa.gov",
+          "tier": "primary",
+          "excerpt": "The current warming trend is different because it is clearly the result of human activities since the mid-1800s, and is proceeding at a rate not seen over many recent millennia.1 It is undeniable that human activities have produced the atmospheric gases that have trapped more of the Sun’s energy in the Earth system. This extra energy has warmed the atmosphere, ocean, and land, and widespread and rapid changes in the atmosphere, ocean, cryosphere, and biosphere have occurred. [...] The planet's average surface temperature has risen about 2 degrees Fahrenheit (1 degrees Celsius) since the late 19th century, a change driven largely by increased carbon dioxide emissions into the atmosphere and other human activities.4 Most of the warming occurred in the past 40 years, with the seven most recent years being the warmest. The years 2016 and 2020 are tied for the warmest year on record.5 [...] While Earth’s climate has changed throughout its history, the current warming is happening at a rate not seen in the past 10,000 years.\n According to the Intergovernmental Panel on Climate Change (IPCC), \"Since systematic scientific assessments began in the 1970s, the influence of human activity on the warming of the climate system has evolved from theory to established fact.\"1",
+          "excerptTruncated": false,
+          "publicationDateEstimate": null,
+          "retrievedAt": "2026-10-17T08:02:52.470Z",
+          "quality": "direct_evidence",
+          "relation": "contradicts",
+          "relationProbability": 0.84,
+          "sourceQualityProbability": 0.9400000000000001
+        }
+      ]
+    },
+    {
+      "videoId": "RkdbSxyXftc",
+      "sentenceId": "s0028",
+      "targetId": "s0028",
+      "text": "Contrary to media headlines, the trend over the past couple of decades has been essentially flat.",
+      "start": 163.23,
+      "end": 173.87,
+      "screeningScore": 2.45,
+      "evidenceStatus": "contradicted",
+      "citations": [
+        {
+          "id": "E4",
+          "url": "https://science.nasa.gov/climate-change/evidence",
+          "title": "Evidence - NASA Science",
+          "publisher": "nasa.gov",
+          "tier": "primary",
+          "excerpt": "Global sea level rose about 8 inches (20 centimeters) in the last century. The rate in the last two decades, however, is nearly double that of the last century and accelerating slightly every year.10  \n    \n  Image credit: U.S. Army Corps of Engineers Norfolk District [...] Both the extent and thickness of Arctic sea ice has declined rapidly over the last several decades.11  \n    \n  Credit: NASA's Scientific Visualization Studio\n ### Extreme Events Are Increasing in Frequency [...] The current warming trend is different because it is clearly the result of human activities since the mid-1800s, and is proceeding at a rate not seen over many recent millennia.1 It is undeniable that human activities have produced the atmospheric gases that have trapped more of the Sun’s energy in the Earth system. This extra energy has warmed the atmosphere, ocean, and land, and widespread and rapid changes in the atmosphere, ocean, cryosphere, and biosphere have occurred.",
+          "excerptTruncated": false,
+          "publicationDateEstimate": null,
+          "retrievedAt": "2026-10-17T08:02:55.510Z",
+          "quality": "direct_evidence",
+          "relation": "contradicts",
+          "relationProbability": 0.82,
+          "sourceQualityProbability": 0.93
+        }
+      ]
+    }
+  ],
+  "pending": [
+    {
+      "targetId": "s0021",
+      "reason": "search_budget"
+    },
+    {
+      "targetId": "s0022",
+      "reason": "search_budget"
+    },
+    {
+      "targetId": "s0040",
+      "reason": "search_budget"
+    },
+    {
+      "targetId": "s0030",
+      "reason": "search_budget"
+    }
+  ]
+}

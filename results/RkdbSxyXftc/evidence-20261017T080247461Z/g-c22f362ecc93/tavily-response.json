@@ -1,0 +1,42 @@
+{
+  "query": "significant warming trend 21st century evidence",
+  "follow_up_questions": null,
+  "answer": null,
+  "images": [],
+  "results": [
+    {
+      "url": "https://science.nasa.gov/climate-change/evidence",
+      "title": "Evidence - NASA Science",
+      "content": "The current warming trend is different because it is clearly the result of human activities since the mid-1800s, and is proceeding at a rate not seen over many recent millennia.1 It is undeniable that human activities have produced the atmospheric gases that have trapped more of the Sun’s energy in the Earth system. This extra energy has warmed the atmosphere, ocean, and land, and widespread and rapid changes in the atmosphere, ocean, cryosphere, and biosphere have occurred. [...] The planet's average surface temperature has risen about 2 degrees Fahrenheit (1 degrees Celsius) since the late 19th century, a change driven largely by increased carbon dioxide emissions into the atmosphere and other human activities.4 Most of the warming occurred in the past 40 years, with the seven most recent years being the warmest. The years 2016 and 2020 are tied for the warmest year on record.5 [...] While Earth’s climate has changed throughout its history, the current warming is happening at a rate not seen in the past 10,000 years.\n According to the Intergovernmental Panel on Climate Change (IPCC), \"Since systematic scientific assessments began in the 1970s, the influence of human activity on the warming of the climate system has evolved from theory to established fact.\"1",
+      "score": 0.6426349,
+      "raw_content": null,
+      "id": "857836-00"
+    },
+    {
+      "url": "https://science.nasa.gov/climate-change/scientific-consensus",
+      "title": "Scientific Consensus - NASA Science",
+      "content": "\"Climate change is real. There will always be uncertainty in understanding a system as complex as the world’s climate. However there is now strong evidence that significant global warming is occurring. The evidence comes from direct measurements of rising surface air temperatures and subsurface ocean temperatures and from phenomena such as increases in average global sea levels, retreating glaciers, and changes to many physical and biological systems. It is likely that most of the warming in [...] \"Earth's changing climate is a critical issue and poses the risk of significant environmental, social and economic disruptions around the globe. While natural sources of climate variability are significant, multiple lines of evidence indicate that human influences have had an increasingly dominant effect on global climate warming observed since the mid-twentieth century.\" (2015)8\n\n### The Geological Society of America [...] \"Based on extensive scientific evidence, it is extremely likely that human activities, especially emissions of greenhouse gases, are the dominant cause of the observed warming since the mid-20th century. There is no alterative explanation supported by convincing evidence.\" (2019)5\n\n### American Medical Association",
+      "score": 0.5928793,
+      "raw_content": null,
+      "id": "fad5d8-01"
+    },
+    {
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC2995507",
+      "title": "Climate Change: The Evidence and Our Options",
+      "content": "accumulated and have been sustained. The current warming is therefore unusual when viewed from the millennial perspective provided by multiple lines of proxy evidence and the 160-year record of direct temperature measurements. Despite all this evidence, plus the well-documented continual increase in atmospheric greenhouse gas concentrations, societies have taken little action to address this global-scale problem. Hence, the rate of global carbon dioxide emissions continues to accelerate. As a [...] change in Earth's climate system is underway. This paper highlights observations of 20th and 21st century glacier shrinkage in the Andes, the Himalayas, and on Mount Kilimanjaro. Ice cores retrieved from shrinking glaciers around the world confirm their continuous existence for periods ranging from hundreds of years to multiple millennia, suggesting that climatological conditions that dominate those regions today are different from those under which these ice fields originally accumulated and",
+      "score": 0.4651208,
+      "raw_content": null,
+      "id": "fcd911-02"
+    },
+    {
+      "url": "https://science.nasa.gov/earth/climate-change/global-warming",
+      "title": "Global Warming - NASA Science",
+      "content": "©2007 IPCC WG1 AR-4.\n\nIt is impossible to pin any single unusual weather event on global warming, but emerging evidence suggests that global warming is already influencing the weather. Heat waves, droughts, and intense rain events have increased in frequency during the last 50 years, and human-induced global warming more likely than not contributed to the trend.\n\n### Rising Sea Levels [...] The models predict that as the world consumes ever more fossil fuel, greenhouse gas concentrations will continue to rise, and Earth’s average surface temperature will rise with them. Based on a range of plausible emission scenarios, average surface temperatures could rise between 2°C and 6°C by the end of the 21st century.",
+      "score": 0.43972388,
+      "raw_content": null,
+      "id": "dd99f1-03"
+    }
+  ],
+  "response_time": 1.79,
+  "request_id": "1e30ae49-9b0e-413b-9176-4b0c74e36186"
+}

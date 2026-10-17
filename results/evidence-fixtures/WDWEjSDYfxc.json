@@ -1,0 +1,24 @@
+{
+  "videoId": "WDWEjSDYfxc",
+  "language": "en",
+  "videoUrl": "https://www.youtube.com/watch?v=WDWEjSDYfxc",
+  "transcriptSource": "examples/transcripts/WDWEjSDYfxc.json",
+  "screeningSource": "results/WDWEjSDYfxc/20261017T070631678Z/results.json",
+  "evidenceSource": "results/WDWEjSDYfxc/evidence-20261017T080310353Z/evidence.json",
+  "maxSearches": 3,
+  "eligibleClaims": 1,
+  "assessments": [
+    {
+      "videoId": "WDWEjSDYfxc",
+      "sentenceId": "s0014",
+      "targetId": "s0014",
+      "text": "In other words, fossil fuels are 100 percent organic and were produced with solar energy.",
+      "start": 86.21,
+      "end": 97.82000000000001,
+      "screeningScore": 2.06,
+      "evidenceStatus": "insufficient_evidence",
+      "citations": []
+    }
+  ],
+  "pending": []
+}

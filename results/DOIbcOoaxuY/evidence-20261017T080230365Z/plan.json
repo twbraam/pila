@@ -1,0 +1,86 @@
+{
+  "groups": [
+    {
+      "id": "g-a313969c8f30",
+      "query": "nor scientists today evidence",
+      "claims": [
+        {
+          "videoId": "DOIbcOoaxuY",
+          "sentenceId": "s0021",
+          "text": "Nor can scientists today.",
+          "start": 102.84,
+          "end": 104.84,
+          "screeningType": "score",
+          "suspicionScore": 2.23,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.23
+    },
+    {
+      "id": "g-dda9b11d3316",
+      "query": "serious doubts about modern darwinian theory cambrian explosion sudden appearance new animals evidence",
+      "claims": [
+        {
+          "videoId": "DOIbcOoaxuY",
+          "sentenceId": "s0055",
+          "text": "So, two serious doubts about modern Darwinian theory: The Cambrian Explosion—the sudden appearance of new animals, which evolutionary theory has failed to explain; and the DNA enigma—the implausibility of random mutations producing the information needed to build new forms of animal life.",
+          "start": 303.99,
+          "end": 323.12,
+          "screeningType": "score",
+          "suspicionScore": 2.23,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.23
+    },
+    {
+      "id": "g-18f13c0d17f0",
+      "query": "novel animal forms exhibiting proto types body designs see today emerged fossil evidence",
+      "claims": [
+        {
+          "videoId": "DOIbcOoaxuY",
+          "sentenceId": "s0015",
+          "text": "These novel animal forms—exhibiting proto-types of most animal body designs we see today—emerged in the fossil record without evidence of earlier ancestors.",
+          "start": 77.7,
+          "end": 87.75999999999999,
+          "screeningType": "score",
+          "suspicionScore": 2.13,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.13
+    },
+    {
+      "id": "g-8c96c79cd971",
+      "query": "show book darwin’s doubt even billion years life’s history enough time overcome evidence",
+      "claims": [
+        {
+          "videoId": "DOIbcOoaxuY",
+          "sentenceId": "s0054",
+          "text": "As I show in my book Darwin’s Doubt, even 4 billion years of life’s history is not enough time to overcome a search problem this big.",
+          "start": 295.919,
+          "end": 303.99,
+          "screeningType": "score",
+          "suspicionScore": 2.05,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.05
+    }
+  ],
+  "pending": [],
+  "eligibleTargets": 4
+}

@@ -1,0 +1,59 @@
+{
+  "groups": [
+    {
+      "id": "g-ee17779b2238",
+      "query": "rising scientists sea levels rise accelerating anything recent papers chinese published january evidence",
+      "claims": [
+        {
+          "videoId": "3PWtaackIJU",
+          "sentenceId": "s0006",
+          "text": "Yes, sea levels are rising, but the rise is not accelerating—if anything, two recent papers, one by Chinese scientists published in January 2014, and the other by U.S. scientists published in May 2013, have shown a small decline in the rate of sea-level increase.",
+          "start": 28.82,
+          "end": 46.22,
+          "screeningType": "score",
+          "suspicionScore": 2.37,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        },
+        {
+          "videoId": "3PWtaackIJU",
+          "sentenceId": "s0001",
+          "text": "Carbons emissions are rising—and faster than most scientists predicted.",
+          "start": 2.08,
+          "end": 6.2,
+          "screeningType": "score",
+          "suspicionScore": 2.23,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.37
+    },
+    {
+      "id": "g-abec368c95d0",
+      "query": "often being told we’re seeing droughts study published march 2014 journal nature evidence",
+      "claims": [
+        {
+          "videoId": "3PWtaackIJU",
+          "sentenceId": "s0007",
+          "text": "We are often being told that we’re seeing more and more droughts, but a study published in March 2014 in the journal Nature actually shows a decrease in the world’s surface that has been afflicted by droughts since 1982.",
+          "start": 46.22,
+          "end": 59.660000000000004,
+          "screeningType": "score",
+          "suspicionScore": 2.03,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.03
+    }
+  ],
+  "pending": [],
+  "eligibleTargets": 3
+}

@@ -1,0 +1,42 @@
+{
+  "query": "co2 climate change connection unimportant controlling earth models based assumption drives temperature evidence",
+  "follow_up_questions": null,
+  "answer": null,
+  "images": [],
+  "results": [
+    {
+      "url": "https://weather.metoffice.gov.uk/learn-about/weather/types-of-weather/temperature/heatwave",
+      "title": "What is a heatwave? - Met Office",
+      "content": "As greenhouse gas concentrations increase heatwaves of similar intensity are projected to become even more frequent, perhaps occurring as regularly as every other year by the 2050s. The Earth’s surface temperature has risen by 1°C since the pre-industrial period (1850-1900) and UK temperatures have risen by a similar amount. [...] Heatwaves are extreme weather events, but research shows that climate change is making these events more likely. A scientific study by the Met Office into the Summer 2018 heatwave in the UK showed that the likelihood of the UK experiencing a summer as hot or hotter than 2018 is a little over 1 in 10. It is30 times more likely to occur now than before the industrial revolution because of the higher concentration of carbon dioxide (a greenhouse gas) in the atmosphere. As greenhouse gas [...] Heatwaves are most common in summer when high pressure develops across an area. High pressure systems are slow moving and can persist over an area for a prolonged period of time, such as days or weeks. They can occur in the UK due to the location of the jet stream, which is usually to the north of the UK in the summer. This can allow high pressure to develop over the UK resulting in persistent dry and settled weather.\n\n### Are heatwaves linked to climate change?",
+      "score": 0.06057952,
+      "raw_content": null,
+      "id": "30a70b-00"
+    },
+    {
+      "url": "https://www.nasa.gov/missions/station/20-years-of-observing-earth-from-the-international-space-station",
+      "title": "20 Years of Observing Earth from the International Space Station - NASA",
+      "content": "These measurements of solar energy, along with model-based calculations of its absorption and reflection by Earth’s atmosphere and surface, provide insights into the sun’s influence on climate, the ozone layer, atmospheric circulation, and ecosystems. The data are critical inputs for modeling of Earth’s climate and atmospheric systems.\n\nCOMING SOON: EMIT & CLARREO-PF [...] What’s Up: October 2026 Skywatching Tips from NASA\n\n### What’s Up: October 2026 Skywatching Tips from NASA\n\n### Missions\n\n### Humans in Space\n\n### Earth\n\n### The Solar System\n\n### The Universe\n\n### Science\n\n### Aeronautics\n\n### Technology\n\n### Learning Resources\n\n### About NASA\n\n### NASA en Español\n\n### News & Events\n\n### Multimedia\n\n### Featured\n\nNASA’s Perseverance Sets Off-World Record for Total Distance Driven\n\n### NASA’s Perseverance Sets Off-World Record for Total Distance Driven [...] OCO-3\n\nSeveral instruments currently aboard the station are not the first of their kind. As the name might suggest, the Orbiting Carbon Observatory-3 (OCO-3) is a third iteration instrument for long-term monitoring of atmospheric carbon dioxide distributions around the globe, complementing long-term ground-based observations. It provides insights into regional carbon sources and sinks and monitors changes in the carbon cycle linked to human activity.",
+      "score": 0.051543966,
+      "raw_content": null,
+      "id": "bc6ddf-01"
+    },
+    {
+      "url": "https://www.nasa.gov/wp-content/uploads/2025/08/nasas-herc-2026-handbook.pdf?emrc=689f42abcdbb5",
+      "title": "Human Exploration Rover Challenge 2026 Handbook",
+      "content": "• 6.3.10 HP Rover Teams shall adhere to the requirements for task execution below, if choosing to attempt the Task Tool Mission. 17 2026 HERC Handbook HERC@mail.nasa.gov 6.4 Vehicle Requirements — Remote Controlled • 6.4.1 Vehicles shall be battery powered. The use of flammable liquids is not permitted. [...] 22 2026 HERC Handbook HERC@mail.nasa.gov 3.2 Review the design at a system level (i.e. Tasks 1, 2, 3) going through each system’s alternative designs, and evaluating the pros and cons of each alternative. 3.2.1 – For each alternative, briefly present research on why the alternative should not be chosen. These should be objective choices based on numerical data. 3.2.2 – After evaluating all alternatives, present the chosen task tool design. [...] HS-PS3-1 Energy Create a computational model to calculate the change in the energy of one component in a system when the change in energy of the other component(s) and energy flows in and out of the system are known.\nHS-PS3-3 Energy Design, build, and refine a device that works within given constraints to convert one form of energy into another form of energy.",
+      "score": 0.033949643,
+      "raw_content": null,
+      "id": "170072-02"
+    },
+    {
+      "url": "https://www.earthdata.nasa.gov/data/catalog/ob-cloud-modisa-l3m-chl-2022.0",
+      "title": "Aqua MODIS Level-3 Global Mapped Chlorophyll (CHL) Data, version 2022.0 | NASA Earthdata",
+      "content": "Delivery of new Suomi National Polar-orbiting Partnership (Suomi NPP) satellite observations will cease on November 2, 2026. Data users should transition now to alternative products from NOAA-21 and NOAA-20. Suomi NPP data announcement\n\nTABLE OF CONTENTS\n\n## Description [...] | Disentangling drivers of Magellanic penguin demography: climate variability and terrestrial predation at Southern Patagonia |  Dodino, Samanta, Barbe, Ian, Roskos, Grisel, Pimper, Lida, Valenzuela, Alejandro Eduardo Jorge, Lopez, Maria Eugenia, Schlaps, Erica, Malmierca, Laura, Rodriguez-Planes, Lucia |  |  Aqua MODIS Level-3 Global Mapped Chlorophyll (CHL) Data, version 2022.0  MODIS Aqua Level 3 SST Thermal IR Monthly 4km Daytime V2019.0 | [...] | Global trends in ocean fronts and impacts on the airsea CO2 flux and chlorophyll concentrations |  Yang, Kai, Meyer, Amelie, Le, Phuc T. D., Strutton, Peter G., Fischer, Andrew M. |  |  Aqua MODIS Level-3 Global Mapped Chlorophyll (CHL) Data, version 2022.0  MODIS Aqua Level 3 SST MID-IR Daily 4km Nighttime V2019.0 |",
+      "score": 0.019948887,
+      "raw_content": null,
+      "id": "327ee0-03"
+    }
+  ],
+  "response_time": 2.86,
+  "request_id": "ee145c2c-6081-4879-89cd-7663a0a8858f"
+}

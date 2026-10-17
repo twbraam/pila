@@ -1,0 +1,181 @@
+{
+  "model": "jev-1.13.0",
+  "answers": {
+    "quality_E1": {
+      "type": "choice",
+      "choice": "direct_evidence",
+      "confidence": 0.91,
+      "probabilities": {
+        "direct_evidence": 0.94,
+        "secondary_summary": 0.05,
+        "unusable": 0.01
+      }
+    },
+    "quality_E2": {
+      "type": "choice",
+      "choice": "unusable",
+      "confidence": 0.91,
+      "probabilities": {
+        "direct_evidence": 0.03,
+        "secondary_summary": 0.03,
+        "unusable": 0.9400000000000001
+      }
+    },
+    "quality_E3": {
+      "type": "choice",
+      "choice": "unusable",
+      "confidence": 1,
+      "probabilities": {
+        "direct_evidence": 0,
+        "secondary_summary": 0,
+        "unusable": 1
+      }
+    },
+    "quality_E4": {
+      "type": "choice",
+      "choice": "unusable",
+      "confidence": 0.89,
+      "probabilities": {
+        "direct_evidence": 0.04,
+        "secondary_summary": 0.03,
+        "unusable": 0.93
+      }
+    },
+    "claim_0_E1": {
+      "type": "choice",
+      "choice": "contradicts",
+      "confidence": 0.84,
+      "probabilities": {
+        "contradicts": 0.88,
+        "supports": 0,
+        "qualifies": 0,
+        "insufficient": 0.12
+      }
+    },
+    "claim_0_E2": {
+      "type": "choice",
+      "choice": "insufficient",
+      "confidence": 1,
+      "probabilities": {
+        "contradicts": 0,
+        "supports": 0,
+        "qualifies": 0,
+        "insufficient": 1
+      }
+    },
+    "claim_0_E3": {
+      "type": "choice",
+      "choice": "insufficient",
+      "confidence": 1,
+      "probabilities": {
+        "contradicts": 0,
+        "supports": 0,
+        "qualifies": 0,
+        "insufficient": 1
+      }
+    },
+    "claim_0_E4": {
+      "type": "choice",
+      "choice": "insufficient",
+      "confidence": 1,
+      "probabilities": {
+        "contradicts": 0,
+        "supports": 0,
+        "qualifies": 0,
+        "insufficient": 1
+      }
+    },
+    "claim_1_E1": {
+      "type": "choice",
+      "choice": "contradicts",
+      "confidence": 0.56,
+      "probabilities": {
+        "contradicts": 0.67,
+        "supports": 0,
+        "qualifies": 0.04,
+        "insufficient": 0.29
+      }
+    },
+    "claim_1_E2": {
+      "type": "choice",
+      "choice": "insufficient",
+      "confidence": 1,
+      "probabilities": {
+        "contradicts": 0,
+        "supports": 0,
+        "qualifies": 0,
+        "insufficient": 1
+      }
+    },
+    "claim_1_E3": {
+      "type": "choice",
+      "choice": "insufficient",
+      "confidence": 1,
+      "probabilities": {
+        "contradicts": 0,
+        "supports": 0,
+        "qualifies": 0,
+        "insufficient": 1
+      }
+    },
+    "claim_1_E4": {
+      "type": "choice",
+      "choice": "insufficient",
+      "confidence": 1,
+      "probabilities": {
+        "contradicts": 0,
+        "supports": 0,
+        "qualifies": 0,
+        "insufficient": 1
+      }
+    },
+    "claim_2_E1": {
+      "type": "choice",
+      "choice": "insufficient",
+      "confidence": 0.76,
+      "probabilities": {
+        "contradicts": 0.03,
+        "supports": 0.04,
+        "qualifies": 0.11,
+        "insufficient": 0.82
+      }
+    },
+    "claim_2_E2": {
+      "type": "choice",
+      "choice": "insufficient",
+      "confidence": 1,
+      "probabilities": {
+        "contradicts": 0,
+        "supports": 0,
+        "qualifies": 0,
+        "insufficient": 1
+      }
+    },
+    "claim_2_E3": {
+      "type": "choice",
+      "choice": "insufficient",
+      "confidence": 1,
+      "probabilities": {
+        "contradicts": 0,
+        "supports": 0,
+        "qualifies": 0,
+        "insufficient": 1
+      }
+    },
+    "claim_2_E4": {
+      "type": "choice",
+      "choice": "insufficient",
+      "confidence": 1,
+      "probabilities": {
+        "contradicts": 0,
+        "supports": 0,
+        "qualifies": 0,
+        "insufficient": 1
+      }
+    }
+  },
+  "usage": {
+    "input_tokens": 6513,
+    "output_tokens": 842
+  }
+}

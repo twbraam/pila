@@ -1,0 +1,42 @@
+{
+  "query": "nor scientists today evidence",
+  "follow_up_questions": null,
+  "answer": null,
+  "images": [],
+  "results": [
+    {
+      "url": "https://science.nasa.gov/dark-matter",
+      "title": "Dark Matter - NASA Science",
+      "content": "Today, scientists have even more direct evidence of dark matter. While dark matter doesn't interact with light, its gravity can bend light from distant galaxies, creating an effect called gravitational lensing. Studying galaxies distorted by gravitational lensing can help scientists better understand dark matter and its place in the universe. [...] There are currently many proposed explanations for what makes up dark matter. In fact, scientists think it's possible that dark matter is made up of more than one kind of matter or particle.\n\n Below are a few of the current candidates with the most support from the scientific community. For context, scientists have been searching for these candidates but have not yet found evidence which would confirm any candidate. New candidates may also continue to emerge.",
+      "score": 0.477238,
+      "raw_content": null,
+      "id": "4f18b0-00"
+    },
+    {
+      "url": "https://science.nasa.gov/climate-change/scientific-consensus",
+      "title": "Scientific Consensus - NASA Science",
+      "content": "It’s important to remember that scientists always focus on the evidence, not on opinions. Scientific evidence continues to show that human activities (primarily the human burning of fossil fuels) have warmed Earth’s surface and its ocean basins, which in turn have continued to impact Earth’s climate. This is based on over a century of scientific evidence forming the structural backbone of today's civilization.",
+      "score": 0.43093804,
+      "raw_content": null,
+      "id": "25d0bd-01"
+    },
+    {
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10576137",
+      "title": "A scientist’s take on scientific evidence in the courtroom",
+      "content": "is one of the most successful applied sciences of our time. In the United States today, there is a highly regulated process for assessing the validity of drugs through clinical trials (58). This process ensures that fateful decisions about drug use are based on high standards of evidence, and it is successful at doing so because of the close intellectual partnership between scientists and physicians. Bad science in the courtroom could be mitigated by similar efforts to cultivate close working [...] In doing so, the appellate court issued a ruling in 1923 – a ruling nearly as notable for its brevity (669 words) as for its impact (it is among the most heavily cited rulings in American case law) – that ultimately established an admissibility test for scientific evidence. Known today as the “Frye standard,” the test was increasingly applied in US Courts for the next seven decades and adopted (and still used) in many state courts as well: [...] In the absence of corroboration, a basic statement presented as scientific evidence simply lacks the empirical support needed to justify a decision. This is a sensible threshold in the practice of scientific investigation, where additional experiments can be performed and alternative hypotheses can be developed and tested, but it hobbles the practice of courtroom litigation where claims can only be vetted by today’s science. Instead, to satisfy fairness constraints, it is often argued that",
+      "score": 0.41250706,
+      "raw_content": null,
+      "id": "4ac7b5-02"
+    },
+    {
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8520088",
+      "title": "Who Speaks for Science?",
+      "content": "In addition, the case for climate change spans numerous fields—paleoclimatology, marine biology, biogeography, atmospheric physics, thermodynamics, plant ecology, and so on. No one person can acquire enough skills in all those fields simultaneously. No one. Not even the scientists who contribute to that immense body of evidence. There is a boundary beyond which one cannot directly validate knowledge based on personal expertise. Not even professional scientists meet the educators’ ideal of the [...] on the epistemics of evidence and arguments that characterize “scientific practices” and the discourse among expert peers, wholly within scientific communities. Nor can they treat science news media as transparent or epistemically unproblematic. Students need to learn instead the distributed structure of knowledge and the social architecture of credibility (Allchin, 2012b; Goldman, 1999; Höttecke & Allchin, 2020). [...] The central lesson for the consumer, then, is to acknowledge our epistemic limits and indebtedness. The corresponding epistemic challenge is to assess the expertise of those who communicate the science. What matters is not the evidence but the credibility of whoever purports to speak for science. That is, to support functional public scientific literacy, educators need to focus foremost on the epistemics of science in public discourse. They cannot rely solely (or even mainly) on the epistemics",
+      "score": 0.36758858,
+      "raw_content": null,
+      "id": "a42b20-03"
+    }
+  ],
+  "response_time": 1.79,
+  "request_id": "4adc43a1-4b9c-4425-b3c9-5c863adae5ee"
+}

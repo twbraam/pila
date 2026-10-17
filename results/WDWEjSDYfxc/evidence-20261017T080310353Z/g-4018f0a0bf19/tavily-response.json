@@ -1,0 +1,42 @@
+{
+  "query": "other words fossil fuels 100 percent organic produced solar energy evidence",
+  "follow_up_questions": null,
+  "answer": null,
+  "images": [],
+  "results": [
+    {
+      "url": "https://ntrs.nasa.gov/api/citations/19730018091/downloads/19730018091.pdf",
+      "title": "SOLAR ENERGY AS A NATIONAL ENERGY RESOURCE",
+      "content": "Same as for fossil fuel combustion.\nAsh returned to soil.\nSame as for fossil fuel combustion.\nDecreases supply of soil conditioning organics.\nS1.00-S2.00 (estimated).1 Based on reasonable truck and rail haul distances and costs. No charge for wastes. No subsidy for agricultural wastes.\nat or around normal atmospheric pressures and at temperatures ranging from about 15°C up to about 50°C. The process operates with organic solid concentrations as low as a few percent and as high as 60-70%. [...] CRUDE FROM SHALE SOLAR LIQUID FUEL FUEL OIL FROM COAL 1971 NATURAL CRUDE FUEL TYPES FIGURE 10. COSTS OF FOSSIL & SOLAR RENEWABLE FUELS 44 organic materials to valuable pure products, chemical raw materials or clean fuels by specific enzyme attack.\nEnzymes are organic substances, produced by living cells, that are capable of catalyzing rel-atively specific synthesis or degradation reac-tions. [...] Because these fossil fuel reserves are being depleted rapidly, it is essential that considera-tion be given to means for providing large additional supplies of high quality, concentrated fuels by using forces similar to those which produced our fossil fuels. The managed produc-tion of plant tissue (e.g., trees, grasses, water plants, fresh water and marine algae) with more efficient use of solar energy and required nutri-ents carried out on suitable land and water areas could provide starting",
+      "score": 0.25903574,
+      "raw_content": null,
+      "id": "64375f-00"
+    },
+    {
+      "url": "https://www.ipcc.ch/site/assets/uploads/2018/02/ar4-wg3-chapter4-1.pdf",
+      "title": "Energy Supply",
+      "content": "• Traditional biomass for domestic heating and cooking still accounts for more than 10% of global energy supplies but could eventually be replaced, mainly by modern biomass and 254 Energy Supply Chapter 4 other renewable energy systems as well as by fossil-based domestic fuels such as kerosene and liquefied petroleum gas (LPG) (high agreement, much evidence – except traditional biomass). [...] and thus improve their economies (high agreement, much evidence). In short, the world is not on course to achieve a sustainable energy future. The global energy supply will continue to be dominated by fossil fuels for several decades. To reduce the resultant GHG emissions will require a transition to zero- and low-carbon technologies. This can happen over time as business opportunities and co-benefits are identified. However, more rapid deployment of zero- and low-carbon technologies will [...] energy use is responsible for about 85% of the anthropogenic CO2 emissions produced annually (IEA, 2003d). Natural gas is the fossil fuel that produces the lowest amount of GHG per unit of energy consumed and is therefore favoured in mitigation strategies. Fossil fuels have enjoyed economic advantages that other technologies may not be able to overcome, although there has been a recent trend for fossil fuel prices to increase and renewable energy prices to decrease because of continued",
+      "score": 0.2107017,
+      "raw_content": null,
+      "id": "7d8a37-01"
+    },
+    {
+      "url": "https://www.ipcc.ch/report/ar6/wg3/chapter/chapter-6",
+      "title": "Chapter 6: Energy systems",
+      "content": "The energy return of investment (EROI) is a useful indicator of full fossil lifecycle costs. Fossil fuels create significantly more energy per unit energy invested – or in other words have much larger EROI – than most cleaner fuels such as biomass or electrolysis-derived hydrogen, where intensive processing reduces EROI (Hall et al. 2014). That said, recent years have seen a decrease in fossil EROI, especially as underground coal mining still represents a substantial portion of global [...] cells, such as amorphous silicon, cadmium telluride and copper indium gallium diselenide (CIGS), use far less material (though they use more glass), but account for less than 10% of the global solar market. Other thin-films, such as those based on perovskites, organic solar cells, or earth-abundant, non-toxic materials such as kesterites, either on their own, or layered on silicon, could further reduce material use per energy produced (Box 6.4).",
+      "score": 0.19539475,
+      "raw_content": null,
+      "id": "6bdd08-02"
+    },
+    {
+      "url": "https://www.iea.org/glossary",
+      "title": "Glossary - IEA",
+      "content": "Fossil fuels\n  :   Energy sources that are typically extracted from underground and which have been formed from the fossilised remains of dead plants by exposure to heat and pressure in the Earth's crust over millions of years. Fossil fuels generate greenhouse gases during their extraction, transport and combustion or oxidation. Includes coal, natural gas, oil and peat. [...] Unabated fossil fuels\n  :   Fossil fuels used for energy purposes without carbon capture, utilisation and storage (CCUS). In IEA analysis, total fossil fuel use is equal to unabated fossil fuels plus fossil fuels with CCUS plus non-energy use of fossil fuels.\n\n  Unabated gas\n  :   See unabated fossil fuels. [...] Solar photovoltaics\n  :   Electricity produced from solar photovoltaic cells including utility-scale and small-scale installations. See photovoltaic.\n\n  Solid bioenergy\n  :   Includes charcoal, fuelwood, dung, agricultural residues, wood waste and other solid biogenic wastes.\n\n  Solid biomass\n  :   See solid bioenergy.\n\n  Solid fuels\n  :   Includes coal, modern solid bioenergy, traditional use of biomass and industrial and municipal wastes.",
+      "score": 0.19237275,
+      "raw_content": null,
+      "id": "4019c6-03"
+    }
+  ],
+  "response_time": 3.07,
+  "request_id": "f6d78aa3-bd6c-4ace-ac72-a45047bddbba"
+}

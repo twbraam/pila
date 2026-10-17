@@ -1,0 +1,51 @@
+{
+  "videoId": "OwqIy8Ikv-c",
+  "language": "en",
+  "videoUrl": "https://www.youtube.com/watch?v=OwqIy8Ikv-c",
+  "transcriptSource": "examples/transcripts/OwqIy8Ikv-c.json",
+  "screeningSource": "results/OwqIy8Ikv-c/20261017T070618135Z/results.json",
+  "evidenceSource": "results/OwqIy8Ikv-c/evidence-20261017T080238219Z/evidence.json",
+  "maxSearches": 3,
+  "eligibleClaims": 4,
+  "assessments": [
+    {
+      "videoId": "OwqIy8Ikv-c",
+      "sentenceId": "s0003",
+      "targetId": "s0003",
+      "text": "For 30 years I taught at MIT, during which time the climate has changed remarkably little.",
+      "start": 2.42,
+      "end": 15.268999999999998,
+      "screeningScore": 2.69,
+      "evidenceStatus": "insufficient_evidence",
+      "citations": []
+    },
+    {
+      "videoId": "OwqIy8Ikv-c",
+      "sentenceId": "s0017",
+      "targetId": "s0017",
+      "text": "None of these is fully understood, and there is no evidence that CO2 emissions are the dominant factor.",
+      "start": 101.68,
+      "end": 115.24,
+      "screeningScore": 2.51,
+      "evidenceStatus": "insufficient_evidence",
+      "citations": []
+    },
+    {
+      "videoId": "OwqIy8Ikv-c",
+      "sentenceId": "s0024",
+      "targetId": "s0024",
+      "text": "The IPCC, acknowledged in its own 2007 report that “The long-term prediction of future climate states is not possible.”",
+      "start": 168.7,
+      "end": 187,
+      "screeningScore": 2.12,
+      "evidenceStatus": "insufficient_evidence",
+      "citations": []
+    }
+  ],
+  "pending": [
+    {
+      "targetId": "s0025",
+      "reason": "search_budget"
+    }
+  ]
+}

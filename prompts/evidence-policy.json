@@ -1,0 +1,32 @@
+{
+  "maxSearches": 3,
+  "maxCandidates": 40,
+  "maxClaimsPerGroup": 6,
+  "minimumTopicOverlap": 0.2,
+  "maxResults": 4,
+  "cacheHours": 168,
+  "excerptCharacters": 2500,
+  "maxJevRequestTokens": 14000,
+  "minimumRelationProbability": 0.8,
+  "minimumSourceQualityProbability": 0.8,
+  "sources": {
+    "ipcc.ch": "primary",
+    "nasa.gov": "primary",
+    "noaa.gov": "primary",
+    "who.int": "primary",
+    "cdc.gov": "primary",
+    "nih.gov": "primary",
+    "gov.uk": "primary",
+    "iea.org": "primary",
+    "iaea.org": "primary",
+    "nrc.gov": "primary",
+    "worldbank.org": "primary",
+    "stat.gov.tw": "primary",
+    "mohw.gov.tw": "primary",
+    "reuters.com": "secondary",
+    "apnews.com": "secondary",
+    "bbc.com": "secondary",
+    "factcheck.org": "secondary",
+    "tfc-taiwan.org.tw": "secondary"
+  }
+}

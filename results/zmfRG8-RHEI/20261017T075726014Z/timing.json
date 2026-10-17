@@ -1,0 +1,18 @@
+{
+  "videoId": "zmfRG8-RHEI",
+  "videoSeconds": 4733.65,
+  "sentenceCount": 789,
+  "totalSeconds": 19.300158920999998,
+  "screeningStageSeconds": 9.11604516,
+  "screeningApiSeconds": 5.5093557629999985,
+  "evidenceStageSeconds": 10.184113761,
+  "screeningCalls": 13,
+  "tavilySearchCalls": 3,
+  "tavilyCacheHits": 0,
+  "evidenceJevCalls": 3,
+  "claimsEvidenceAssessed": 4,
+  "claimsPending": 72,
+  "screeningDirectory": "/home/hadao/sync/projects/pila/results/zmfRG8-RHEI/20261017T075726014Z",
+  "evidenceDirectory": "/home/hadao/sync/projects/pila/results/zmfRG8-RHEI/evidence-20261017T075731646Z",
+  "note": "Timer starts with server modules loaded; includes transcript reading, preprocessing, networking, assessment, and artifact writes. Evidence budget is three research groups, not all flagged claims."
+}

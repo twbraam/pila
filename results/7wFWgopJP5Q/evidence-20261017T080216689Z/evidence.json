@@ -1,0 +1,37 @@
+{
+  "status": "completed",
+  "videoId": "7wFWgopJP5Q",
+  "directory": "/home/hadao/sync/projects/pila/results/7wFWgopJP5Q/evidence-20261017T080216689Z",
+  "searchCalls": 2,
+  "cacheHits": 0,
+  "jevCalls": 0,
+  "groups": [
+    {
+      "id": "g-55c824f91be5",
+      "query": "商業 週刊 資深 專 述 郭 億 如 這篇文章 他 讓 我知道 evidence",
+      "targetIds": [
+        "s0013::part-1"
+      ],
+      "cacheHit": false
+    },
+    {
+      "id": "g-ba9066379d79",
+      "query": "你 自己 有沒有 想過 這 在 法國 現在 的 總統 叫做 歐 evidence",
+      "targetIds": [
+        "s0010"
+      ],
+      "cacheHit": false
+    }
+  ],
+  "assessments": [],
+  "pending": [
+    {
+      "targetId": "s0013::part-1",
+      "reason": "evidence_context_budget"
+    },
+    {
+      "targetId": "s0010",
+      "reason": "evidence_context_budget"
+    }
+  ]
+}

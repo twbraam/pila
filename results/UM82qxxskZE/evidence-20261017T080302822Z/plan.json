@@ -1,0 +1,812 @@
+{
+  "groups": [
+    {
+      "id": "g-77e288df6da6",
+      "query": "rule transitional fossils evidence",
+      "claims": [
+        {
+          "videoId": "UM82qxxskZE",
+          "sentenceId": "s0588",
+          "text": "The rule is there are no transitional fossils.",
+          "start": 3258.709,
+          "end": 3261.042,
+          "screeningType": "score",
+          "suspicionScore": 2.82,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.82
+    },
+    {
+      "id": "g-4339b395bcb9",
+      "query": "real flood destroyed world produced evidence",
+      "claims": [
+        {
+          "videoId": "UM82qxxskZE",
+          "sentenceId": "s1097",
+          "text": "There was a real Flood that destroyed the world and produced all of this.",
+          "start": 6033.389,
+          "end": 6039.005,
+          "screeningType": "score",
+          "suspicionScore": 2.78,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.78
+    },
+    {
+      "id": "g-0812d01db41f",
+      "query": "means formation schnebly hill area had form matter hours there’s knife edge evidence",
+      "claims": [
+        {
+          "videoId": "UM82qxxskZE",
+          "sentenceId": "s0338",
+          "text": "So that means that this Schnebly Hill Formation in this area had to form in a matter of hours.",
+          "start": 1941,
+          "end": 1947.083,
+          "screeningType": "score",
+          "suspicionScore": 2.73,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        },
+        {
+          "videoId": "UM82qxxskZE",
+          "sentenceId": "s0333",
+          "text": "There’s that knife edge boundary and there’s no evidence of erosion there, which means that the Hermit Formation was rapidly deposited and then immediately the Coconino was deposited on top of it.",
+          "start": 1900.083,
+          "end": 1912.042,
+          "screeningType": "score",
+          "suspicionScore": 2.21,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.73
+    },
+    {
+      "id": "g-e66446f14cc3",
+      "query": "god created six days world entire universe evidence",
+      "claims": [
+        {
+          "videoId": "UM82qxxskZE",
+          "sentenceId": "s1094",
+          "text": "God created the world in six days.",
+          "start": 6024.501,
+          "end": 6028.582,
+          "screeningType": "score",
+          "suspicionScore": 2.73,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        },
+        {
+          "videoId": "UM82qxxskZE",
+          "sentenceId": "s0399",
+          "text": "In six days God created the entire universe.",
+          "start": 2236.918,
+          "end": 2240.7090000000003,
+          "screeningType": "score",
+          "suspicionScore": 2.44,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.73
+    },
+    {
+      "id": "g-3ce8911669f1",
+      "query": "dinosaurs evidence it’s fossils dated incorrectly clear then likely organism therefore geologic evidence",
+      "claims": [
+        {
+          "videoId": "UM82qxxskZE",
+          "sentenceId": "s0672",
+          "text": "If the fossils of dinosaurs have been dated incorrectly, which I would say this is clear evidence they have, then it’s very likely the fossils of any organism have been dated incorrectly and therefore then the geologic ages themselves are incorrect.",
+          "start": 3702.501,
+          "end": 3717.834,
+          "screeningType": "score",
+          "suspicionScore": 2.67,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        },
+        {
+          "videoId": "UM82qxxskZE",
+          "sentenceId": "s0524",
+          "text": "For the trilobites, for the amphibians, for the dinosaurs, the first time I find evidence of them in the fossil record it’s from trackways, not hard parts.",
+          "start": 2862.918,
+          "end": 2871.584,
+          "screeningType": "score",
+          "suspicionScore": 2.34,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.67
+    },
+    {
+      "id": "g-e5479b932a5c",
+      "query": "del might surprise know geological formations see here canyons layers even plants evidence",
+      "claims": [
+        {
+          "videoId": "UM82qxxskZE",
+          "sentenceId": "s0014",
+          "text": "DEL: But it might surprise you to know… …that all of the geological formations that we see here — the canyons, the layers, even the plants — …are younger than I am.",
+          "start": 82.377,
+          "end": 94.709,
+          "screeningType": "score",
+          "suspicionScore": 2.64,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.64
+    },
+    {
+      "id": "g-c40371df9fa9",
+      "query": "real adam eve evidence",
+      "claims": [
+        {
+          "videoId": "UM82qxxskZE",
+          "sentenceId": "s1095",
+          "text": "There was a real Adam, a real Eve.",
+          "start": 6028.632,
+          "end": 6031.299,
+          "screeningType": "score",
+          "suspicionScore": 2.58,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.58
+    },
+    {
+      "id": "g-6cab96f50630",
+      "query": "beginning toledot noah evidence",
+      "claims": [
+        {
+          "videoId": "UM82qxxskZE",
+          "sentenceId": "s0188",
+          "text": "This is the beginning of the toledot of Noah.",
+          "start": 1093.501,
+          "end": 1096.459,
+          "screeningType": "score",
+          "suspicionScore": 2.53,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.53
+    },
+    {
+      "id": "g-e6c0efa76a5b",
+      "query": "condition requires sorting process take place during catastrophic implacement evidence",
+      "claims": [
+        {
+          "videoId": "UM82qxxskZE",
+          "sentenceId": "s0579",
+          "text": "So that condition requires a sorting process that can only take place during a catastrophic implacement.",
+          "start": 3198.792,
+          "end": 3206.167,
+          "screeningType": "score",
+          "suspicionScore": 2.53,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.53
+    },
+    {
+      "id": "g-316b546032b0",
+      "query": "time i’ve studied those areas found meets criteria famous sight tower babel evidence",
+      "claims": [
+        {
+          "videoId": "UM82qxxskZE",
+          "sentenceId": "s1001",
+          "text": "And so one at a time I’ve studied all of those areas and found only one that meets all the criteria of the famous sight of the Tower of Babel and that is the site of Eridu, which is in southeastern Mesopotamia.",
+          "start": 5359.626,
+          "end": 5373.959,
+          "screeningType": "score",
+          "suspicionScore": 2.48,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.48
+    },
+    {
+      "id": "g-c89939d558d2",
+      "query": "chromosomes liver change shape expose new protein gene make copies build brand evidence",
+      "claims": [
+        {
+          "videoId": "UM82qxxskZE",
+          "sentenceId": "s0785",
+          "text": "Now the chromosomes in the liver will change shape, expose that new protein gene, make copies of it, build a brand new protein that can kill off that toxin and when it’s not needed anymore, they’ll change shape again and fold back.",
+          "start": 4218.834,
+          "end": 4234.918,
+          "screeningType": "score",
+          "suspicionScore": 2.47,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.47
+    },
+    {
+      "id": "g-891951c05d1f",
+      "query": "see we’re every time layer rock that’s thick thinking about event probably evidence",
+      "claims": [
+        {
+          "videoId": "UM82qxxskZE",
+          "sentenceId": "s0490",
+          "text": "And so every time we see a layer of rock that’s this thick, we’re thinking about an event that probably took minutes to make, not thousands of years.",
+          "start": 2639.959,
+          "end": 2649.667,
+          "screeningType": "score",
+          "suspicionScore": 2.46,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        },
+        {
+          "videoId": "UM82qxxskZE",
+          "sentenceId": "s0908",
+          "text": "We’re the only ones to create zoos so we can see the beauty of God’s animals.",
+          "start": 4873.487,
+          "end": 4877.736000000001,
+          "screeningType": "score",
+          "suspicionScore": 2.19,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.46
+    },
+    {
+      "id": "g-90bd3b4f7903",
+      "query": "evolution see changes that’s got mean something besides because don’t form into evidence",
+      "claims": [
+        {
+          "videoId": "UM82qxxskZE",
+          "sentenceId": "s0591",
+          "text": "That’s got to mean something besides evolution because we don’t ever see changes from this form into this form in the rocks themselves.",
+          "start": 3276.584,
+          "end": 3285.209,
+          "screeningType": "score",
+          "suspicionScore": 2.46,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        },
+        {
+          "videoId": "UM82qxxskZE",
+          "sentenceId": "s0705",
+          "text": "Evolution theory requires that small, random changes can explain everything we see, but it can’t.",
+          "start": 3895.876,
+          "end": 3903.8759999999997,
+          "screeningType": "score",
+          "suspicionScore": 2.35,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.46
+    },
+    {
+      "id": "g-8d69f48f4cf4",
+      "query": "fossil record basically stays unchanged disappears without having changed find contrary darwin’s evidence",
+      "claims": [
+        {
+          "videoId": "UM82qxxskZE",
+          "sentenceId": "s0590",
+          "text": "It basically stays unchanged and it disappears from the fossil record without having been changed.",
+          "start": 3271.125,
+          "end": 3276.542,
+          "screeningType": "score",
+          "suspicionScore": 2.45,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        },
+        {
+          "videoId": "UM82qxxskZE",
+          "sentenceId": "s0589",
+          "text": "What we find in the fossil record — and contrary to Darwin’s hopes, this is the rule — is that a form exists in the fossil record.",
+          "start": 3261.083,
+          "end": 3271.083,
+          "screeningType": "score",
+          "suspicionScore": 2.37,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        },
+        {
+          "videoId": "UM82qxxskZE",
+          "sentenceId": "s0702",
+          "text": "No, there’s missing links between almost every major group of animal and almost every other major group of animal and plant and bacteria throughout the entire fossil record, which indicates very strongly that these are actually different creations.",
+          "start": 3878.209,
+          "end": 3893,
+          "screeningType": "score",
+          "suspicionScore": 2.19,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.45
+    },
+    {
+      "id": "g-0d774b5ebfb4",
+      "query": "created day universe hour jesus descended adam sixth creation then earth can’t evidence",
+      "claims": [
+        {
+          "videoId": "UM82qxxskZE",
+          "sentenceId": "s1048",
+          "text": "The universe was created for a 24 hour day.",
+          "start": 5640.501,
+          "end": 5644.417,
+          "screeningType": "score",
+          "suspicionScore": 2.44,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        },
+        {
+          "videoId": "UM82qxxskZE",
+          "sentenceId": "s0249",
+          "text": "If Jesus is descended from Adam, and Adam was created on the sixth day of creation, then the earth can’t be very old.",
+          "start": 1403.334,
+          "end": 1411.0829999999999,
+          "screeningType": "score",
+          "suspicionScore": 2.25,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.44
+    },
+    {
+      "id": "g-92bbb2313441",
+      "query": "layers accumulating hours weeks within months you’ve got whole stack pancake over evidence",
+      "claims": [
+        {
+          "videoId": "UM82qxxskZE",
+          "sentenceId": "s0354",
+          "text": "And so these layers are accumulating in hours, weeks and within months, you’ve got this whole stack of pancake layers over such wide areas.",
+          "start": 2011.542,
+          "end": 2021.375,
+          "screeningType": "score",
+          "suspicionScore": 2.41,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.41
+    },
+    {
+      "id": "g-ad9bf3817918",
+      "query": "longer sun going able burn forever evidence",
+      "claims": [
+        {
+          "videoId": "UM82qxxskZE",
+          "sentenceId": "s0414",
+          "text": "Now no longer is the sun going to be able to burn forever.",
+          "start": 2291.375,
+          "end": 2294.459,
+          "screeningType": "score",
+          "suspicionScore": 2.41,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.41
+    },
+    {
+      "id": "g-db718d8656dc",
+      "query": "genesis history true everything done point looked evidence shows word god laid evidence",
+      "claims": [
+        {
+          "videoId": "UM82qxxskZE",
+          "sentenceId": "s1100",
+          "text": "Genesis is history, true history.",
+          "start": 6047.412,
+          "end": 6051.3820000000005,
+          "screeningType": "score",
+          "suspicionScore": 2.38,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        },
+        {
+          "videoId": "UM82qxxskZE",
+          "sentenceId": "s1093",
+          "text": "Everything that we have done up to this point has looked at the evidence that shows us that the Word of God, the history that has been laid down for us in Genesis is true.",
+          "start": 6010.751,
+          "end": 6024.459000000001,
+          "screeningType": "score",
+          "suspicionScore": 2.26,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.38
+    },
+    {
+      "id": "g-8fa4fea5a987",
+      "query": "living then huge catastrophe brought end evidence",
+      "claims": [
+        {
+          "videoId": "UM82qxxskZE",
+          "sentenceId": "s0581",
+          "text": "They were all living and then there was this huge catastrophe that brought them to an end.",
+          "start": 3222.417,
+          "end": 3227.459,
+          "screeningType": "score",
+          "suspicionScore": 2.31,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.31
+    },
+    {
+      "id": "g-21ba87798e85",
+      "query": "couple days evidence",
+      "claims": [
+        {
+          "videoId": "UM82qxxskZE",
+          "sentenceId": "s0021",
+          "text": "All in a couple days.",
+          "start": 143.076,
+          "end": 145.54399999999998,
+          "screeningType": "score",
+          "suspicionScore": 2.3,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.3
+    },
+    {
+      "id": "g-7b75c3c52922",
+      "query": "another those varieties living things god made beginning survived flood aboard ark evidence",
+      "claims": [
+        {
+          "videoId": "UM82qxxskZE",
+          "sentenceId": "s0900",
+          "text": "But this would be just another one of those varieties of living things that God made in the beginning and it survived the Flood aboard the ark.",
+          "start": 4815.542,
+          "end": 4823.501,
+          "screeningType": "score",
+          "suspicionScore": 2.3,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.3
+    },
+    {
+      "id": "g-c9dd2291d24c",
+      "query": "continuity similarity significant i’d guys descended single pair critters ark eventually generated evidence",
+      "claims": [
+        {
+          "videoId": "UM82qxxskZE",
+          "sentenceId": "s0819",
+          "text": "So the continuity, the similarity there is so significant that I’d say these guys have all descended from a single pair of critters that was on the ark and that eventually generated all the different sorts of cats that we have today.",
+          "start": 4416.959,
+          "end": 4432.25,
+          "screeningType": "score",
+          "suspicionScore": 2.27,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.27
+    },
+    {
+      "id": "g-97b0d86020f2",
+      "query": "everything way sleep cycles work come definitive historical account evidence",
+      "claims": [
+        {
+          "videoId": "UM82qxxskZE",
+          "sentenceId": "s1049",
+          "text": "And so everything from the way our sleep cycles and the way our work cycles work all come from that definitive historical account there.",
+          "start": 5644.459,
+          "end": 5656.0830000000005,
+          "screeningType": "score",
+          "suspicionScore": 2.26,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.26
+    },
+    {
+      "id": "g-e1555e448c70",
+      "query": "it’s something letter time natural selection evidence",
+      "claims": [
+        {
+          "videoId": "UM82qxxskZE",
+          "sentenceId": "s0792",
+          "text": "It’s not something you can do one letter at a time with natural selection.",
+          "start": 4266.542,
+          "end": 4270.918000000001,
+          "screeningType": "score",
+          "suspicionScore": 2.25,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.25
+    },
+    {
+      "id": "g-c9c1ec217e3a",
+      "query": "eclipses spectacular rare planet matters it’s happens evidence",
+      "claims": [
+        {
+          "videoId": "UM82qxxskZE",
+          "sentenceId": "s0926",
+          "text": "And so these eclipses are spectacular and rare, and this is the only planet on which it matters, and it’s the only planet on which it happens.",
+          "start": 4963.083,
+          "end": 4972,
+          "screeningType": "score",
+          "suspicionScore": 2.24,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.24
+    },
+    {
+      "id": "g-220477bcd0c8",
+      "query": "find forms ziggurats around globe evidence",
+      "claims": [
+        {
+          "videoId": "UM82qxxskZE",
+          "sentenceId": "s1025",
+          "text": "We find forms of these ziggurats all around the globe.",
+          "start": 5529.667,
+          "end": 5534.292,
+          "screeningType": "score",
+          "suspicionScore": 2.24,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.24
+    },
+    {
+      "id": "g-65ad376afcd2",
+      "query": "geologists jettisoned idea evidence",
+      "claims": [
+        {
+          "videoId": "UM82qxxskZE",
+          "sentenceId": "s0087",
+          "text": "Most geologists have jettisoned that idea.",
+          "start": 521.25,
+          "end": 524.792,
+          "screeningType": "score",
+          "suspicionScore": 2.16,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.16
+    },
+    {
+      "id": "g-be18a7225e59",
+      "query": "then next thing find genesis water ball space evidence",
+      "claims": [
+        {
+          "videoId": "UM82qxxskZE",
+          "sentenceId": "s0204",
+          "text": "And then the next thing we find in Genesis 1:2, we find a water ball that is in space.",
+          "start": 1148.834,
+          "end": 1156.042,
+          "screeningType": "score",
+          "suspicionScore": 2.15,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.15
+    },
+    {
+      "id": "g-1f58ba758bce",
+      "query": "room spare literally diversity today built into those every kind evidence",
+      "claims": [
+        {
+          "videoId": "UM82qxxskZE",
+          "sentenceId": "s0837",
+          "text": "So you have room to spare, literally room to spare and all of that diversity that we have today is built into those two of every kind.",
+          "start": 4502.918,
+          "end": 4511.751,
+          "screeningType": "score",
+          "suspicionScore": 2.15,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.15
+    },
+    {
+      "id": "g-883c8c399c0f",
+      "query": "neanderthal here it’s evidence",
+      "claims": [
+        {
+          "videoId": "UM82qxxskZE",
+          "sentenceId": "s0897",
+          "text": "This Neanderthal here, it’s one of us.",
+          "start": 4808.542,
+          "end": 4812.334000000001,
+          "screeningType": "score",
+          "suspicionScore": 2.15,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.15
+    },
+    {
+      "id": "g-a57017e46670",
+      "query": "changes whole thinking about history earth because suddenly radioactive clocks reliable evidence",
+      "claims": [
+        {
+          "videoId": "UM82qxxskZE",
+          "sentenceId": "s0288",
+          "text": "And that changes the whole thinking about the history of the earth because suddenly now these radioactive clocks are not reliable.",
+          "start": 1649.125,
+          "end": 1657.626,
+          "screeningType": "score",
+          "suspicionScore": 2.14,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.14
+    }
+  ],
+  "pending": [
+    {
+      "targetId": "s0582",
+      "reason": "candidate_budget"
+    },
+    {
+      "targetId": "s0953",
+      "reason": "candidate_budget"
+    },
+    {
+      "targetId": "s0400",
+      "reason": "candidate_budget"
+    },
+    {
+      "targetId": "s0580",
+      "reason": "candidate_budget"
+    },
+    {
+      "targetId": "s0242",
+      "reason": "candidate_budget"
+    },
+    {
+      "targetId": "s0491",
+      "reason": "candidate_budget"
+    },
+    {
+      "targetId": "s0707",
+      "reason": "candidate_budget"
+    },
+    {
+      "targetId": "s0865",
+      "reason": "candidate_budget"
+    },
+    {
+      "targetId": "s1096",
+      "reason": "candidate_budget"
+    },
+    {
+      "targetId": "s0866",
+      "reason": "candidate_budget"
+    },
+    {
+      "targetId": "s0961",
+      "reason": "candidate_budget"
+    },
+    {
+      "targetId": "s0449",
+      "reason": "candidate_budget"
+    },
+    {
+      "targetId": "s0523",
+      "reason": "candidate_budget"
+    },
+    {
+      "targetId": "s0340",
+      "reason": "candidate_budget"
+    },
+    {
+      "targetId": "s0494",
+      "reason": "candidate_budget"
+    },
+    {
+      "targetId": "s0529",
+      "reason": "candidate_budget"
+    },
+    {
+      "targetId": "s0099",
+      "reason": "candidate_budget"
+    }
+  ],
+  "eligibleTargets": 57
+}

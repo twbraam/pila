@@ -2,7 +2,7 @@
 
 A planned Chrome extension that checks YouTube captions for potential misinformation and shows evidence links during video playback.
 
-The **Extract module is implemented as a TypeScript/Node.js HTTP endpoint, CLI, and library**. Extract and Process share the root package configuration and must run on the **same Node.js server**. Process includes a working Jev screening CLI; evidence checking, Process integration into the server, Overlay, and the WXT extension integration remain planned. The completed server will extract captions, process them, and return the result array specified below to Overlay. Extract uses [`youtube-transcript-plus`](https://github.com/ericmmartin/youtube-transcript-plus) to retrieve existing YouTube captions; it does not transcribe audio or require Gemini credentials.
+The **Extract module is implemented as a TypeScript/Node.js HTTP endpoint, CLI, and library**. Extract and Process share the root package configuration and must run on the **same Node.js server**. Process includes a working Jev screening CLI and an exported Tavily/Jev evidence-checking function. HTTP integration, final Overlay reporting, and the WXT extension integration remain planned. The completed server will extract captions, process them, and return the result array specified below to Overlay. Extract uses [`youtube-transcript-plus`](https://github.com/ericmmartin/youtube-transcript-plus) to retrieve existing YouTube captions; it does not transcribe audio or require Gemini credentials.
 
 ## Project layout
 
@@ -36,7 +36,7 @@ flowchart LR
         B["Extract: fetch captions"] --> C["Assemble timed sentences"]
         C --> D["Internal Transcript"]
         D --> E["Process: Jev screening"]
-        E --> H["Evidence checking (TODO)"]
+        E --> H["Grouped Tavily + Jev evidence API"]
     end
     H --> F["JSON result array (TODO)"]
     F --> G["Overlay during playback (planned)"]
@@ -205,7 +205,7 @@ See [JEV.md](./JEV.md) for JSON prompts, score criteria, options, API reuse, and
 The complete processing pipeline is:
 
 1. **Screen with Jev (implemented):** identify statements that need fact-checking. A candidate proceeds to evidence checking; otherwise, continue with the next sentence.
-2. **Find and assess evidence (TODO):** use Tavily to search for evidence links, then use Jev to assess the statement and produce an integer score with source URLs. The final score meanings and reporting criteria will be specified separately.
+2. **Find and assess evidence (function API implemented):** call `verifySuspicions()` from `process/tavily.ts`. Related candidates share bounded Tavily searches, then Jev assesses each target against retrieved excerpts independently. Outcomes include contradiction, support, conflicts, and insufficient evidence, with actual source URLs and excerpts. Final integer Overlay scores and endpoint integration remain TODO.
 
 **Input:** the internal `Transcript`. **Output:** the array defined below. A skipped sentence produces no result; that does not establish that it is true.
 
@@ -235,7 +235,7 @@ Each result has exactly these four fields; `explanation` is no longer part of th
 
 The planned `OverlayResult`, `OverlayResults`, and `assertOverlayResults()` must enforce the exact fields, finite nonnegative timestamps, nonempty sentence text, integer scores from 0 through 3, HTTP(S) source URLs, and chronological order. The contract permits an empty `sources` array and does not assign score meanings.
 
-**Process TODO:** implement the shared result types/schema/validator and their tests; define final scoring criteria; add evidence checking and field mapping to the existing screening code; and integrate Process into the server with integration tests. Split targets must map back to their original source sentence text and start time. The screening implementation exists; the final response and combined endpoint remain pending.
+**Process TODO:** implement the shared result types/schema/validator and their tests; define final scoring criteria and map the existing screening/evidence outputs to the Overlay fields; and integrate Process into the server with integration tests. Split targets must map back to their original source sentence text and start time. The screening implementation exists; the final response and combined endpoint remain pending.
 
 ## 3. Overlay (planned)
 

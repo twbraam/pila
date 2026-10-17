@@ -1,0 +1,105 @@
+{
+  "status": "completed",
+  "videoId": "zmfRG8-RHEI",
+  "directory": "/home/hadao/sync/projects/pila/results/zmfRG8-RHEI/evidence-20261017T074751086Z",
+  "searchCalls": 0,
+  "cacheHits": 1,
+  "jevCalls": 1,
+  "groups": [
+    {
+      "id": "g-4e357eb7a18b",
+      "query": "co2 climate change connection unimportant controlling earth models based assumption drives temperature evidence",
+      "targetIds": [
+        "s0315",
+        "s0328",
+        "s0313"
+      ],
+      "cacheHit": true
+    }
+  ],
+  "assessments": [
+    {
+      "videoId": "zmfRG8-RHEI",
+      "sentenceId": "s0315",
+      "targetId": "s0315",
+      "text": "Yes I assert, that there is no connection whatsoever, between CO₂ and climate change.",
+      "start": 1873.829,
+      "end": 1880.7089999999998,
+      "screeningScore": 2.86,
+      "evidenceStatus": "contradicted",
+      "citations": [
+        {
+          "id": "E1",
+          "url": "https://weather.metoffice.gov.uk/learn-about/weather/types-of-weather/temperature/heatwave",
+          "title": "What is a heatwave? - Met Office",
+          "publisher": "gov.uk",
+          "tier": "primary",
+          "excerpt": "As greenhouse gas concentrations increase heatwaves of similar intensity are projected to become even more frequent, perhaps occurring as regularly as every other year by the 2050s. The Earth’s surface temperature has risen by 1°C since the pre-industrial period (1850-1900) and UK temperatures have risen by a similar amount. [...] Heatwaves are extreme weather events, but research shows that climate change is making these events more likely. A scientific study by the Met Office into the Summer 2018 heatwave in the UK showed that the likelihood of the UK experiencing a summer as hot or hotter than 2018 is a little over 1 in 10. It is30 times more likely to occur now than before the industrial revolution because of the higher concentration of carbon dioxide (a greenhouse gas) in the atmosphere. As greenhouse gas [...] Heatwaves are most common in summer when high pressure develops across an area. High pressure systems are slow moving and can persist over an area for a prolonged period of time, such as days or weeks. They can occur in the UK due to the location of the jet stream, which is usually to the north of the UK in the summer. This can allow high pressure to develop over the UK resulting in persistent dry and settled weather.\n\n### Are heatwaves linked to climate change?",
+          "excerptTruncated": false,
+          "publicationDateEstimate": null,
+          "retrievedAt": "2026-10-17T07:45:10.239Z",
+          "quality": "direct_evidence",
+          "relation": "contradicts",
+          "relationProbability": 0.88,
+          "sourceQualityProbability": 0.94
+        }
+      ]
+    },
+    {
+      "videoId": "zmfRG8-RHEI",
+      "sentenceId": "s0328",
+      "targetId": "s0328",
+      "text": "CO₂ is quite unimportant, in controlling the Earth&#39;s climate.",
+      "start": 1929.208,
+      "end": 1933.828,
+      "screeningScore": 2.55,
+      "evidenceStatus": "needs_review",
+      "citations": [
+        {
+          "id": "E1",
+          "url": "https://weather.metoffice.gov.uk/learn-about/weather/types-of-weather/temperature/heatwave",
+          "title": "What is a heatwave? - Met Office",
+          "publisher": "gov.uk",
+          "tier": "primary",
+          "excerpt": "As greenhouse gas concentrations increase heatwaves of similar intensity are projected to become even more frequent, perhaps occurring as regularly as every other year by the 2050s. The Earth’s surface temperature has risen by 1°C since the pre-industrial period (1850-1900) and UK temperatures have risen by a similar amount. [...] Heatwaves are extreme weather events, but research shows that climate change is making these events more likely. A scientific study by the Met Office into the Summer 2018 heatwave in the UK showed that the likelihood of the UK experiencing a summer as hot or hotter than 2018 is a little over 1 in 10. It is30 times more likely to occur now than before the industrial revolution because of the higher concentration of carbon dioxide (a greenhouse gas) in the atmosphere. As greenhouse gas [...] Heatwaves are most common in summer when high pressure develops across an area. High pressure systems are slow moving and can persist over an area for a prolonged period of time, such as days or weeks. They can occur in the UK due to the location of the jet stream, which is usually to the north of the UK in the summer. This can allow high pressure to develop over the UK resulting in persistent dry and settled weather.\n\n### Are heatwaves linked to climate change?",
+          "excerptTruncated": false,
+          "publicationDateEstimate": null,
+          "retrievedAt": "2026-10-17T07:45:10.239Z",
+          "quality": "direct_evidence",
+          "relation": "contradicts",
+          "relationProbability": 0.67,
+          "sourceQualityProbability": 0.94
+        }
+      ]
+    },
+    {
+      "videoId": "zmfRG8-RHEI",
+      "sentenceId": "s0313",
+      "targetId": "s0313",
+      "text": "All climate models are based on the assumption, that CO₂ drives temperature change.",
+      "start": 1863.377,
+      "end": 1868.493,
+      "screeningScore": 2.21,
+      "evidenceStatus": "insufficient_evidence",
+      "citations": []
+    }
+  ],
+  "pending": [
+    {
+      "targetId": "s0280",
+      "reason": "search_budget"
+    },
+    {
+      "targetId": "s0274",
+      "reason": "search_budget"
+    },
+    {
+      "targetId": "s0281",
+      "reason": "search_budget"
+    },
+    {
+      "targetId": "s0288",
+      "reason": "search_budget"
+    }
+  ]
+}
