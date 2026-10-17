@@ -1,0 +1,161 @@
+{
+  "status": "completed",
+  "videoId": "gIorXcloIac",
+  "directory": "/home/hadao/sync/projects/pila/results/gIorXcloIac/evidence-20261017T080314056Z",
+  "searchCalls": 3,
+  "cacheHits": 0,
+  "jevCalls": 3,
+  "groups": [
+    {
+      "id": "g-f2ac930f3e30",
+      "query": "mean binary into existence gradual again must understand problems require bangs sudden evidence",
+      "targetIds": [
+        "s0043",
+        "s0015",
+        "s0014"
+      ],
+      "cacheHit": false
+    },
+    {
+      "id": "g-3e8b943aa4ac",
+      "query": "come animals art appreciate beauty evidence",
+      "targetIds": [
+        "s0039"
+      ],
+      "cacheHit": false
+    },
+    {
+      "id": "g-0779be80af3f",
+      "query": "way account differences still great diversity life forms mean huge bacteria plants evidence",
+      "targetIds": [
+        "s0030",
+        "s0031"
+      ],
+      "cacheHit": false
+    }
+  ],
+  "assessments": [
+    {
+      "videoId": "gIorXcloIac",
+      "sentenceId": "s0043",
+      "targetId": "s0043",
+      "text": "And again, you must understand, these problems require bangs--I mean, sudden binary pops into existence, since there&#39;s no evidence for any gradual developments in any of these.",
+      "start": 284.19,
+      "end": 297.77,
+      "screeningScore": 2.67,
+      "evidenceStatus": "insufficient_evidence",
+      "citations": []
+    },
+    {
+      "videoId": "gIorXcloIac",
+      "sentenceId": "s0015",
+      "targetId": "s0015",
+      "text": "There was no gradual development, no transitional forms, just a binary flip -- a metaphysical, now you don&#39;t see it, and now you do.",
+      "start": 90.87,
+      "end": 109.95,
+      "screeningScore": 2.18,
+      "evidenceStatus": "insufficient_evidence",
+      "citations": []
+    },
+    {
+      "videoId": "gIorXcloIac",
+      "sentenceId": "s0014",
+      "targetId": "s0014",
+      "text": "I mean, that time, matter and space all came into existence in some great cosmological flash about 16 billion years ago.",
+      "start": 86.09,
+      "end": 97.36,
+      "screeningScore": 2.06,
+      "evidenceStatus": "insufficient_evidence",
+      "citations": []
+    },
+    {
+      "videoId": "gIorXcloIac",
+      "sentenceId": "s0039",
+      "targetId": "s0039",
+      "text": "Come on, animals don&#39;t do art, and they don&#39;t appreciate beauty.",
+      "start": 253.47,
+      "end": 257.41,
+      "screeningScore": 2.46,
+      "evidenceStatus": "needs_context",
+      "citations": [
+        {
+          "id": "E1",
+          "url": "https://www.bbc.com/future/article/20220527-the-animals-with-an-artistic-eye",
+          "title": "The animals with an eye for art",
+          "publisher": "bbc.com",
+          "tier": "secondary",
+          "excerpt": "Appreciating art\n\nWhile the list of creatures who produce art is relatively small, there are other animals who, it could be argued, seem to appreciate beauty.\n\nIn 1995, a team of psychologists led by Shigeru Watanabe, a professor of psychology from Keio University in Tokyo, showed that pigeons could be taught to discriminate Claude Monet artworks from Pablo Picasso. [...] Another species that does appear to appreciate beauty and aesthetics is the peacock. The peacock's tail is useless for flight. It is so large that it is a physical burden to carry around. It also is more likely to attract the attention of predators. Nevertheless, if a male is to have any hope of attracting a mate he must invest in the costly, brightly coloured plumage. Why? Because female peahens find it sexy. The preference is so strong that it is a major driving force of evolution in the [...] These findings challenge the belief that art is the special provenance of Homo sapiens, but it is perhaps not that surprising that other species of human had creative impulses. After all, we know that other hominins made and used tools, and even buried their dead.\n\nHowever, it may surprise you to learn that there are other members of the animal kingdom that appreciate beauty and artistic flair too.\n\nYou might also like:",
+          "excerptTruncated": false,
+          "publicationDateEstimate": null,
+          "retrievedAt": "2026-10-17T08:03:20.962Z",
+          "quality": "secondary_summary",
+          "relation": "contradicts",
+          "relationProbability": 0.85,
+          "sourceQualityProbability": 0.98
+        },
+        {
+          "id": "E2",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4412058",
+          "title": "Combining universal beauty and cultural context in a unifying model of visual aesthetic experience",
+          "publisher": "nih.gov",
+          "tier": "primary",
+          "excerpt": "beautiful or ugly, respectively, by adult human observers (Watanabe, 2011). If perceptual processing of beauty is basic and universal amongst humans, there is no good reason why this concept should not be extended to animals (Welsch, 2004). To prove that animals can appreciate beauty will be difficult because we cannot communicate with them about beauty or aesthetics. Nevertheless, we can search for neural mechanisms in animals that correspond to the neural mechanisms associated with aesthetic [...] with aesthetic experience in humans. The demonstration of beauty-related brain functions in animals would be of great interest because it would give us insight into the evolutionary origins of aesthetic experience. Moreover, if humans and animals share beauty-responsive mechanisms to some extent, this may explain why there can be cross-species appreciation of beautiful patterns, e.g., the appreciation of elaborate bird plumage or bird songs by humans. [...] - (3)Can animals have an aesthetic experience? It seems reasonable to assume that cognitive processing of cultural information is not as complex in animals as in humans in general (Tomasello, 1999), but cultural behavior has been observed at least in some species, for example, for whale songs (Mercado et al., 2005; Cantor and Whitehead, 2013). Moreover, pigeons can be trained to discriminate between art styles and between children’s paintings that were classified as beautiful or ugly,",
+          "excerptTruncated": false,
+          "publicationDateEstimate": null,
+          "retrievedAt": "2026-10-17T08:03:20.962Z",
+          "quality": "secondary_summary",
+          "relation": "qualifies",
+          "relationProbability": 0.42,
+          "sourceQualityProbability": 0.57
+        },
+        {
+          "id": "E4",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10350433",
+          "title": "An Attempt to Explain Visual Aesthetic Appreciation",
+          "publisher": "nih.gov",
+          "tier": "primary",
+          "excerpt": "are created (at least collected) by the animals, and the process may involve pleasure for both the creator and the spectator, but the behavior is part of courtship, and the animals seem unlikely to spend time on similar behavior in the absence of a chance for mating. In short, animals in the wild do not appear to produce visual artifacts simply for the joy of the creation, their delight is more akin to what humans’ experience when finding a ripe fruit or spotting a potential lover. Humans find [...] In some situations, an exact balance can add value because we delight in symmetry (Adkins & Norman, 2016; Bertamini et al., 2013). This appreciation is apparently shared with animals (Bertamini et al., 2018). One possible explanation is related to mate choice. All vertebrates have bilateral bodies, meaning they are, as a rule of thumb, meant to be symmetrical around a central plane. Breaches of this symmetry is a sign of inferior health and gene quality, which is why people tend to prefer a [...] The aesthetic elements are presumably pleasant partly due to the rewards offered for learning through play behavior. The eyes are arguably our most important sense organ, and we are encouraged to practice recognition and interpretation of visual stimuli, whether in the form of depth, symmetry, or finding the ‘human touch.’ The popularity of art may be partly due to humans carrying a considerable propensity for play behavior even as we age. Where most animals apparently use spare time simply to",
+          "excerptTruncated": false,
+          "publicationDateEstimate": null,
+          "retrievedAt": "2026-10-17T08:03:20.962Z",
+          "quality": "direct_evidence",
+          "relation": "qualifies",
+          "relationProbability": 0.42,
+          "sourceQualityProbability": 0.6
+        }
+      ]
+    },
+    {
+      "videoId": "gIorXcloIac",
+      "sentenceId": "s0030",
+      "targetId": "s0030",
+      "text": "But we still don&#39;t have a way to account for the great diversity of life forms, I mean, the huge differences between bacteria, plants and animals.",
+      "start": 194.069,
+      "end": 204.70000000000002,
+      "screeningScore": 2.31,
+      "evidenceStatus": "insufficient_evidence",
+      "citations": []
+    },
+    {
+      "videoId": "gIorXcloIac",
+      "sentenceId": "s0031",
+      "targetId": "s0031",
+      "text": "Nor do we have a way to account for the differences between man and animal.",
+      "start": 199.27,
+      "end": 209.54,
+      "screeningScore": 2.18,
+      "evidenceStatus": "insufficient_evidence",
+      "citations": []
+    }
+  ],
+  "pending": [
+    {
+      "targetId": "s0034",
+      "reason": "search_budget"
+    },
+    {
+      "targetId": "s0025",
+      "reason": "search_budget"
+    }
+  ]
+}

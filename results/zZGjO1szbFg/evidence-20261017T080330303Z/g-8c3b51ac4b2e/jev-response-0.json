@@ -1,0 +1,93 @@
+{
+  "model": "jev-1.13.0",
+  "answers": {
+    "quality_E1": {
+      "type": "choice",
+      "choice": "direct_evidence",
+      "confidence": 0.31,
+      "probabilities": {
+        "direct_evidence": 0.54,
+        "secondary_summary": 0.28,
+        "unusable": 0.18
+      }
+    },
+    "quality_E2": {
+      "type": "choice",
+      "choice": "unusable",
+      "confidence": 0.73,
+      "probabilities": {
+        "direct_evidence": 0.16,
+        "secondary_summary": 0.02,
+        "unusable": 0.82
+      }
+    },
+    "quality_E3": {
+      "type": "choice",
+      "choice": "unusable",
+      "confidence": 1,
+      "probabilities": {
+        "direct_evidence": 0,
+        "secondary_summary": 0,
+        "unusable": 1
+      }
+    },
+    "quality_E4": {
+      "type": "choice",
+      "choice": "secondary_summary",
+      "confidence": 0.27,
+      "probabilities": {
+        "direct_evidence": 0.3,
+        "secondary_summary": 0.51,
+        "unusable": 0.19
+      }
+    },
+    "claim_0_E1": {
+      "type": "choice",
+      "choice": "insufficient",
+      "confidence": 1,
+      "probabilities": {
+        "contradicts": 0,
+        "supports": 0,
+        "qualifies": 0,
+        "insufficient": 1
+      }
+    },
+    "claim_0_E2": {
+      "type": "choice",
+      "choice": "insufficient",
+      "confidence": 1,
+      "probabilities": {
+        "contradicts": 0,
+        "supports": 0,
+        "qualifies": 0,
+        "insufficient": 1
+      }
+    },
+    "claim_0_E3": {
+      "type": "choice",
+      "choice": "insufficient",
+      "confidence": 1,
+      "probabilities": {
+        "contradicts": 0,
+        "supports": 0,
+        "qualifies": 0,
+        "insufficient": 1
+      }
+    },
+    "claim_0_E4": {
+      "type": "choice",
+      "choice": "insufficient",
+      "confidence": 1,
+      "probabilities": {
+        "contradicts": 0,
+        "supports": 0,
+        "qualifies": 0,
+        "insufficient": 1
+      }
+    }
+  },
+  "usage": {
+    "input_tokens": 4797,
+    "output_tokens": 403
+  }
+}

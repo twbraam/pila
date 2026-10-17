@@ -1,0 +1,341 @@
+{
+  "status": "completed",
+  "startedAt": "2026-10-17T08:02:08.477Z",
+  "screeningReused": true,
+  "screeningIndex": "results/summary.json",
+  "maxSearchesPerVideo": 3,
+  "selection": "score > 2; existing candidate/group budgets retained",
+  "fixtureKind": "captured evidence-stage outputs for demo playback, not hand-labeled truth",
+  "policy": {
+    "maxSearches": 3,
+    "maxCandidates": 40,
+    "maxClaimsPerGroup": 6,
+    "minimumTopicOverlap": 0.2,
+    "maxResults": 4,
+    "cacheHours": 168,
+    "excerptCharacters": 2500,
+    "maxJevRequestTokens": 14000,
+    "minimumRelationProbability": 0.8,
+    "minimumSourceQualityProbability": 0.8,
+    "sources": {
+      "ipcc.ch": "primary",
+      "nasa.gov": "primary",
+      "noaa.gov": "primary",
+      "who.int": "primary",
+      "cdc.gov": "primary",
+      "nih.gov": "primary",
+      "gov.uk": "primary",
+      "iea.org": "primary",
+      "iaea.org": "primary",
+      "nrc.gov": "primary",
+      "worldbank.org": "primary",
+      "stat.gov.tw": "primary",
+      "mohw.gov.tw": "primary",
+      "reuters.com": "secondary",
+      "apnews.com": "secondary",
+      "bbc.com": "secondary",
+      "factcheck.org": "secondary",
+      "tfc-taiwan.org.tw": "secondary"
+    }
+  },
+  "videos": 13,
+  "completedVideos": 13,
+  "eligibleClaims": 179,
+  "assessedClaims": 35,
+  "pendingClaims": 144,
+  "tavilySearchCalls": 27,
+  "cacheHits": 3,
+  "evidenceJevCalls": 28,
+  "screeningCalls": 0,
+  "statusCounts": {
+    "contradicted": 6,
+    "insufficient_evidence": 25,
+    "needs_context": 1,
+    "needs_review": 3
+  },
+  "runs": [
+    {
+      "videoId": "3PWtaackIJU",
+      "language": "en",
+      "screeningSource": "results/3PWtaackIJU/20261017T070615516Z/results.json",
+      "screeningSha256": "32742dbfa431f0b355cf0f15ac46797ab2c8dbbe31b33e8e59086f0f6289cd7a",
+      "evidence": "results/3PWtaackIJU/evidence-20261017T080208478Z/evidence.json",
+      "fixture": "results/evidence-fixtures/3PWtaackIJU.json",
+      "eligibleClaims": 3,
+      "assessedClaims": 3,
+      "pendingClaims": 0,
+      "searchCalls": 2,
+      "cacheHits": 0,
+      "evidenceJevCalls": 2,
+      "seconds": 8.205292298,
+      "statusCounts": {
+        "contradicted": 1,
+        "insufficient_evidence": 2
+      },
+      "pendingReasonCounts": {}
+    },
+    {
+      "videoId": "7wFWgopJP5Q",
+      "language": "zh-TW",
+      "screeningSource": "results/7wFWgopJP5Q/20261017T071219936Z/results.json",
+      "screeningSha256": "709c1d96b618245862ea265ade40c8127e3c13647a9cef27c42174209e325f5f",
+      "evidence": "results/7wFWgopJP5Q/evidence-20261017T080216689Z/evidence.json",
+      "fixture": "results/evidence-fixtures/7wFWgopJP5Q.json",
+      "eligibleClaims": 2,
+      "assessedClaims": 0,
+      "pendingClaims": 2,
+      "searchCalls": 2,
+      "cacheHits": 0,
+      "evidenceJevCalls": 0,
+      "seconds": 8.889715626,
+      "statusCounts": {},
+      "pendingReasonCounts": {
+        "evidence_context_budget": 2
+      }
+    },
+    {
+      "videoId": "BSI8oxcQFfw",
+      "language": "zh-TW",
+      "screeningSource": "results/BSI8oxcQFfw/20261017T071221785Z/results.json",
+      "screeningSha256": "30cf2e8fbcfc7f1025ffe9ba8b02637e43df3f6aad575f98e6d9d801c9042c47",
+      "evidence": "results/BSI8oxcQFfw/evidence-20261017T080225576Z/evidence.json",
+      "fixture": "results/evidence-fixtures/BSI8oxcQFfw.json",
+      "eligibleClaims": 2,
+      "assessedClaims": 2,
+      "pendingClaims": 0,
+      "searchCalls": 1,
+      "cacheHits": 0,
+      "evidenceJevCalls": 2,
+      "seconds": 4.789233035999998,
+      "statusCounts": {
+        "insufficient_evidence": 2
+      },
+      "pendingReasonCounts": {}
+    },
+    {
+      "videoId": "DOIbcOoaxuY",
+      "language": "en",
+      "screeningSource": "results/DOIbcOoaxuY/20261017T070616381Z/results.json",
+      "screeningSha256": "02200933d5bd22f1cf1d0be07c3312d762418ce1525a388eb79d4806983d63fb",
+      "evidence": "results/DOIbcOoaxuY/evidence-20261017T080230365Z/evidence.json",
+      "fixture": "results/evidence-fixtures/DOIbcOoaxuY.json",
+      "eligibleClaims": 4,
+      "assessedClaims": 3,
+      "pendingClaims": 1,
+      "searchCalls": 3,
+      "cacheHits": 0,
+      "evidenceJevCalls": 3,
+      "seconds": 7.851121792000002,
+      "statusCounts": {
+        "insufficient_evidence": 3
+      },
+      "pendingReasonCounts": {
+        "search_budget": 1
+      }
+    },
+    {
+      "videoId": "OwqIy8Ikv-c",
+      "language": "en",
+      "screeningSource": "results/OwqIy8Ikv-c/20261017T070618135Z/results.json",
+      "screeningSha256": "55b80b9c09982afed5dc95c4fa7b1c285d2af2fc7eb43318858debfb6819f86a",
+      "evidence": "results/OwqIy8Ikv-c/evidence-20261017T080238219Z/evidence.json",
+      "fixture": "results/evidence-fixtures/OwqIy8Ikv-c.json",
+      "eligibleClaims": 4,
+      "assessedClaims": 3,
+      "pendingClaims": 1,
+      "searchCalls": 3,
+      "cacheHits": 0,
+      "evidenceJevCalls": 3,
+      "seconds": 9.239296824,
+      "statusCounts": {
+        "insufficient_evidence": 3
+      },
+      "pendingReasonCounts": {
+        "search_budget": 1
+      }
+    },
+    {
+      "videoId": "RkdbSxyXftc",
+      "language": "en",
+      "screeningSource": "results/RkdbSxyXftc/20261017T070619824Z/results.json",
+      "screeningSha256": "0d05a2239c4033ae5fa8b47a228750b0611bb6ce3e465600ee48aabd43dfeefa",
+      "evidence": "results/RkdbSxyXftc/evidence-20261017T080247461Z/evidence.json",
+      "fixture": "results/evidence-fixtures/RkdbSxyXftc.json",
+      "eligibleClaims": 7,
+      "assessedClaims": 3,
+      "pendingClaims": 4,
+      "searchCalls": 3,
+      "cacheHits": 0,
+      "evidenceJevCalls": 3,
+      "seconds": 8.329569711999996,
+      "statusCounts": {
+        "insufficient_evidence": 1,
+        "contradicted": 2
+      },
+      "pendingReasonCounts": {
+        "search_budget": 4
+      }
+    },
+    {
+      "videoId": "TGUeqcBXy_A",
+      "language": "zh-TW",
+      "screeningSource": "results/TGUeqcBXy_A/20261017T071223686Z/results.json",
+      "screeningSha256": "8e34fb0dde4af50ac84a79d58e333bf2b10fb0eb1d44688bc57c3ec542b1cbaf",
+      "evidence": "results/TGUeqcBXy_A/evidence-20261017T080255791Z/evidence.json",
+      "fixture": "results/evidence-fixtures/TGUeqcBXy_A.json",
+      "eligibleClaims": 3,
+      "assessedClaims": 1,
+      "pendingClaims": 2,
+      "searchCalls": 2,
+      "cacheHits": 0,
+      "evidenceJevCalls": 1,
+      "seconds": 6.996873348000001,
+      "statusCounts": {
+        "insufficient_evidence": 1
+      },
+      "pendingReasonCounts": {
+        "evidence_context_budget": 2
+      }
+    },
+    {
+      "videoId": "UM82qxxskZE",
+      "language": "en",
+      "screeningSource": "results/UM82qxxskZE/20261017T070624832Z/results.json",
+      "screeningSha256": "98650e36e7c73c481dccb2f369aaa8ab366b1d9839ffb8eb8faf5ade51df0049",
+      "evidence": "results/UM82qxxskZE/evidence-20261017T080302822Z/evidence.json",
+      "fixture": "results/evidence-fixtures/UM82qxxskZE.json",
+      "eligibleClaims": 57,
+      "assessedClaims": 4,
+      "pendingClaims": 53,
+      "searchCalls": 3,
+      "cacheHits": 0,
+      "evidenceJevCalls": 3,
+      "seconds": 7.565250349000002,
+      "statusCounts": {
+        "contradicted": 1,
+        "insufficient_evidence": 3
+      },
+      "pendingReasonCounts": {
+        "candidate_budget": 17,
+        "search_budget": 36
+      }
+    },
+    {
+      "videoId": "WDWEjSDYfxc",
+      "language": "en",
+      "screeningSource": "results/WDWEjSDYfxc/20261017T070631678Z/results.json",
+      "screeningSha256": "41156e266acba55227876682752d75db93a34f39a650e860092033ea75650f67",
+      "evidence": "results/WDWEjSDYfxc/evidence-20261017T080310353Z/evidence.json",
+      "fixture": "results/evidence-fixtures/WDWEjSDYfxc.json",
+      "eligibleClaims": 1,
+      "assessedClaims": 1,
+      "pendingClaims": 0,
+      "searchCalls": 1,
+      "cacheHits": 0,
+      "evidenceJevCalls": 1,
+      "seconds": 3.6987105930000035,
+      "statusCounts": {
+        "insufficient_evidence": 1
+      },
+      "pendingReasonCounts": {}
+    },
+    {
+      "videoId": "gIorXcloIac",
+      "language": "en",
+      "screeningSource": "results/gIorXcloIac/20261017T070617269Z/results.json",
+      "screeningSha256": "fa54e47a4c87cb85b7e87a5714f14a52f9f7c1705b9667563ecf9ccab0cc3fc3",
+      "evidence": "results/gIorXcloIac/evidence-20261017T080314056Z/evidence.json",
+      "fixture": "results/evidence-fixtures/gIorXcloIac.json",
+      "eligibleClaims": 8,
+      "assessedClaims": 6,
+      "pendingClaims": 2,
+      "searchCalls": 3,
+      "cacheHits": 0,
+      "evidenceJevCalls": 3,
+      "seconds": 9.070552403999987,
+      "statusCounts": {
+        "insufficient_evidence": 5,
+        "needs_context": 1
+      },
+      "pendingReasonCounts": {
+        "search_budget": 2
+      }
+    },
+    {
+      "videoId": "qZN2jt2cCU4",
+      "language": "en",
+      "screeningSource": "results/qZN2jt2cCU4/20261017T070618965Z/results.json",
+      "screeningSha256": "b759886a7fda4c72b21f277f673bac3c71fc365f3cd39c3c0154d5e37cd1711c",
+      "evidence": "results/qZN2jt2cCU4/evidence-20261017T080323128Z/evidence.json",
+      "fixture": "results/evidence-fixtures/qZN2jt2cCU4.json",
+      "eligibleClaims": 9,
+      "assessedClaims": 4,
+      "pendingClaims": 5,
+      "searchCalls": 3,
+      "cacheHits": 0,
+      "evidenceJevCalls": 3,
+      "seconds": 7.177852892999988,
+      "statusCounts": {
+        "needs_review": 1,
+        "insufficient_evidence": 3
+      },
+      "pendingReasonCounts": {
+        "search_budget": 5
+      }
+    },
+    {
+      "videoId": "zZGjO1szbFg",
+      "language": "en",
+      "screeningSource": "results/zZGjO1szbFg/20261017T070641117Z/results.json",
+      "screeningSha256": "f63f9d79df69c607b1702ed6f47895ea68b62cacade8bc94c0d73b34d29f5959",
+      "evidence": "results/zZGjO1szbFg/evidence-20261017T080330303Z/evidence.json",
+      "fixture": "results/evidence-fixtures/zZGjO1szbFg.json",
+      "eligibleClaims": 1,
+      "assessedClaims": 1,
+      "pendingClaims": 0,
+      "searchCalls": 1,
+      "cacheHits": 0,
+      "evidenceJevCalls": 1,
+      "seconds": 3.512509862999999,
+      "statusCounts": {
+        "insufficient_evidence": 1
+      },
+      "pendingReasonCounts": {}
+    },
+    {
+      "videoId": "zmfRG8-RHEI",
+      "language": "en",
+      "screeningSource": "results/zmfRG8-RHEI/20261017T070635769Z/results.json",
+      "screeningSha256": "693864e86dfd94bffbc75677a40c83d1d69278b1cb14cd6626479b30cc8a5332",
+      "evidence": "results/zmfRG8-RHEI/evidence-20261017T080333839Z/evidence.json",
+      "fixture": "results/evidence-fixtures/zmfRG8-RHEI.json",
+      "eligibleClaims": 78,
+      "assessedClaims": 4,
+      "pendingClaims": 74,
+      "searchCalls": 0,
+      "cacheHits": 3,
+      "evidenceJevCalls": 3,
+      "seconds": 0.8232757180000044,
+      "statusCounts": {
+        "contradicted": 2,
+        "needs_review": 2
+      },
+      "pendingReasonCounts": {
+        "candidate_budget": 38,
+        "search_budget": 36
+      }
+    }
+  ],
+  "finishedAt": "2026-10-17T08:03:34.641Z",
+  "totalSeconds": 86.23865174100001,
+  "observedApiCalls": {
+    "screeningCalls": 0,
+    "tavilySearchCalls": 27,
+    "evidenceJevCalls": 28
+  },
+  "pendingReasonCounts": {
+    "evidence_context_budget": 4,
+    "search_budget": 85,
+    "candidate_budget": 55
+  }
+}

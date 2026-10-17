@@ -1,0 +1,145 @@
+{
+  "groups": [
+    {
+      "id": "g-f2ac930f3e30",
+      "query": "mean binary into existence gradual again must understand problems require bangs sudden evidence",
+      "claims": [
+        {
+          "videoId": "gIorXcloIac",
+          "sentenceId": "s0043",
+          "text": "And again, you must understand, these problems require bangs--I mean, sudden binary pops into existence, since there&#39;s no evidence for any gradual developments in any of these.",
+          "start": 284.19,
+          "end": 297.77,
+          "screeningType": "score",
+          "suspicionScore": 2.67,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        },
+        {
+          "videoId": "gIorXcloIac",
+          "sentenceId": "s0015",
+          "text": "There was no gradual development, no transitional forms, just a binary flip -- a metaphysical, now you don&#39;t see it, and now you do.",
+          "start": 90.87,
+          "end": 109.95,
+          "screeningType": "score",
+          "suspicionScore": 2.18,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        },
+        {
+          "videoId": "gIorXcloIac",
+          "sentenceId": "s0014",
+          "text": "I mean, that time, matter and space all came into existence in some great cosmological flash about 16 billion years ago.",
+          "start": 86.09,
+          "end": 97.36,
+          "screeningType": "score",
+          "suspicionScore": 2.06,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.67
+    },
+    {
+      "id": "g-3e8b943aa4ac",
+      "query": "come animals art appreciate beauty evidence",
+      "claims": [
+        {
+          "videoId": "gIorXcloIac",
+          "sentenceId": "s0039",
+          "text": "Come on, animals don&#39;t do art, and they don&#39;t appreciate beauty.",
+          "start": 253.47,
+          "end": 257.41,
+          "screeningType": "score",
+          "suspicionScore": 2.46,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.46
+    },
+    {
+      "id": "g-0779be80af3f",
+      "query": "way account differences still great diversity life forms mean huge bacteria plants evidence",
+      "claims": [
+        {
+          "videoId": "gIorXcloIac",
+          "sentenceId": "s0030",
+          "text": "But we still don&#39;t have a way to account for the great diversity of life forms, I mean, the huge differences between bacteria, plants and animals.",
+          "start": 194.069,
+          "end": 204.70000000000002,
+          "screeningType": "score",
+          "suspicionScore": 2.31,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        },
+        {
+          "videoId": "gIorXcloIac",
+          "sentenceId": "s0031",
+          "text": "Nor do we have a way to account for the differences between man and animal.",
+          "start": 199.27,
+          "end": 209.54,
+          "screeningType": "score",
+          "suspicionScore": 2.18,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.31
+    },
+    {
+      "id": "g-a185497cfc7c",
+      "query": "look darwin answered lot questions answer core question evolution begin evidence",
+      "claims": [
+        {
+          "videoId": "gIorXcloIac",
+          "sentenceId": "s0034",
+          "text": "Now look, Darwin answered a lot of questions, but he could never answer the core question: How did evolution begin?",
+          "start": 215.569,
+          "end": 228.38,
+          "screeningType": "score",
+          "suspicionScore": 2.19,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.19
+    },
+    {
+      "id": "g-0042f821e962",
+      "query": "mind blowing advancements made physicis biology chemistry past 100 years still closer evidence",
+      "claims": [
+        {
+          "videoId": "gIorXcloIac",
+          "sentenceId": "s0025",
+          "text": "For all the mind-blowing advancements we&#39;ve made in physicis, biology, and chemistry in just the past 100 years, we&#39;re still no closer to making it happen.",
+          "start": 155.42,
+          "end": 165.459,
+          "screeningType": "score",
+          "suspicionScore": 2.13,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.13
+    }
+  ],
+  "pending": [],
+  "eligibleTargets": 8
+}

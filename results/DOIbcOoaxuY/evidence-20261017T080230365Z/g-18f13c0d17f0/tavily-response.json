@@ -1,0 +1,42 @@
+{
+  "query": "novel animal forms exhibiting proto types body designs see today emerged fossil evidence",
+  "follow_up_questions": null,
+  "answer": null,
+  "images": [],
+  "results": [
+    {
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12993075",
+      "title": "A smartphone analogy to explore the origin of animals",
+      "content": "23. Erwin DH. The origin of animal body plans: a view from fossil evidence and the regulatory genome Development 2020 147 dev182899 doi:10.1242/dev.182899 PMID:32079678 Erwin DH (2020) The origin of animal body plans: a view from fossil evidence and the regulatory genome. Development 147:dev182899 PMID:32079678 doi:10.1242/dev.182899 [...] The idea that animals arose due to an incredible burst of genetic innovation was primarily spurred by the fossil record (Erwin et al, 2011; Erwin and Valentine, 2013; Briggs, 2015). Notably, the diversity of animal life suddenly appears in the fossil record over a relatively short span of approximately 20 to 25 million years, at the beginning of the Cambrian period, 540 million years ago. Cambrian fossils are beautifully preserved and show diverse, complex animal-like body plans. [...] body plans. Representatives of most animal clades are found, including annelids (worms), arthropods (insects, crabs), molluscs (snails, octopuses), and chordates (including humans and fish) (Fedonkin, 2007). There are even fossils from the Cambrian that cannot be attributed to any living animal, implying a high degree of biological innovation and diversification during that period. This phenomenon, known as the “Cambrian explosion”, led to the concept that the origin of animals itself involved",
+      "score": 0.36466494,
+      "raw_content": null,
+      "id": "88f697-00"
+    },
+    {
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4590474",
+      "title": "Exploring macroevolution using modern and fossil data",
+      "content": "Macroevolution, encompassing the deep-time patterns of the origins of modern biodiversity, has been discussed in many contexts. Non-Darwinian models such as macromutations have been proposed as a means of bridging seemingly large gaps in knowledge, or as a means to explain the origin of exquisitely adapted body plans. However, such gaps can be spanned by new fossil finds, and complex, integrated organisms can be shown to have evolved piecemeal. For example, the fossil record between dinosaurs [...] # Exploring macroevolution using modern and fossil data\n\nMichael J. Benton\n\nProceedings of the Royal Society B: Biological Sciences · 2015-07-07 · 282(1810):20150569 · DOI: 10.1098/rspb.2015.0569 · PMID: 26063844 · PMCID: PMC4590474\n\n## Abstract [...] between dinosaurs and Archaeopteryx has now filled up with astonishing fossil intermediates that show how the unique plexus of avian adaptations emerged step by step over 60 Myr. New numerical approaches to morphometrics and phylogenetic comparative methods allow palaeontologists and biologists to work together on deep-time questions of evolution, to explore how diversity, morphology and function have changed through time. Patterns are more complex than sometimes expected, with frequent",
+      "score": 0.24179403,
+      "raw_content": null,
+      "id": "5cff4d-01"
+    },
+    {
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6593199",
+      "title": "Inherency of Form and Function in Animal Development and Evolution",
+      "content": "“Proto-cell types,” providing, for example, evolutionary starting points for the evolution of muscle, neurons, connective tissue, blood, glands, and liver, need not have originated via germline encoding (in this scenario, the germline itself may have arisen by this same “plasticity first” process), or in a reproducible spatiotemporal or even quantitatively regulated fashion. That is, the novel cellular phenotypes could have appeared in a cell mass randomly or reversibly. More programmed modes [...] shared features of animal functional anatomy emerged with relative facility. [...] step not only in metazoan multicellularity but also in metazoan developmental gene regulation. Once constituted with components inherited from unicellular ancestors (e.g., p300/CBP transactivating hubs, Grh factors, β-catenin, PcGII proteins) or emerging at the unicellular holozoan-metazoan interface (e.g., enhancers; classical cadherins and their cytoskeletal adaptors, including PcGI proteins), a new category of organism, a “proto-metazoan” could proceed to create a multiplicity of",
+      "score": 0.22903514,
+      "raw_content": null,
+      "id": "0ecfb0-02"
+    },
+    {
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8061703",
+      "title": "The origin of animals: an ancestral reconstruction of the unicellular-to-multicellular transition",
+      "content": "Figure 1. · Phylogenetic classification of animals and their unicellular relatives. (a) A timeline of different events during early animal evolution. The transition to animal multicellularity, and therefore the origin of the first animals, occurred sometime at the end of the Tonian period, according to molecular clock estimates. The oldest fossil or geological evidence of recognizable animals dates back to the Ediacaran period, with molecular clocks extending the emergence of different animal [...] 28. et al. 2015 Spiralian phylogeny informs the evolution of microscopic lineages. Curr. Biol. 25, 2000 - 2006. (doi:10.1016/j.cub.2015.06.068) PMID:26212884\n29. . 1995 Evidence from 18S ribosomal DNA that the lophophorates are protostome animals. Science 267, 1641 - 1643. (doi:10.1126/science.7886451) PMID:7886451\n30. . 1997 Evidence for a clade of nematodes, arthropods and other moulting animals. Nature 387, 489 - 493. (doi:10.1038/387489a0) PMID:9168109",
+      "score": 0.15537329,
+      "raw_content": null,
+      "id": "b16bb7-03"
+    }
+  ],
+  "response_time": 2.19,
+  "request_id": "5e033ddc-363d-4355-84ad-91536366d832"
+}

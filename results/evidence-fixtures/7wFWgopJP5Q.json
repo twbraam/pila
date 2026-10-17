@@ -1,0 +1,21 @@
+{
+  "videoId": "7wFWgopJP5Q",
+  "language": "zh-TW",
+  "videoUrl": "https://www.youtube.com/watch?v=7wFWgopJP5Q",
+  "transcriptSource": "examples/transcripts/7wFWgopJP5Q.json",
+  "screeningSource": "results/7wFWgopJP5Q/20261017T071219936Z/results.json",
+  "evidenceSource": "results/7wFWgopJP5Q/evidence-20261017T080216689Z/evidence.json",
+  "maxSearches": 3,
+  "eligibleClaims": 2,
+  "assessments": [],
+  "pending": [
+    {
+      "targetId": "s0013::part-1",
+      "reason": "evidence_context_budget"
+    },
+    {
+      "targetId": "s0010",
+      "reason": "evidence_context_budget"
+    }
+  ]
+}

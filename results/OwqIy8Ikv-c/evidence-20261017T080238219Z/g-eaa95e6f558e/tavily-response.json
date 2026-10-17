@@ -1,0 +1,42 @@
+{
+  "query": "ipcc acknowledged own 2007 report long term prediction future climate states possible evidence",
+  "follow_up_questions": null,
+  "answer": null,
+  "images": [],
+  "results": [
+    {
+      "url": "https://www.ipcc.ch/sr15",
+      "title": "Global Warming of 1.5 ºC —",
+      "content": "An IPCC special report on the impacts of global warming of 1.5 °C above pre-industrial levels and related global greenhouse gas emission pathways, in the context of strengthening the global response to the threat of climate change, sustainable development, and efforts to eradicate poverty. Understanding the impacts of 1.5°C global warming above pre-industrial levels and related global emission pathways in the context of strengthening the response to the threat of climate change, sustainable development and efforts to eradicate poverty. This chapter frames the context, knowledge-base and assessment approaches used to understand the impacts of 1.5°C global warming above pre-industrial levels and related global greenhouse gas emission pathways, building on the IPCC Fifth Assessment Report (AR5), in the context of strengthening the global response to the threat of climate change, sustainable development and efforts to eradicate poverty.",
+      "score": 0.98562,
+      "raw_content": null,
+      "id": "41ce72-00"
+    },
+    {
+      "url": "https://www.ipcc.ch/site/assets/uploads/2018/03/ar4_wg2_full_report.pdf",
+      "title": "Climate Change 2007 – Impacts, Adaptation and ...",
+      "content": "Climate Change 2007: Impacts, A Adaptation a and V Vulnerability The Intergovernmental Panel on Climate Change (IPCC) was set up jointly by the World Meteorological Organization and the United Nations Environment Programme to provide an authoritative international statement of scientific understanding of climate change. The report: • evaluates evidence that recent observed changes in climate have already affected a variety of physical and biological systems and concludes that these effects can be attributed to global warming; • makes a detailed assessment of the impacts of future climate change and sea-level rise on ecosystems, water resources, agriculture and food security, human health, coastal and low-lying regions and industry and settle-ments; • provides a complete new assessment of the impacts of climate change on major regions of the world (Africa, Asia, Australia/New Zealand, Europe, Latin America, North America, polar regions and small islands); • considers responses through adaptation; • explores the synergies and trade-offs between adaptation and mitigation; • evaluates the key vulnerabilities to climate change, and assesses aggregate damage levels and the role of multiple stresses.",
+      "score": 0.98433,
+      "raw_content": null,
+      "id": "ae4eb3-01"
+    },
+    {
+      "url": "https://www.ipcc.ch/site/assets/uploads/2018/03/ar4-wg1-chapter1.pdf",
+      "title": "Historical Overview of Climate Change Science",
+      "content": "Model simulations with no changes in external forcing (e.g., no increases in atmospheric CO2 concentration) provide valuable information on the natural internal variability of the climate system on time scales of years to centuries. They also revealed a highly correlated evolution of temperature changes and atmospheric composition, which was subsequently conﬁ rmed over the past 400 kyr (Petit et al., 1999) and now extends to almost 1 Myr. This discovery drove research to understand the causal links between greenhouse gases and climate change. 117 Chapter 1 Historical Overview of Climate Change Science 1.5.3 Coupled Models: Evolution, Use, Assessment The ﬁ rst National Academy of Sciences of the USA report on global warming (Charney et al., 1979), on the basis of two models simulating the impact of doubled atmospheric CO2 concentrations, spoke of a range of global mean equilibrium surface temperature increase of between 1.5°C and 4.5°C, a range that has remained part of conventional wisdom at least as recently as the TAR. Cubasch, U., et al., 1994: Monte Carlo climate change forecasts with a global coupled ocean-atmosphere model.",
+      "score": 0.9781,
+      "raw_content": null,
+      "id": "060c34-02"
+    },
+    {
+      "url": "https://www.ipcc.ch/site/assets/uploads/2018/02/WG1AR5_Chapter12_FINAL.pdf",
+      "title": "Long-term Climate Change: Projections, Commitments and ...",
+      "content": "1029 12 This chapter should be cited as: Collins, M., R. Tebaldi, A.J. Weaver and M. Wehner, 2013: Long-term Climate Change: Projections, Com­ mitments and Irreversibility. Contribution of Working Group I to the Fifth Assessment Report of the Intergovernmental Panel on Climate Change [Stocker, T.F., D. 1034 12.2 Climate Model Ensembles and Sources of Uncertainty from Emissions to Projections............ 1035 12.2.1 The Coupled Model Intercomparison Project Phase 5 and Other Tools. 1047 12.3.3 Synthesis of Projected Global Mean Radiative Forcing for the 21st Century. 1052 12.4 Projected Climate Change over the 21st Century.................................................................... Executive Summary This chapter assesses long-term projections of climate change for the end of the 21st century and beyond, where the forced signal depends on the scenario and is typically larger than the internal variability of the climate system. {12.2.2, 12.2.3, 12.4.2, 12.4.9, Figures 12.10, 12.39, 12.40, 12.41} Projections of Temperature Change Global mean temperatures will continue to rise over the 21st century if greenhouse gas (GHG) emissions continue unabat­ ed.",
+      "score": 0.97583,
+      "raw_content": null,
+      "id": "ee6f70-03"
+    }
+  ],
+  "response_time": 2.7,
+  "request_id": "10c350a6-c86a-4b32-b0f0-3d29198d284d"
+}

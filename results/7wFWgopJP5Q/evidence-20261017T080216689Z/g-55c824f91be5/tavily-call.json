@@ -1,0 +1,29 @@
+{
+  "query": "商業 週刊 資深 專 述 郭 億 如 這篇文章 他 讓 我知道 evidence",
+  "search_depth": "basic",
+  "auto_parameters": false,
+  "max_results": 4,
+  "chunks_per_source": 3,
+  "include_answer": false,
+  "include_raw_content": false,
+  "include_domains": [
+    "ipcc.ch",
+    "nasa.gov",
+    "noaa.gov",
+    "who.int",
+    "cdc.gov",
+    "nih.gov",
+    "gov.uk",
+    "iea.org",
+    "iaea.org",
+    "nrc.gov",
+    "worldbank.org",
+    "stat.gov.tw",
+    "mohw.gov.tw",
+    "reuters.com",
+    "apnews.com",
+    "bbc.com",
+    "factcheck.org",
+    "tfc-taiwan.org.tw"
+  ]
+}

@@ -1,0 +1,118 @@
+{
+  "groups": [
+    {
+      "id": "g-4e357eb7a18b",
+      "query": "co2 climate change connection unimportant controlling earth models based assumption drives temperature evidence",
+      "claims": [
+        {
+          "videoId": "zmfRG8-RHEI",
+          "sentenceId": "s0315",
+          "text": "Yes I assert, that there is no connection whatsoever, between CO₂ and climate change.",
+          "start": 1873.829,
+          "end": 1880.7089999999998,
+          "screeningType": "score",
+          "suspicionScore": 2.86,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        },
+        {
+          "videoId": "zmfRG8-RHEI",
+          "sentenceId": "s0328",
+          "text": "CO₂ is quite unimportant, in controlling the Earth&#39;s climate.",
+          "start": 1929.208,
+          "end": 1933.828,
+          "screeningType": "score",
+          "suspicionScore": 2.55,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        },
+        {
+          "videoId": "zmfRG8-RHEI",
+          "sentenceId": "s0313",
+          "text": "All climate models are based on the assumption, that CO₂ drives temperature change.",
+          "start": 1863.377,
+          "end": 1868.493,
+          "screeningType": "score",
+          "suspicionScore": 2.21,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.86
+    },
+    {
+      "id": "g-43d230f58ffc",
+      "query": "co2 temperature driven changes past ice ages start maximum end minimum exact evidence",
+      "claims": [
+        {
+          "videoId": "zmfRG8-RHEI",
+          "sentenceId": "s0280",
+          "text": "CO₂ has never driven temperature changes in the past, never.",
+          "start": 1674.792,
+          "end": 1679.8039999999999,
+          "screeningType": "score",
+          "suspicionScore": 2.84,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        },
+        {
+          "videoId": "zmfRG8-RHEI",
+          "sentenceId": "s0274",
+          "text": "Ice ages start when CO₂ is at it&#39;s maximum, and ice ages end, when CO₂ is at its minimum, which is the exact opposite of what would occur if carbon dioxide was controlling the temperature.",
+          "start": 1650.066,
+          "end": 1664.433,
+          "screeningType": "score",
+          "suspicionScore": 2.75,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        },
+        {
+          "videoId": "zmfRG8-RHEI",
+          "sentenceId": "s0281",
+          "text": "Nor is it clear in recent times, that CO₂ is having any effect on temperature.",
+          "start": 1681.37,
+          "end": 1686.289,
+          "screeningType": "score",
+          "suspicionScore": 2.04,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.84
+    },
+    {
+      "id": "g-f8544569121b",
+      "query": "puzzle first early part where such sharp warming 1900s 1930s 1940s co2 evidence",
+      "claims": [
+        {
+          "videoId": "zmfRG8-RHEI",
+          "sentenceId": "s0288",
+          "text": "That&#39;s the puzzle that the first early part, where we have such a sharp warming, from the 1900s and 1930s and 1940s ... the CO₂ could never cause that temperqature rise.",
+          "start": 1722.914,
+          "end": 1732.573,
+          "screeningType": "score",
+          "suspicionScore": 2.17,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.17
+    }
+  ],
+  "pending": [],
+  "eligibleTargets": 7
+}

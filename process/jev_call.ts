@@ -10,7 +10,7 @@ const API_URL = 'https://api.typesafe.ai/v1/systemone';
 const KEY_NAMES = ['TYPESAFE_API_KEY', 'JEV_API', 'JEV_API_KEY', 'TYPE_SAFE_API_KEY'];
 const PLACEHOLDERS = new Set(['your_typesafe_api_key_here', 'your_key_here']);
 
-function loadApiKey(): string {
+export function loadApiKey(): string {
   const find = (values: Record<string, string | undefined>) => {
     for (const name of KEY_NAMES) {
       const value = values[name]?.trim();
@@ -24,7 +24,13 @@ function loadApiKey(): string {
   return existsSync(path) ? find(parseEnv(readFileSync(path, 'utf8'))) : '';
 }
 
-export async function callJev(apiKey: string, payload: Payload): Promise<Record<string, unknown>> {
+export interface JevRequest {
+  model: string;
+  state: unknown;
+  questions: Record<string, unknown>;
+}
+
+export async function callJev(apiKey: string, payload: JevRequest): Promise<Record<string, unknown>> {
   const response = await fetch(API_URL, {
     method: 'POST',
     headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },

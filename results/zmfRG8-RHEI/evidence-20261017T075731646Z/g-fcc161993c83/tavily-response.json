@@ -1,0 +1,42 @@
+{
+  "query": "truth idea earth warmer past evidence",
+  "follow_up_questions": null,
+  "answer": null,
+  "images": [],
+  "results": [
+    {
+      "url": "https://www.bbc.com/news/science-environment-59251912",
+      "title": "COP26: The truth behind the new climate change denial",
+      "content": "We've looked at some of the most viral claims of the past year, and what the evidence really says.\n\n## The claim: A 'Grand Solar Minimum' will halt global warming\n\nPeople have long claimed, incorrectly, that the past century's temperature changes are just part of the Earth's natural cycle, rather than the result of human behaviour. [...] Studies suggest the Sun may well go through a weaker phase sometime this century, but that this would lead, at most, to a temporary 0.1 - 0.2C cooling of the planet.\n\nThat's not nearly enough to offset human activity, which has already warmed the planet by about 1.2C over the past 200 years and will continue to rise, possibly topping 2.4C by the end of the century. [...] We know recent temperature rises weren't caused by the changes in the Sun's natural cycle because the layer of atmosphere nearest the earth is warming, while the layer of atmosphere closest to the Sun - the stratosphere - is cooling.\n\nHeat which would normally be released into the stratosphere is being trapped by greenhouse gases like carbon dioxide from people burning fuel.",
+      "score": 0.47504577,
+      "raw_content": null,
+      "id": "f395ad-00"
+    },
+    {
+      "url": "https://science.nasa.gov/climate-change/evidence",
+      "title": "Evidence - NASA Science",
+      "content": "# Evidence\n\nThere is unequivocal evidence that Earth is warming at an unprecedented rate. Human activity is the principal cause.\n\nEn español\n\n### Takeaways [...] While Earth’s climate has changed throughout its history, the current warming is happening at a rate not seen in the past 10,000 years.\n According to the Intergovernmental Panel on Climate Change (IPCC), \"Since systematic scientific assessments began in the 1970s, the influence of human activity on the warming of the climate system has evolved from theory to established fact.\"1 [...] Ice cores drawn from Greenland, Antarctica, and tropical mountain glaciers show that Earth’s climate responds to changes in greenhouse gas levels. Ancient evidence can also be found in tree rings, ocean sediments, coral reefs, and layers of sedimentary rocks. This ancient, or paleoclimate, evidence reveals that current warming is occurring roughly 10 times faster than the average rate of warming after an ice age. Carbon dioxide from human activities is increasing about 250 times faster than it",
+      "score": 0.41748574,
+      "raw_content": null,
+      "id": "1f420b-01"
+    },
+    {
+      "url": "https://climate.nasa.gov/evidence",
+      "title": "Evidence - NASA Science",
+      "content": "While Earth’s climate has changed throughout its history, the current warming is happening at a rate not seen in the past 10,000 years.\n According to the Intergovernmental Panel on Climate Change (IPCC), \"Since systematic scientific assessments began in the 1970s, the influence of human activity on the warming of the climate system has evolved from theory to established fact.\"1 [...] Ice cores drawn from Greenland, Antarctica, and tropical mountain glaciers show that Earth’s climate responds to changes in greenhouse gas levels. Ancient evidence can also be found in tree rings, ocean sediments, coral reefs, and layers of sedimentary rocks. This ancient, or paleoclimate, evidence reveals that current warming is occurring roughly 10 times faster than the average rate of warming after an ice age. Carbon dioxide from human activities is increasing about 250 times faster than it [...] Earth's climate has changed throughout history. Just in the last 800,000 years, there have been eight cycles of ice ages and warmer periods, with the end of the last ice age about 11,700 years ago marking the beginning of the modern climate era — and of human civilization. Most of these climate changes are attributed to very small variations in Earth’s orbit that change the amount of solar energy our planet receives.",
+      "score": 0.39733082,
+      "raw_content": null,
+      "id": "beabf6-02"
+    },
+    {
+      "url": "https://www.bbc.com/news/articles/cp8jwj90ejno",
+      "title": "The truth about life on other planets and what it means for Earth",
+      "content": "The idea was to capture the tiny amount of starlight glancing through the atmospheres of these faraway worlds and study them for chemical fingerprints of molecules, which on Earth can only be produced by living organisms, so-called biosignatures.\n\nAnd they succeeded in developing such instruments for ground and space-based telescopes. [...] The scientific case for the possibility of life or past life in our own solar system has increased in recent years following data sent back by various spacecraft, so several missions to search for signs of it are on their way. [...] A much more definitive discovery would be to discover life in our own solar system using robotic space craft containing portable laboratories. Any off-world bug could be analysed, possibly even brought back to Earth, providing prima facie evidence to at least significantly limit any scientific push back that may ensue.",
+      "score": 0.279765,
+      "raw_content": null,
+      "id": "9901b2-03"
+    }
+  ],
+  "response_time": 3.39,
+  "request_id": "7cd7f823-61c9-44f7-9751-5c29c8878729"
+}

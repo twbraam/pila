@@ -1,0 +1,882 @@
+{
+  "groups": [
+    {
+      "id": "g-b75183c56c08",
+      "query": "clouds absorb energy evidence",
+      "claims": [
+        {
+          "videoId": "zmfRG8-RHEI",
+          "sentenceId": "s0330",
+          "text": "Clouds don&#39;t absorb any energy at all.",
+          "start": 1936.678,
+          "end": 1939.585,
+          "screeningType": "score",
+          "suspicionScore": 2.88,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.88
+    },
+    {
+      "id": "g-4e357eb7a18b",
+      "query": "co2 climate connection change unimportant controlling earth evidence",
+      "claims": [
+        {
+          "videoId": "zmfRG8-RHEI",
+          "sentenceId": "s0315",
+          "text": "Yes I assert, that there is no connection whatsoever, between CO₂ and climate change.",
+          "start": 1873.829,
+          "end": 1880.7089999999998,
+          "screeningType": "score",
+          "suspicionScore": 2.86,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        },
+        {
+          "videoId": "zmfRG8-RHEI",
+          "sentenceId": "s0328",
+          "text": "CO₂ is quite unimportant, in controlling the Earth&#39;s climate.",
+          "start": 1929.208,
+          "end": 1933.828,
+          "screeningType": "score",
+          "suspicionScore": 2.55,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.86
+    },
+    {
+      "id": "g-fcc161993c83",
+      "query": "truth idea earth warmer past evidence",
+      "claims": [
+        {
+          "videoId": "zmfRG8-RHEI",
+          "sentenceId": "s0317",
+          "text": "There is no truth to the idea, that the Earth is warmer now, than it has been in the past.",
+          "start": 1883.578,
+          "end": 1889.853,
+          "screeningType": "score",
+          "suspicionScore": 2.85,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.85
+    },
+    {
+      "id": "g-bfdb9f5bb1fa",
+      "query": "co2 low sank life earth close level depths recent glacial maximum amount evidence",
+      "claims": [
+        {
+          "videoId": "zmfRG8-RHEI",
+          "sentenceId": "s0248",
+          "text": "At the depths of the most recent glacial maximum, the amount of CO₂ in the atmosphere sank so low, all life on Earth came close to extinction.",
+          "start": 1487.126,
+          "end": 1496.805,
+          "screeningType": "score",
+          "suspicionScore": 2.84,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        },
+        {
+          "videoId": "zmfRG8-RHEI",
+          "sentenceId": "s0249",
+          "text": "They say CO₂ is higher than it&#39;s been for one 100 thousand years, but what they don&#39;t tell you in that period they&#39;re talking about, is that CO₂ sank so low, that all life on Earth nearly died. 20,000 years ago, CO₂ is at the lowest level it has ever been in the history of the Earth, 180 parts per million.",
+          "start": 1496.83,
+          "end": 1514.6290000000001,
+          "screeningType": "score",
+          "suspicionScore": 2.73,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        },
+        {
+          "videoId": "zmfRG8-RHEI",
+          "sentenceId": "s0239",
+          "text": "Even with modern industry&#39;s contribution to CO₂ levels, by geological standards, the level of atmospheric CO₂ today is close to being as low, as it has ever been.",
+          "start": 1423.604,
+          "end": 1433.631,
+          "screeningType": "score",
+          "suspicionScore": 2.47,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.84
+    },
+    {
+      "id": "g-43d230f58ffc",
+      "query": "co2 temperature driven changes past ice ages start maximum end minimum exact evidence",
+      "claims": [
+        {
+          "videoId": "zmfRG8-RHEI",
+          "sentenceId": "s0280",
+          "text": "CO₂ has never driven temperature changes in the past, never.",
+          "start": 1674.792,
+          "end": 1679.8039999999999,
+          "screeningType": "score",
+          "suspicionScore": 2.84,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        },
+        {
+          "videoId": "zmfRG8-RHEI",
+          "sentenceId": "s0274",
+          "text": "Ice ages start when CO₂ is at it&#39;s maximum, and ice ages end, when CO₂ is at its minimum, which is the exact opposite of what would occur if carbon dioxide was controlling the temperature.",
+          "start": 1650.066,
+          "end": 1664.433,
+          "screeningType": "score",
+          "suspicionScore": 2.75,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.84
+    },
+    {
+      "id": "g-87caec17d5eb",
+      "query": "simply reflect sunlight back out into space evidence",
+      "claims": [
+        {
+          "videoId": "zmfRG8-RHEI",
+          "sentenceId": "s0331",
+          "text": "They simply reflect all the sunlight, back out into space.",
+          "start": 1939.623,
+          "end": 1945.8029999999999,
+          "screeningType": "score",
+          "suspicionScore": 2.81,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.81
+    },
+    {
+      "id": "g-d7781d46ff5b",
+      "query": "getting hotter milder earth climate temperature rather evidence",
+      "claims": [
+        {
+          "videoId": "zmfRG8-RHEI",
+          "sentenceId": "s0399",
+          "text": "The Earth&#39;s climate has not been getting hotter, it&#39;s been getting milder.",
+          "start": 2356.198,
+          "end": 2361.3630000000003,
+          "screeningType": "score",
+          "suspicionScore": 2.75,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        },
+        {
+          "videoId": "zmfRG8-RHEI",
+          "sentenceId": "s0405",
+          "text": "So the temperature&#39;s getting milder, rather than getting hotter.",
+          "start": 2384.279,
+          "end": 2388.818,
+          "screeningType": "score",
+          "suspicionScore": 2.61,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.75
+    },
+    {
+      "id": "g-9b2e1500ba0d",
+      "query": "years since warming past 200 barely changed temperatures according rural thermometers occurred evidence",
+      "claims": [
+        {
+          "videoId": "zmfRG8-RHEI",
+          "sentenceId": "s0286",
+          "text": "According to rural thermometers, most of the warming in the past 200 years, occurred before the 1940s, and have barely changed since then.",
+          "start": 1702.581,
+          "end": 1712.4869999999999,
+          "screeningType": "score",
+          "suspicionScore": 2.69,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        },
+        {
+          "videoId": "zmfRG8-RHEI",
+          "sentenceId": "s0397",
+          "text": "Summer temperatures, over the past 300 to 400 years, since the end of the Little Ice Age, have barely changed at all.",
+          "start": 2346.388,
+          "end": 2353.023,
+          "screeningType": "score",
+          "suspicionScore": 2.63,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        },
+        {
+          "videoId": "zmfRG8-RHEI",
+          "sentenceId": "s0220",
+          "text": "And since 1880, most the warming, it looks like, is due to the urban heat island effect.",
+          "start": 1260.046,
+          "end": 1266.1689999999999,
+          "screeningType": "score",
+          "suspicionScore": 2.6,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        },
+        {
+          "videoId": "zmfRG8-RHEI",
+          "sentenceId": "s0101",
+          "text": "And at no time during those 200 million years, were temperatures as cold, as they are today.",
+          "start": 541.22,
+          "end": 547.211,
+          "screeningType": "score",
+          "suspicionScore": 2.4,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.69
+    },
+    {
+      "id": "g-71015e0674f4",
+      "query": "such thing climate emergency happening planet evidence",
+      "claims": [
+        {
+          "videoId": "zmfRG8-RHEI",
+          "sentenceId": "s0020",
+          "text": "There&#39;s no such thing as a climate emergency, happening on this planet now.",
+          "start": 83.531,
+          "end": 87.275,
+          "screeningType": "score",
+          "suspicionScore": 2.66,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.66
+    },
+    {
+      "id": "g-d2113a0e6fc2",
+      "query": "likewise official figures show number hot days u.s markedly declined evidence",
+      "claims": [
+        {
+          "videoId": "zmfRG8-RHEI",
+          "sentenceId": "s0389",
+          "text": "Likewise, official figures show, that the number of hot days in the U.S. has markedly declined.",
+          "start": 2304.748,
+          "end": 2312.483,
+          "screeningType": "score",
+          "suspicionScore": 2.65,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.65
+    },
+    {
+      "id": "g-02df14881dc0",
+      "query": "evidence multiple sources agree official global temperature record used world governments reported evidence",
+      "claims": [
+        {
+          "videoId": "zmfRG8-RHEI",
+          "sentenceId": "s0224",
+          "text": "Evidence from multiple sources now agree, that the official global temperature record as used by world governments and reported in the world&#39;s media, is showing far too much warming over the last 120 years, artificially inflated ... by urbanization.",
+          "start": 1300.184,
+          "end": 1315.459,
+          "screeningType": "score",
+          "suspicionScore": 2.63,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.63
+    },
+    {
+      "id": "g-8420713bfbcb",
+      "query": "shows increase evidence",
+      "claims": [
+        {
+          "videoId": "zmfRG8-RHEI",
+          "sentenceId": "s0426",
+          "text": "It shows no increase whatsoever.",
+          "start": 2475.328,
+          "end": 2479.247,
+          "screeningType": "score",
+          "suspicionScore": 2.61,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.61
+    },
+    {
+      "id": "g-d41aff9037b6",
+      "query": "temperature records change show overall here since 1940 look high temperatures almost evidence",
+      "claims": [
+        {
+          "videoId": "zmfRG8-RHEI",
+          "sentenceId": "s0148",
+          "text": "Records show, that there has been no overall change in temperature here, since 1940.",
+          "start": 840.12,
+          "end": 845.495,
+          "screeningType": "score",
+          "suspicionScore": 2.59,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        },
+        {
+          "videoId": "zmfRG8-RHEI",
+          "sentenceId": "s0401",
+          "text": "If you look at temperature records, high temperatures are almost unchanged.",
+          "start": 2363.183,
+          "end": 2368.713,
+          "screeningType": "score",
+          "suspicionScore": 2.56,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        },
+        {
+          "videoId": "zmfRG8-RHEI",
+          "sentenceId": "s0363",
+          "text": "What is causing the ocean temperature to change is clearly variations in solar activity.",
+          "start": 2142.628,
+          "end": 2147.9519999999998,
+          "screeningType": "score",
+          "suspicionScore": 2.44,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.59
+    },
+    {
+      "id": "g-c245f94083c2",
+      "query": "truth co2 higher should evidence",
+      "claims": [
+        {
+          "videoId": "zmfRG8-RHEI",
+          "sentenceId": "s0319",
+          "text": "There is no truth, that CO₂ is higher than it should be.",
+          "start": 1889.878,
+          "end": 1895.645,
+          "screeningType": "score",
+          "suspicionScore": 2.58,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.58
+    },
+    {
+      "id": "g-8184983705e4",
+      "query": "shows clearly 1930s far prone heat waves today evidence",
+      "claims": [
+        {
+          "videoId": "zmfRG8-RHEI",
+          "sentenceId": "s0386",
+          "text": "It shows very clearly that the 1930s were far more prone to heat waves, than we are today.",
+          "start": 2291.37,
+          "end": 2297.673,
+          "screeningType": "score",
+          "suspicionScore": 2.57,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.57
+    },
+    {
+      "id": "g-c2ccf648853c",
+      "query": "hundreds times powerful trivial effects co2 evidence",
+      "claims": [
+        {
+          "videoId": "zmfRG8-RHEI",
+          "sentenceId": "s0334",
+          "text": "That is hundreds of times more powerful, than the trivial effects of CO₂.",
+          "start": 1953.09,
+          "end": 1960.2740000000001,
+          "screeningType": "score",
+          "suspicionScore": 2.55,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.55
+    },
+    {
+      "id": "g-b46b00dac29d",
+      "query": "zero co2 100 sun evidence",
+      "claims": [
+        {
+          "videoId": "zmfRG8-RHEI",
+          "sentenceId": "s0373",
+          "text": "All of it has zero for the CO₂, 100% for the sun, how&#39;s that?",
+          "start": 2200.482,
+          "end": 2205.0009999999997,
+          "screeningType": "score",
+          "suspicionScore": 2.54,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.54
+    },
+    {
+      "id": "g-1256de742ee3",
+      "query": "sort temperatures completely out range anything people experience evidence",
+      "claims": [
+        {
+          "videoId": "zmfRG8-RHEI",
+          "sentenceId": "s0394",
+          "text": "These sort of temperatures are just completely out of range of anything people experience now.",
+          "start": 2326.318,
+          "end": 2332.186,
+          "screeningType": "score",
+          "suspicionScore": 2.51,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.51
+    },
+    {
+      "id": "g-6296a41a0d2c",
+      "query": "evidence evidence",
+      "claims": [
+        {
+          "videoId": "zmfRG8-RHEI",
+          "sentenceId": "s0021",
+          "text": "It&#39;s ... there&#39;s no, no evidence of one !",
+          "start": 87.3,
+          "end": 89.85,
+          "screeningType": "score",
+          "suspicionScore": 2.5,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.5
+    },
+    {
+      "id": "g-6adcef402421",
+      "query": "observable increase evidence",
+      "claims": [
+        {
+          "videoId": "zmfRG8-RHEI",
+          "sentenceId": "s0428",
+          "text": "There is no observable increase at all.",
+          "start": 2483.488,
+          "end": 2486.477,
+          "screeningType": "score",
+          "suspicionScore": 2.5,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.5
+    },
+    {
+      "id": "g-a917e3b2df53",
+      "query": "every single school university business climate office officers program evidence",
+      "claims": [
+        {
+          "videoId": "zmfRG8-RHEI",
+          "sentenceId": "s0516",
+          "text": "Every single school, or university, or business, will have a climate office, or climate officers, and a climate program.",
+          "start": 2972.248,
+          "end": 2984.2760000000003,
+          "screeningType": "score",
+          "suspicionScore": 2.5,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.5
+    },
+    {
+      "id": "g-1d182e901fce",
+      "query": "human being shade naked dies hypothermia evidence",
+      "claims": [
+        {
+          "videoId": "zmfRG8-RHEI",
+          "sentenceId": "s0121",
+          "text": "A human being in the shade naked dies at 20°C, from hypothermia.",
+          "start": 640.913,
+          "end": 647.735,
+          "screeningType": "score",
+          "suspicionScore": 2.48,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.48
+    },
+    {
+      "id": "g-0ad7e5683fdd",
+      "query": "actual observations historical evidence clearly suggests evidence",
+      "claims": [
+        {
+          "videoId": "zmfRG8-RHEI",
+          "sentenceId": "s0314",
+          "text": "But actual observations and historical evidence, clearly suggests that it doesn&#39;t.",
+          "start": 1868.518,
+          "end": 1873.804,
+          "screeningType": "score",
+          "suspicionScore": 2.48,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.48
+    },
+    {
+      "id": "g-0016db294791",
+      "query": "united states much hotter 1930s evidence",
+      "claims": [
+        {
+          "videoId": "zmfRG8-RHEI",
+          "sentenceId": "s0390",
+          "text": "The United States was much hotter in the 1930s.",
+          "start": 2313.702,
+          "end": 2317.4150000000004,
+          "screeningType": "score",
+          "suspicionScore": 2.48,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.48
+    },
+    {
+      "id": "g-c91e75e1b1e9",
+      "query": "common mistake suppose higher average temperature mean hot weather true evidence",
+      "claims": [
+        {
+          "videoId": "zmfRG8-RHEI",
+          "sentenceId": "s0395",
+          "text": "A common mistake is to suppose, that higher average temperature will mean more hot weather, but this isn&#39;t true.",
+          "start": 2333.366,
+          "end": 2340.101,
+          "screeningType": "score",
+          "suspicionScore": 2.47,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.47
+    },
+    {
+      "id": "g-8aebf6f95760",
+      "query": "million parts per look through phanerozoic last 550 years see co2 order evidence",
+      "claims": [
+        {
+          "videoId": "zmfRG8-RHEI",
+          "sentenceId": "s0244",
+          "text": "If we look through the phanerozoic the last 550 million years, we would see CO₂ on the order of 7000 parts per million.",
+          "start": 1455.764,
+          "end": 1465.309,
+          "screeningType": "score",
+          "suspicionScore": 2.46,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        },
+        {
+          "videoId": "zmfRG8-RHEI",
+          "sentenceId": "s0250",
+          "text": "If it had gone down another thirty parts per million, we&#39;d all be dead.",
+          "start": 1514.654,
+          "end": 1518.41,
+          "screeningType": "score",
+          "suspicionScore": 2.45,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.46
+    },
+    {
+      "id": "g-17cc03c6a1cc",
+      "query": "0.04 percent evidence",
+      "claims": [
+        {
+          "videoId": "zmfRG8-RHEI",
+          "sentenceId": "s0260",
+          "text": "Just 0.04 of a percent.",
+          "start": 1570.784,
+          "end": 1574.0590000000002,
+          "screeningType": "score",
+          "suspicionScore": 2.41,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.41
+    },
+    {
+      "id": "g-4d1c29c1068b",
+      "query": "science support claims evidence",
+      "claims": [
+        {
+          "videoId": "zmfRG8-RHEI",
+          "sentenceId": "s0064",
+          "text": "Group 1, which is the science: They don&#39;t support any of these claims.",
+          "start": 313.69,
+          "end": 319.456,
+          "screeningType": "score",
+          "suspicionScore": 2.39,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.39
+    },
+    {
+      "id": "g-e4cf299649bb",
+      "query": "No! evidence",
+      "claims": [
+        {
+          "videoId": "zmfRG8-RHEI",
+          "sentenceId": "s0278",
+          "text": "No!",
+          "start": 1674.792,
+          "end": 1677.4089999999999,
+          "screeningType": "score",
+          "suspicionScore": 2.38,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.38
+    }
+  ],
+  "pending": [
+    {
+      "targetId": "s0675",
+      "reason": "candidate_budget"
+    },
+    {
+      "targetId": "s0411",
+      "reason": "candidate_budget"
+    },
+    {
+      "targetId": "s0431",
+      "reason": "candidate_budget"
+    },
+    {
+      "targetId": "s0116",
+      "reason": "candidate_budget"
+    },
+    {
+      "targetId": "s0407",
+      "reason": "candidate_budget"
+    },
+    {
+      "targetId": "s0759",
+      "reason": "candidate_budget"
+    },
+    {
+      "targetId": "s0388",
+      "reason": "candidate_budget"
+    },
+    {
+      "targetId": "s0404",
+      "reason": "candidate_budget"
+    },
+    {
+      "targetId": "s0518",
+      "reason": "candidate_budget"
+    },
+    {
+      "targetId": "s0047",
+      "reason": "candidate_budget"
+    },
+    {
+      "targetId": "s0253",
+      "reason": "candidate_budget"
+    },
+    {
+      "targetId": "s0321",
+      "reason": "candidate_budget"
+    },
+    {
+      "targetId": "s0284",
+      "reason": "candidate_budget"
+    },
+    {
+      "targetId": "s0247",
+      "reason": "candidate_budget"
+    },
+    {
+      "targetId": "s0398",
+      "reason": "candidate_budget"
+    },
+    {
+      "targetId": "s0313",
+      "reason": "candidate_budget"
+    },
+    {
+      "targetId": "s0413",
+      "reason": "candidate_budget"
+    },
+    {
+      "targetId": "s0422",
+      "reason": "candidate_budget"
+    },
+    {
+      "targetId": "s0416",
+      "reason": "candidate_budget"
+    },
+    {
+      "targetId": "s0525",
+      "reason": "candidate_budget"
+    },
+    {
+      "targetId": "s0288",
+      "reason": "candidate_budget"
+    },
+    {
+      "targetId": "s0106",
+      "reason": "candidate_budget"
+    },
+    {
+      "targetId": "s0145",
+      "reason": "candidate_budget"
+    },
+    {
+      "targetId": "s0418",
+      "reason": "candidate_budget"
+    },
+    {
+      "targetId": "s0423",
+      "reason": "candidate_budget"
+    },
+    {
+      "targetId": "s0099",
+      "reason": "candidate_budget"
+    },
+    {
+      "targetId": "s0305",
+      "reason": "candidate_budget"
+    },
+    {
+      "targetId": "s0196",
+      "reason": "candidate_budget"
+    },
+    {
+      "targetId": "s0199",
+      "reason": "candidate_budget"
+    },
+    {
+      "targetId": "s0150",
+      "reason": "candidate_budget"
+    },
+    {
+      "targetId": "s0379",
+      "reason": "candidate_budget"
+    },
+    {
+      "targetId": "s0102",
+      "reason": "candidate_budget"
+    },
+    {
+      "targetId": "s0135",
+      "reason": "candidate_budget"
+    },
+    {
+      "targetId": "s0758",
+      "reason": "candidate_budget"
+    },
+    {
+      "targetId": "s0281",
+      "reason": "candidate_budget"
+    },
+    {
+      "targetId": "s0729",
+      "reason": "candidate_budget"
+    },
+    {
+      "targetId": "s0417",
+      "reason": "candidate_budget"
+    },
+    {
+      "targetId": "s0238",
+      "reason": "candidate_budget"
+    }
+  ],
+  "eligibleTargets": 78
+}

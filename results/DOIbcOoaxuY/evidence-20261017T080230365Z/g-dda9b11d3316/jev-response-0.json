@@ -1,0 +1,93 @@
+{
+  "model": "jev-1.13.0",
+  "answers": {
+    "quality_E1": {
+      "type": "choice",
+      "choice": "secondary_summary",
+      "confidence": 0.92,
+      "probabilities": {
+        "direct_evidence": 0,
+        "secondary_summary": 0.95,
+        "unusable": 0.05
+      }
+    },
+    "quality_E2": {
+      "type": "choice",
+      "choice": "unusable",
+      "confidence": 0.49,
+      "probabilities": {
+        "direct_evidence": 0.04,
+        "secondary_summary": 0.3,
+        "unusable": 0.66
+      }
+    },
+    "quality_E3": {
+      "type": "choice",
+      "choice": "unusable",
+      "confidence": 0.25,
+      "probabilities": {
+        "direct_evidence": 0.18,
+        "secondary_summary": 0.32,
+        "unusable": 0.5
+      }
+    },
+    "quality_E4": {
+      "type": "choice",
+      "choice": "unusable",
+      "confidence": 0.82,
+      "probabilities": {
+        "direct_evidence": 0.04,
+        "secondary_summary": 0.08,
+        "unusable": 0.88
+      }
+    },
+    "claim_0_E1": {
+      "type": "choice",
+      "choice": "insufficient",
+      "confidence": 0.95,
+      "probabilities": {
+        "contradicts": 0,
+        "supports": 0,
+        "qualifies": 0.04,
+        "insufficient": 0.96
+      }
+    },
+    "claim_0_E2": {
+      "type": "choice",
+      "choice": "insufficient",
+      "confidence": 0.95,
+      "probabilities": {
+        "contradicts": 0,
+        "supports": 0.01,
+        "qualifies": 0.03,
+        "insufficient": 0.96
+      }
+    },
+    "claim_0_E3": {
+      "type": "choice",
+      "choice": "insufficient",
+      "confidence": 0.92,
+      "probabilities": {
+        "contradicts": 0.01,
+        "supports": 0,
+        "qualifies": 0.05,
+        "insufficient": 0.94
+      }
+    },
+    "claim_0_E4": {
+      "type": "choice",
+      "choice": "insufficient",
+      "confidence": 1,
+      "probabilities": {
+        "contradicts": 0,
+        "supports": 0,
+        "qualifies": 0,
+        "insufficient": 1
+      }
+    }
+  },
+  "usage": {
+    "input_tokens": 4166,
+    "output_tokens": 402
+  }
+}

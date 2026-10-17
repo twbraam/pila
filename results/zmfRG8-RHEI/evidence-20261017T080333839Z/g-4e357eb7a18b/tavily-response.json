@@ -1,0 +1,42 @@
+{
+  "query": "co2 climate connection change unimportant controlling earth evidence",
+  "follow_up_questions": null,
+  "answer": null,
+  "images": [],
+  "results": [
+    {
+      "url": "https://www.ipcc.ch/report/ar6/wg1/chapter/chapter-7",
+      "title": "Chapter 7: The Earth’s Energy Budget, Climate Feedbacks, and Climate Sensitivity | Climate Change 2021: The Physical Science Basis",
+      "content": "7.5.4). They are also used as important evidence in the process understanding estimates of the temperature, water vapour, albedo, biogeophysical, and non-CO2 biogeochemical feedbacks, whereas other evidence is primarily used for cloud feedbacks where the climate model evidence is weak (Section 7.4.2). One perspective on this is that the process understanding line of evidence builds on and replaces ESM estimates. [...] Paleoclimate proxy data provide observational evidence of large-scale patterns of surface warming in response to past forcings, and allow an evaluation of the modelled response to these forcings (Sections 3.3.1.1 and 3.8.2.1). In particular, paleoclimate data provide evidence for long-term changes in polar amplification during time periods in which the primary forcing was a change in atmospheric CO2, although data sparsity means that for some time periods this evidence may be limited to a [...] and from more models carrying out simulations at multiple CO2 concentrations. Greater confidence in the paleoclimate lines of evidence would be obtained from stronger constraints on atmospheric CO2 concentrations, ice-sheet forcing, and temperatures, during past warm climates.",
+      "score": 0.348934,
+      "raw_content": null,
+      "id": "e962da-00"
+    },
+    {
+      "url": "https://www.ipcc.ch/srccl/chapter/chapter-2",
+      "title": "Chapter 2 : Land–Climate interactions — Special Report on Climate Change and Land",
+      "content": "the database showed increasing trends in tree growth that cannot be explained by climate variability, nitrogen deposition, elevation or latitude. Thus there is limited evidence (low agreement) among observations of enhanced tree growth due to CO2 fertilisation of forests during the 20th century (Gedalof and Berg 2010770). [...] One line of evidence for CO2 fertilisation is the increasing land sink (‘the residual land sink’ in AR5) over the last 50 years as the atmospheric CO2 concentration has increased (Los 2013781; Sitch et al. 2015782; Campbell et al. 2017783; Keenan and Riley 2018784). A combined analysis of atmospheric inverse analyses, ecosystem models and forest inventory data concluded that 60% of the recent terrestrial carbon sink can be directly attributed to increasing atmospheric CO2 (Schimel et al. [...] In summary, there is low confidence about the magnitude of the CO2 effect and other factors that may explain at least a portion of the land sink (e.g., nitrogen deposition, increased growing season, reduced burning, erosion and re-deposition or organic sediments, aerosol-induced cooling). Increases in atmospheric CO2 result in increased water use efficiency and increase leaf-level photosynthesis (high confidence). The extent to which CO2 fertilisation results in plant- or ecosystem-level carbon",
+      "score": 0.31681347,
+      "raw_content": null,
+      "id": "3cb65e-01"
+    },
+    {
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6686333",
+      "title": "Prospects for narrowing bounds on Earth's equilibrium climate sensitivity",
+      "content": "Andrews et al., 2015; Knutti and Rugenstein, 2015] and an increase in the radiative forcing of successive CO2 doublings [Gregory et al., 2015] and/or strengthening of cloud or water vapor feedbacks [Meraner et al., 2013], making this condition more plausible. Because evidence from “hothouse” climates seems unlikely to discount a very high ECS, the deep past does not play a role in this storyline. [...] to a perturbing agent in the absence of global surface warming [Gregory and Webb, 2008; Sherwood et al., 2015]. Present evidence does not suggest that this is a large effect, but the uncertainty it introduces into forcing estimates will become more important as uncertainty in ECS is reduced. [...] being >4.5 K. The posteriori estimate is relatively insensitive to modest changes in the prior, or how we assess the evidence that appears to refute the storyline for a high ECS (Appendix S1). This is less true if only a single line of evidence in isolation is considered, as reasoning from a single line of evidence is more prone to be misleading. For instance, taking only the instrumental record, which appears to rule out a very high ECS, actually ends up increasing the chance of ECS <1.5 K",
+      "score": 0.3155466,
+      "raw_content": null,
+      "id": "986700-02"
+    },
+    {
+      "url": "https://www.ipcc.ch/site/assets/uploads/2018/02/ar4-wg1-chapter9-1.pdf",
+      "title": "[PDF] Understanding and Attributing Climate Change",
+      "content": "4.5°C with a most likely value of approximately 3°C (Box 10.2). The transient climate response, based on observational constraints, is very likely larger than 1°C and very unlikely to be greater than 3.5°C at the time of atmospheric CO2 doubling in response to a 1% yr–1 increase in CO2, supporting the overall assessment that the transient climate response is very unlikely greater than 3°C (Chapter 10). Overall consistency of evidence. Many observed changes in surface and free atmospheric [...] climate change, then the evidence for a causal connection is substantially increased. For example, the attribution of recent warming to greenhouse gas forcing becomes more reliable if the inﬂ uences of other external forcings, for example solar forcing, are explicitly accounted for in the analysis. This is an area of research with considerable challenges because different forcing factors may lead to similar large-scale spatial patterns of response (Section 9.2.2). Note that another key element [...] offset by cooling from aerosols and other natural and anthropogenic factors. The overall evidence from studies using instrumental surface temperature and free atmospheric temperature data, along with evidence from analysis of temperature over the last few hundred years (Section 9.3.3.2), indicates that it is very unlikely that the contribution from solar forcing to the warming of the last 50 years was larger than that from greenhouse gas forcing.",
+      "score": 0.30049968,
+      "raw_content": null,
+      "id": "113f30-03"
+    }
+  ],
+  "response_time": 3.13,
+  "request_id": "7edd2a9b-f9e4-4fce-bbd5-ffd42ce4631e"
+}

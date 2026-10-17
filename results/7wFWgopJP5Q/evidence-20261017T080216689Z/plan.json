@@ -1,0 +1,56 @@
+{
+  "groups": [
+    {
+      "id": "g-55c824f91be5",
+      "query": "商業 週刊 資深 專 述 郭 億 如 這篇文章 他 讓 我知道 evidence",
+      "claims": [
+        {
+          "videoId": "7wFWgopJP5Q",
+          "language": "zh-TW",
+          "sentenceId": "s0013",
+          "targetId": "s0013::part-1",
+          "partIndex": 1,
+          "partCount": 2,
+          "timestampPrecision": "source_sentence",
+          "text": "商業週刊，這個資深專述郭億如這篇文章 他讓我知道，原來領土比台灣大四分之一 人口比台灣少600萬的荷蘭 人家有28家電力公司 台灣電力還沒有自由化，是非常荒謬的事情 跟越南寮國是被擺在一起的 我們是不是一個百廢待舉的國家 我的互動是演講問大學生，他們不太認識這個人 可是三重跟蘆洲的老年人都認識他欸你相信嗎 原來他們把他當成是朱立倫 剛剛那位是美國，五月以前他是能源部長 他叫朱立文，諾貝爾物理講得主 他是美國之前的能源部長 他都做些什麼事呢 探討美國核電政策探討美國綠能政策 哪裡像台灣的政府 都不敢談論台灣的綠能政策 一味為核電護航 工商時報右下角的圖表，我們知道 美國風力發電量近六年逐年上升 美國核能發電量近三年逐年減少 如果核電那麼好，為什麼這個趨勢是往下跑 1986年發生車諾比核災 ",
+          "start": 646.029,
+          "end": 719.9970000000001,
+          "screeningType": "score",
+          "suspicionScore": 2.1,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.1
+    },
+    {
+      "id": "g-ba9066379d79",
+      "query": "你 自己 有沒有 想過 這 在 法國 現在 的 總統 叫做 歐 evidence",
+      "claims": [
+        {
+          "videoId": "7wFWgopJP5Q",
+          "language": "zh-TW",
+          "sentenceId": "s0010",
+          "targetId": "s0010",
+          "partIndex": 1,
+          "partCount": 1,
+          "timestampPrecision": "source_sentence",
+          "text": "你自己有沒有想過 這在法國，法國現在的總統叫做歐蘭德 連法國，他最依賴核電的這個法國 他的歐蘭德都宣布2025年要由75%依賴核電 降到50% 誰還敢說擁核是趨勢 法國的首都叫巴黎 離巴黎最近的核電廠叫Nogent核電廠 天下雜誌講過一句話 台灣是世界上唯一把核電廠蓋在首都生活圈的國家 我用法國做驗證 法國首都巴黎根Nogent核電廠這個距離超過100公里 如果Nogent出事了，比照福島疏散半徑 至少他的首都，離這個核電廠 還有70公里以上 表示人家的政治中心巴黎照樣可以運轉 調度醫療，軍隊，食物飲水 台灣呢?",
+          "start": 543.819,
+          "end": 604.577,
+          "screeningType": "score",
+          "suspicionScore": 2.07,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.07
+    }
+  ],
+  "pending": [],
+  "eligibleTargets": 2
+}

@@ -1,0 +1,42 @@
+{
+  "query": "rule transitional fossils evidence",
+  "follow_up_questions": null,
+  "answer": null,
+  "images": [],
+  "results": [
+    {
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4340927",
+      "title": "Transition of Eocene Whales from Land to Sea: Evidence from Bone Microstructure",
+      "content": "Many amniote groups (e.g. sauropterygians, squamates, cetaceans, sirenians, pinnipeds) made the evolutionary transition from a fully terrestrial to a semi- to fully aquatic life. This required major morphological and physiological changes that are best developed in the most specialized aquatic forms, like extant cetaceans and sirenians, which now live totally independent of the terrestrial environment. Several lineages are known with transitional fossil forms, but it remains difficult to [...] The fossils analyzed here are rare and parts of exceptionally complete skeletons, meaning that destructive sampling was precluded. No permits were required for the described study. Osteological cross sections were obtained from microscale computed tomography (CT), allowing non-destructive imaging of the three-dimensional outer and inner structure of the samples. Both conventional and synchrotron X-ray micro-CT (see Table 1) were used: (1) high-resolution computed tomography (GEphoenix∣X-ray [...] Here we focus on the transition of cetaceans from land to sea. Cetaceans arose in the early Eocene (about 50 Myr ago), when the earliest fossils are known in Indo-Pakistan. ‘Archaic’ or ‘primitive’ cetaceans, called archaeocetes, include five families illustrating various modes of adaptation to an aquatic life (Fig. 1). The degree of aquatic adaptation and swimming modes of these taxa are debated (e.g. [1–11]). Here we address the lifestyle of early cetaceans by analysis of microanatomical",
+      "score": 0.54840803,
+      "raw_content": null,
+      "id": "ad4762-00"
+    },
+    {
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12246020",
+      "title": "Living Fossil: A Metaphor’s Travels Across Popular Culture and the Foundations of Darwinian Evolution and Anthropology",
+      "content": "links which might connect present with the past” (Pourtalès 1868; Thomson 1873, p. 80). While the findings of Thomson’s 1872 HMS Challenger expedition ultimately suggested that there was no smooth gradation or evidence of transitional forms that linked species in a way that would satisfy his interpretation of Darwin’s natural selection, the initial publication of results garnered large scientific and public interest in living fossils (Thomson 1880). [...] We have defended a view that against the expectation of ongoing change and progressive development, Darwin used living fossils in support of his evolutionary theory. Living fossils were exceptions that prove the rule of his principles of natural selection and divergence through the actions and circumstances these principles entailed in the natural world. Darwin associated several attributes with his named living fossil examples relevant to processes of natural selection and divergence, among [...] 242. Sterner Beckett. Norms of evidence in the classification of living fossils Frontiers in Ecology and Evolution 2023 11 1198224 Sterner, Beckett. 2023. Norms of evidence in the classification of living fossils. Frontiers in Ecology and Evolution 11: 1198224. 10.3389/fevo.2023.1198224.",
+      "score": 0.42090955,
+      "raw_content": null,
+      "id": "2a068f-01"
+    },
+    {
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7790829",
+      "title": "Environmental drivers of body size evolution in crocodile-line archosaurs",
+      "content": "The Neogene fossil record, from 23 Ma to the present, shows evidence for interactions between temperature and body size. The size transitions, whether up (Fig. 4a, c) or down (Fig. 4b), appear to be gradual and they are associated with the Miocene Climate optimum. [...] rule, or vice versa. We identify equal numbers of shorter-term episodes of increasing and decreasing mean body size, and there is no evidence for Cope’s Rule through pseudosuchian history. [...] growth rates, life history, and reproductive success17–20, and can be measured in fossils. There is a tendency in many clades for body size to become larger through time, sometimes termed Cope’s Rule21,22. Larger animals may be more vulnerable to extinction than smaller ones, requiring more food and taking longer to reach sexual maturity21. However, the ubiquity of Cope’s Rule has been questioned21. Such an increase in body size may be a statistical artefact arising from increasing diversity,",
+      "score": 0.33809948,
+      "raw_content": null,
+      "id": "42b774-02"
+    },
+    {
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12292216",
+      "title": "Exploring the Causes of the Cambrian Explosion Based on the Evolution Mechanism of Genome Sequences",
+      "content": "found in late Devonian strata around 380 Ma. They have both fish and amphibian characteristics and are considered to be transitional species between fish and tetrapods. So paleontological evidence suggests that amphibians originated around 380–360 Ma. The origin time we gave is 391–363 Ma, which is in the Devonian period. For reptiles, scientists discovered fossil footprints dating back 318 Ma that belong to Hylonomus lyelli [30,31], a small lizard-like animal from the Carboniferous period. [...] We found that regardless of animals or plants, there is such a rule for the transition of evolution mode in the phase transition region: starting from δTA1 > 1 and δCG1 < 1, going through the intermediate process of δTA1 > 1 and δCG1 > 1, and finally reaching the evolution state of δCG1 > 1 and δTA1 < 1 (Figure 1A,C). According to the definition of independent selection intensity (see “Section 2”), when δCG1 ≠ 1 or δTA1 ≠ 1, the distribution location of the 8-mer spectrum in CG1 or TA1 subsets",
+      "score": 0.28784838,
+      "raw_content": null,
+      "id": "980176-03"
+    }
+  ],
+  "response_time": 2,
+  "request_id": "843cd4d5-b764-4f91-916c-182cc4628b6c"
+}

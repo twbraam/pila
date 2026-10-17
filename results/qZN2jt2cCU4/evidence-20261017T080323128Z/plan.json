@@ -1,0 +1,172 @@
+{
+  "groups": [
+    {
+      "id": "g-87f4198c5261",
+      "query": "compared water h20 carbon dioxide co2 minor contributor warming earth evidence",
+      "claims": [
+        {
+          "videoId": "qZN2jt2cCU4",
+          "sentenceId": "s0033",
+          "text": "Compared to water, H20, carbon dioxide, CO2 is a minor contributor to the warming of the earth.",
+          "start": 172.44,
+          "end": 180.88,
+          "screeningType": "score",
+          "suspicionScore": 2.56,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.56
+    },
+    {
+      "id": "g-90b240a2a363",
+      "query": "don’t work know evidence",
+      "claims": [
+        {
+          "videoId": "qZN2jt2cCU4",
+          "sentenceId": "s0017",
+          "text": "And I know they don’t work.",
+          "start": 78.5,
+          "end": 80.42,
+          "screeningType": "score",
+          "suspicionScore": 2.34,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        },
+        {
+          "videoId": "qZN2jt2cCU4",
+          "sentenceId": "s0019",
+          "text": "They don’t work now.",
+          "start": 82.18,
+          "end": 83.86000000000001,
+          "screeningType": "score",
+          "suspicionScore": 2.19,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.34
+    },
+    {
+      "id": "g-2815d556da41",
+      "query": "that’s why over last years climate prediction after another based computer models evidence",
+      "claims": [
+        {
+          "videoId": "qZN2jt2cCU4",
+          "sentenceId": "s0042",
+          "text": "That’s why, over the last 30 years, one climate prediction after another – based on computer models – has been wrong.",
+          "start": 235.82,
+          "end": 243.28,
+          "screeningType": "score",
+          "suspicionScore": 2.3,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.3
+    },
+    {
+      "id": "g-0fcd2c02a0bd",
+      "query": "want numbers produce result show earth’s temperature end century degrees centigrade higher evidence",
+      "claims": [
+        {
+          "videoId": "qZN2jt2cCU4",
+          "sentenceId": "s0046",
+          "text": "So, if they want to show that the earth’s temperature at the end of the century will be two degrees centigrade higher than it is now, they put in the numbers that produce that result.",
+          "start": 278.12,
+          "end": 287.12,
+          "screeningType": "score",
+          "suspicionScore": 2.28,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        },
+        {
+          "videoId": "qZN2jt2cCU4",
+          "sentenceId": "s0045",
+          "text": "Discarding the unmanageable details, modelers “tune” their simplified equations with lots of adjustable inputs, numbers that can be changed to produce whatever result the modelers want.",
+          "start": 264.26,
+          "end": 278.12,
+          "screeningType": "score",
+          "suspicionScore": 2.22,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.28
+    },
+    {
+      "id": "g-57c61eb71ff9",
+      "query": "other words even massive amounts real time data models still accurately predict evidence",
+      "claims": [
+        {
+          "videoId": "qZN2jt2cCU4",
+          "sentenceId": "s0039",
+          "text": "In other words, even with massive amounts of real-time data, the models still could not accurately predict Irma’s path two days in advance.",
+          "start": 216.26,
+          "end": 226.04,
+          "screeningType": "score",
+          "suspicionScore": 2.25,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.25
+    },
+    {
+      "id": "g-792c0f68a3ac",
+      "query": "they’re wrong because even powerful computers can’t solve equations needed accurately describe evidence",
+      "claims": [
+        {
+          "videoId": "qZN2jt2cCU4",
+          "sentenceId": "s0043",
+          "text": "They’re wrong because even the most powerful computers can’t solve all the equations needed to accurately describe climate.",
+          "start": 243.28,
+          "end": 251.98,
+          "screeningType": "score",
+          "suspicionScore": 2.19,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.19
+    },
+    {
+      "id": "g-731d0db440f1",
+      "query": "haven’t worked past evidence",
+      "claims": [
+        {
+          "videoId": "qZN2jt2cCU4",
+          "sentenceId": "s0018",
+          "text": "They haven’t worked in the past.",
+          "start": 80.42,
+          "end": 82.18,
+          "screeningType": "score",
+          "suspicionScore": 2.13,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.13
+    }
+  ],
+  "pending": [],
+  "eligibleTargets": 9
+}

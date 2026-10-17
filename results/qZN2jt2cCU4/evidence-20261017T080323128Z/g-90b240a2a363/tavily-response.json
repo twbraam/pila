@@ -1,0 +1,42 @@
+{
+  "query": "don’t work know evidence",
+  "follow_up_questions": null,
+  "answer": null,
+  "images": [],
+  "results": [
+    {
+      "url": "https://pubmed.ncbi.nlm.nih.gov/28956293",
+      "title": "Guidelines: The do's, don'ts and don't knows of direct observation of clinical skills in medical education.",
+      "content": "High frequency, high quality direct observation of clinical skills can be challenging. These guidelines offer important evidence-based Do's and Don'ts that can help improve the frequency and quality of direct observation. Improving direct observation requires focus not just on individual supervisors and their learners, but also on the organizations and cultures in which they work and train. Additional research to address the Don't Knows can help educators realize the full potential of direct [...] ## Results\n\nA final set of 33 Do's, Don'ts and Don't Knows is presented along with a summary of evidence for each guideline. Guidelines focus on two groups: individual supervisors and the educational leaders responsible for clinical training programs. Guidelines address recommendations for how to focus direct observation, select an assessment tool, promote high quality assessments, conduct rater training, and create a learning culture conducive to direct observation.\n\n## Conclusions [...] ## Methods\n\nWe built consensus through an iterative approach in which each author, based on their medical education and research knowledge and expertise, independently developed a list of Do's, Don'ts, and Don't Knows about direct observation of clinical skills. Lists were compiled, discussed and revised. We then sought and compiled evidence to support each guideline and determine the strength of each guideline.\n\n## Results",
+      "score": 0.52115494,
+      "raw_content": null,
+      "id": "88e793-00"
+    },
+    {
+      "url": "https://www.bbc.com/worklife/article/20180323-how-much-should-your-boss-know-about-you",
+      "title": "How much should your boss know about you?",
+      "content": "This should keep the most cynical temptations at bay for now, but how to reap the benefits of data in an acceptable way? There is a strong case for finding this balance: as Waber says, data can give you evidence-based advice for advancing your career, or for enhancing your effectivity at work. Having a space for taking care of your health at work might improve your happiness at your job, and some studies suggest that this also translates into a productivity push. [...] And there is a fundamental problem: these fitness tracking measurements are often inaccurate. People are very bad at self-reporting and fitness trackers and smartphones are not exactly precise. A recent evidence review shows that different models and techniques gather different results and it is very difficult to draw trustworthy comparisons between them. [...] There are several good business reasons to collect data on employees – from doing better risk management to examining if social behaviours in the workplace can lead to gender discrimination.  “Companies fundamentally don't understand how people interact and collaborate at work,”, says Ben Waber, president and CEO of Humanyze, an American company which gathers and analyses data about the workplace. He says that he can show them.",
+      "score": 0.14082025,
+      "raw_content": null,
+      "id": "14d97d-01"
+    },
+    {
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3807133",
+      "title": "Identifying Discrimination at Work: The Use of Field Experiments",
+      "content": "Some have argued that Blacks are quick to interpret ambiguous interactions as evidence of racism (Ford, 2008), a concern particularly relevant to a study that relies on the performance of testers who are aware of the intended focus of the research (Heckman, 1998). Quite unlike expectations that testers would be vigilant in perceiving the slightest hint of foul play, the present research suggests that testers were rarely able to identify discrimination at work. Indeed, this research is more [...] Indeed, it is difficult to know exactly what is going through employers’ minds as they evaluate candidates of different races. Based on the evidence we can glean from the interactions between testers and employers in our field experiments, it seemed that only in rare cases were employers categorically unwilling to hire African Americans (see Pager et al., 2009, p. 787–788). Rather, employers often seemed genuinely interested in evaluating the qualifications of a given candidate, irrespective of [...] The fact that employers’ preferences and biases are more often manifested through subtle and dynamic interactions, rather than outright rejection of minority candidates, itself poses problems for the enforcement of antidiscrimination law. It is extremely difficult to find evidence of intent—often a prerequisite to a successful antidiscrimination case—when an employer does not consciously intend to exclude Blacks, but instead selectively attends to information that presents a more favorable",
+      "score": 0.12337643,
+      "raw_content": null,
+      "id": "c789b8-02"
+    },
+    {
+      "url": "https://www.worldbank.org/en/topic/labormarkets/publication/what-works-for-work-proven-promising-employment-solutions",
+      "title": "What Works for Work: A Guidebook to Proven and Promising Employment Solutions",
+      "content": "New World Bank Group guidebook presents evidence-based strategies for designing effective labor programs, especially in low- and middle-income countries facing job creation challenges.\n The most effective labor programs in low- and middle-income countries deliver earnings and employment improvements four to five times greater than the average, at times providing up to ten years lasting benefits, and returns far exceeding the initial investments. [...] contextual tailoring\n comprehensive scope\n incentive alignment\n private sector engagement\n integration with social protection\n\nBy following these principles and grounding programs in evidence, governments can transform employment solutions into strategic investments that foster more inclusive and resilient labor markets.",
+      "score": 0.12230314,
+      "raw_content": null,
+      "id": "4df6a8-03"
+    }
+  ],
+  "response_time": 1.85,
+  "request_id": "ca83c3fe-2b28-4f93-9361-06b468aa5542"
+}

@@ -1,0 +1,86 @@
+{
+  "groups": [
+    {
+      "id": "g-4436d7b8f679",
+      "query": "years taught mit during time climate changed remarkably little evidence",
+      "claims": [
+        {
+          "videoId": "OwqIy8Ikv-c",
+          "sentenceId": "s0003",
+          "text": "For 30 years I taught at MIT, during which time the climate has changed remarkably little.",
+          "start": 2.42,
+          "end": 15.268999999999998,
+          "screeningType": "score",
+          "suspicionScore": 2.69,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.69
+    },
+    {
+      "id": "g-75f6a38446b1",
+      "query": "fully understood evidence co2 emissions dominant factor evidence",
+      "claims": [
+        {
+          "videoId": "OwqIy8Ikv-c",
+          "sentenceId": "s0017",
+          "text": "None of these is fully understood, and there is no evidence that CO2 emissions are the dominant factor.",
+          "start": 101.68,
+          "end": 115.24,
+          "screeningType": "score",
+          "suspicionScore": 2.51,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.51
+    },
+    {
+      "id": "g-eaa95e6f558e",
+      "query": "ipcc acknowledged own 2007 report long term prediction future climate states possible evidence",
+      "claims": [
+        {
+          "videoId": "OwqIy8Ikv-c",
+          "sentenceId": "s0024",
+          "text": "The IPCC, acknowledged in its own 2007 report that “The long-term prediction of future climate states is not possible.”",
+          "start": 168.7,
+          "end": 187,
+          "screeningType": "score",
+          "suspicionScore": 2.12,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.12
+    },
+    {
+      "id": "g-1875ea555ca8",
+      "query": "importantly scenario burning fossil fuels leads catastrophe isn’t part either asserts evidence",
+      "claims": [
+        {
+          "videoId": "OwqIy8Ikv-c",
+          "sentenceId": "s0025",
+          "text": "Most importantly, the scenario that the burning of fossil fuels leads to catastrophe isn’t part of what either group asserts.",
+          "start": 187,
+          "end": 197.9,
+          "screeningType": "score",
+          "suspicionScore": 2.09,
+          "reviewThreshold": 2,
+          "suspectedIssue": true,
+          "nextStep": "verify_claim",
+          "truthStatus": "not_assessed"
+        }
+      ],
+      "priority": 2.09
+    }
+  ],
+  "pending": [],
+  "eligibleTargets": 4
+}

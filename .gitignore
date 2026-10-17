@@ -20,5 +20,8 @@ playwright-report/
 # Built by npm run build:sw-test
 packages/factcheck/test/sw/extension/sw.js
 
+# Tavily response cache (process/tavily.ts)
+results/.cache/
+
 # Logs
 *.log

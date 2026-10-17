@@ -1,0 +1,1097 @@
+{
+  "model": "jev-1.13.0",
+  "answers": {
+    "target_0_suspicion": {
+      "type": "score",
+      "score": 0.06,
+      "confidence": 0.93,
+      "legend": {
+        "0": "0: No specific endorsed factual issue identified. Includes ordinary plausible facts, opinions, neutral quotations, explicit rebuttals, or merely missing citations.",
+        "1": "1: Weak or unresolved concern. A possible issue exists but ambiguity, missing scope, or uncertain attribution prevents identifying a specific substantive error.",
+        "2": "2: A concrete endorsed factual assertion has a plausible substantive contradiction or materially misleading inference; independent verification is warranted.",
+        "3": "3: A concrete endorsed assertion appears directly incompatible with well-established background knowledge, or an explicit inference is clearly invalid. Strong priority for verification, not an evidence-backed verdict."
+      },
+      "probabilities": {
+        "0": 0.96,
+        "1": 0.02,
+        "2": 0.01,
+        "3": 0.01
+      }
+    },
+    "target_1_suspicion": {
+      "type": "score",
+      "score": 0.07,
+      "confidence": 0.93,
+      "legend": {
+        "0": "0: No specific endorsed factual issue identified. Includes ordinary plausible facts, opinions, neutral quotations, explicit rebuttals, or merely missing citations.",
+        "1": "1: Weak or unresolved concern. A possible issue exists but ambiguity, missing scope, or uncertain attribution prevents identifying a specific substantive error.",
+        "2": "2: A concrete endorsed factual assertion has a plausible substantive contradiction or materially misleading inference; independent verification is warranted.",
+        "3": "3: A concrete endorsed assertion appears directly incompatible with well-established background knowledge, or an explicit inference is clearly invalid. Strong priority for verification, not an evidence-backed verdict."
+      },
+      "probabilities": {
+        "0": 0.94,
+        "1": 0.05,
+        "2": 0.01,
+        "3": 0
+      }
+    },
+    "target_2_suspicion": {
+      "type": "score",
+      "score": 0.82,
+      "confidence": 0.17,
+      "legend": {
+        "0": "0: No specific endorsed factual issue identified. Includes ordinary plausible facts, opinions, neutral quotations, explicit rebuttals, or merely missing citations.",
+        "1": "1: Weak or unresolved concern. A possible issue exists but ambiguity, missing scope, or uncertain attribution prevents identifying a specific substantive error.",
+        "2": "2: A concrete endorsed factual assertion has a plausible substantive contradiction or materially misleading inference; independent verification is warranted.",
+        "3": "3: A concrete endorsed assertion appears directly incompatible with well-established background knowledge, or an explicit inference is clearly invalid. Strong priority for verification, not an evidence-backed verdict."
+      },
+      "probabilities": {
+        "0": 0.54,
+        "1": 0.18,
+        "2": 0.19,
+        "3": 0.09
+      }
+    },
+    "target_3_suspicion": {
+      "type": "score",
+      "score": 0.35,
+      "confidence": 0.66,
+      "legend": {
+        "0": "0: No specific endorsed factual issue identified. Includes ordinary plausible facts, opinions, neutral quotations, explicit rebuttals, or merely missing citations.",
+        "1": "1: Weak or unresolved concern. A possible issue exists but ambiguity, missing scope, or uncertain attribution prevents identifying a specific substantive error.",
+        "2": "2: A concrete endorsed factual assertion has a plausible substantive contradiction or materially misleading inference; independent verification is warranted.",
+        "3": "3: A concrete endorsed assertion appears directly incompatible with well-established background knowledge, or an explicit inference is clearly invalid. Strong priority for verification, not an evidence-backed verdict."
+      },
+      "probabilities": {
+        "0": 0.75,
+        "1": 0.17,
+        "2": 0.07,
+        "3": 0.01
+      }
+    },
+    "target_4_suspicion": {
+      "type": "score",
+      "score": 0.43,
+      "confidence": 0.57,
+      "legend": {
+        "0": "0: No specific endorsed factual issue identified. Includes ordinary plausible facts, opinions, neutral quotations, explicit rebuttals, or merely missing citations.",
+        "1": "1: Weak or unresolved concern. A possible issue exists but ambiguity, missing scope, or uncertain attribution prevents identifying a specific substantive error.",
+        "2": "2: A concrete endorsed factual assertion has a plausible substantive contradiction or materially misleading inference; independent verification is warranted.",
+        "3": "3: A concrete endorsed assertion appears directly incompatible with well-established background knowledge, or an explicit inference is clearly invalid. Strong priority for verification, not an evidence-backed verdict."
+      },
+      "probabilities": {
+        "0": 0.7,
+        "1": 0.19,
+        "2": 0.09,
+        "3": 0.02
+      }
+    },
+    "target_5_suspicion": {
+      "type": "score",
+      "score": 0.11,
+      "confidence": 0.91,
+      "legend": {
+        "0": "0: No specific endorsed factual issue identified. Includes ordinary plausible facts, opinions, neutral quotations, explicit rebuttals, or merely missing citations.",
+        "1": "1: Weak or unresolved concern. A possible issue exists but ambiguity, missing scope, or uncertain attribution prevents identifying a specific substantive error.",
+        "2": "2: A concrete endorsed factual assertion has a plausible substantive contradiction or materially misleading inference; independent verification is warranted.",
+        "3": "3: A concrete endorsed assertion appears directly incompatible with well-established background knowledge, or an explicit inference is clearly invalid. Strong priority for verification, not an evidence-backed verdict."
+      },
+      "probabilities": {
+        "0": 0.92,
+        "1": 0.07,
+        "2": 0.01,
+        "3": 0
+      }
+    },
+    "target_6_suspicion": {
+      "type": "score",
+      "score": 0.25,
+      "confidence": 0.76,
+      "legend": {
+        "0": "0: No specific endorsed factual issue identified. Includes ordinary plausible facts, opinions, neutral quotations, explicit rebuttals, or merely missing citations.",
+        "1": "1: Weak or unresolved concern. A possible issue exists but ambiguity, missing scope, or uncertain attribution prevents identifying a specific substantive error.",
+        "2": "2: A concrete endorsed factual assertion has a plausible substantive contradiction or materially misleading inference; independent verification is warranted.",
+        "3": "3: A concrete endorsed assertion appears directly incompatible with well-established background knowledge, or an explicit inference is clearly invalid. Strong priority for verification, not an evidence-backed verdict."
+      },
+      "probabilities": {
+        "0": 0.84,
+        "1": 0.1,
+        "2": 0.04,
+        "3": 0.02
+      }
+    },
+    "target_7_suspicion": {
+      "type": "score",
+      "score": 0.42,
+      "confidence": 0.58,
+      "legend": {
+        "0": "0: No specific endorsed factual issue identified. Includes ordinary plausible facts, opinions, neutral quotations, explicit rebuttals, or merely missing citations.",
+        "1": "1: Weak or unresolved concern. A possible issue exists but ambiguity, missing scope, or uncertain attribution prevents identifying a specific substantive error.",
+        "2": "2: A concrete endorsed factual assertion has a plausible substantive contradiction or materially misleading inference; independent verification is warranted.",
+        "3": "3: A concrete endorsed assertion appears directly incompatible with well-established background knowledge, or an explicit inference is clearly invalid. Strong priority for verification, not an evidence-backed verdict."
+      },
+      "probabilities": {
+        "0": 0.73,
+        "1": 0.16,
+        "2": 0.07,
+        "3": 0.04
+      }
+    },
+    "target_8_suspicion": {
+      "type": "score",
+      "score": 1.14,
+      "confidence": 0.29,
+      "legend": {
+        "0": "0: No specific endorsed factual issue identified. Includes ordinary plausible facts, opinions, neutral quotations, explicit rebuttals, or merely missing citations.",
+        "1": "1: Weak or unresolved concern. A possible issue exists but ambiguity, missing scope, or uncertain attribution prevents identifying a specific substantive error.",
+        "2": "2: A concrete endorsed factual assertion has a plausible substantive contradiction or materially misleading inference; independent verification is warranted.",
+        "3": "3: A concrete endorsed assertion appears directly incompatible with well-established background knowledge, or an explicit inference is clearly invalid. Strong priority for verification, not an evidence-backed verdict."
+      },
+      "probabilities": {
+        "0": 0.28,
+        "1": 0.36,
+        "2": 0.29,
+        "3": 0.07
+      }
+    },
+    "target_9_suspicion": {
+      "type": "score",
+      "score": 0.15,
+      "confidence": 0.85,
+      "legend": {
+        "0": "0: No specific endorsed factual issue identified. Includes ordinary plausible facts, opinions, neutral quotations, explicit rebuttals, or merely missing citations.",
+        "1": "1: Weak or unresolved concern. A possible issue exists but ambiguity, missing scope, or uncertain attribution prevents identifying a specific substantive error.",
+        "2": "2: A concrete endorsed factual assertion has a plausible substantive contradiction or materially misleading inference; independent verification is warranted.",
+        "3": "3: A concrete endorsed assertion appears directly incompatible with well-established background knowledge, or an explicit inference is clearly invalid. Strong priority for verification, not an evidence-backed verdict."
+      },
+      "probabilities": {
+        "0": 0.89,
+        "1": 0.08,
+        "2": 0.02,
+        "3": 0.01
+      }
+    },
+    "target_10_suspicion": {
+      "type": "score",
+      "score": 0.52,
+      "confidence": 0.47,
+      "legend": {
+        "0": "0: No specific endorsed factual issue identified. Includes ordinary plausible facts, opinions, neutral quotations, explicit rebuttals, or merely missing citations.",
+        "1": "1: Weak or unresolved concern. A possible issue exists but ambiguity, missing scope, or uncertain attribution prevents identifying a specific substantive error.",
+        "2": "2: A concrete endorsed factual assertion has a plausible substantive contradiction or materially misleading inference; independent verification is warranted.",
+        "3": "3: A concrete endorsed assertion appears directly incompatible with well-established background knowledge, or an explicit inference is clearly invalid. Strong priority for verification, not an evidence-backed verdict."
+      },
+      "probabilities": {
+        "0": 0.67,
+        "1": 0.17,
+        "2": 0.12,
+        "3": 0.04
+      }
+    },
+    "target_11_suspicion": {
+      "type": "score",
+      "score": 1.46,
+      "confidence": 0.29,
+      "legend": {
+        "0": "0: No specific endorsed factual issue identified. Includes ordinary plausible facts, opinions, neutral quotations, explicit rebuttals, or merely missing citations.",
+        "1": "1: Weak or unresolved concern. A possible issue exists but ambiguity, missing scope, or uncertain attribution prevents identifying a specific substantive error.",
+        "2": "2: A concrete endorsed factual assertion has a plausible substantive contradiction or materially misleading inference; independent verification is warranted.",
+        "3": "3: A concrete endorsed assertion appears directly incompatible with well-established background knowledge, or an explicit inference is clearly invalid. Strong priority for verification, not an evidence-backed verdict."
+      },
+      "probabilities": {
+        "0": 0.15,
+        "1": 0.32,
+        "2": 0.44,
+        "3": 0.09
+      }
+    },
+    "target_12_suspicion": {
+      "type": "score",
+      "score": 0.48,
+      "confidence": 0.53,
+      "legend": {
+        "0": "0: No specific endorsed factual issue identified. Includes ordinary plausible facts, opinions, neutral quotations, explicit rebuttals, or merely missing citations.",
+        "1": "1: Weak or unresolved concern. A possible issue exists but ambiguity, missing scope, or uncertain attribution prevents identifying a specific substantive error.",
+        "2": "2: A concrete endorsed factual assertion has a plausible substantive contradiction or materially misleading inference; independent verification is warranted.",
+        "3": "3: A concrete endorsed assertion appears directly incompatible with well-established background knowledge, or an explicit inference is clearly invalid. Strong priority for verification, not an evidence-backed verdict."
+      },
+      "probabilities": {
+        "0": 0.6900000000000001,
+        "1": 0.18,
+        "2": 0.1,
+        "3": 0.03
+      }
+    },
+    "target_13_suspicion": {
+      "type": "score",
+      "score": 1.57,
+      "confidence": 0.26,
+      "legend": {
+        "0": "0: No specific endorsed factual issue identified. Includes ordinary plausible facts, opinions, neutral quotations, explicit rebuttals, or merely missing citations.",
+        "1": "1: Weak or unresolved concern. A possible issue exists but ambiguity, missing scope, or uncertain attribution prevents identifying a specific substantive error.",
+        "2": "2: A concrete endorsed factual assertion has a plausible substantive contradiction or materially misleading inference; independent verification is warranted.",
+        "3": "3: A concrete endorsed assertion appears directly incompatible with well-established background knowledge, or an explicit inference is clearly invalid. Strong priority for verification, not an evidence-backed verdict."
+      },
+      "probabilities": {
+        "0": 0.16,
+        "1": 0.26,
+        "2": 0.42,
+        "3": 0.16
+      }
+    },
+    "target_14_suspicion": {
+      "type": "score",
+      "score": 1.37,
+      "confidence": 0.21,
+      "legend": {
+        "0": "0: No specific endorsed factual issue identified. Includes ordinary plausible facts, opinions, neutral quotations, explicit rebuttals, or merely missing citations.",
+        "1": "1: Weak or unresolved concern. A possible issue exists but ambiguity, missing scope, or uncertain attribution prevents identifying a specific substantive error.",
+        "2": "2: A concrete endorsed factual assertion has a plausible substantive contradiction or materially misleading inference; independent verification is warranted.",
+        "3": "3: A concrete endorsed assertion appears directly incompatible with well-established background knowledge, or an explicit inference is clearly invalid. Strong priority for verification, not an evidence-backed verdict."
+      },
+      "probabilities": {
+        "0": 0.19,
+        "1": 0.33,
+        "2": 0.39999999999999997,
+        "3": 0.08
+      }
+    },
+    "target_15_suspicion": {
+      "type": "score",
+      "score": 0.92,
+      "confidence": 0.36,
+      "legend": {
+        "0": "0: No specific endorsed factual issue identified. Includes ordinary plausible facts, opinions, neutral quotations, explicit rebuttals, or merely missing citations.",
+        "1": "1: Weak or unresolved concern. A possible issue exists but ambiguity, missing scope, or uncertain attribution prevents identifying a specific substantive error.",
+        "2": "2: A concrete endorsed factual assertion has a plausible substantive contradiction or materially misleading inference; independent verification is warranted.",
+        "3": "3: A concrete endorsed assertion appears directly incompatible with well-established background knowledge, or an explicit inference is clearly invalid. Strong priority for verification, not an evidence-backed verdict."
+      },
+      "probabilities": {
+        "0": 0.35,
+        "1": 0.41,
+        "2": 0.19,
+        "3": 0.05
+      }
+    },
+    "target_16_suspicion": {
+      "type": "score",
+      "score": 1.6,
+      "confidence": 0.17,
+      "legend": {
+        "0": "0: No specific endorsed factual issue identified. Includes ordinary plausible facts, opinions, neutral quotations, explicit rebuttals, or merely missing citations.",
+        "1": "1: Weak or unresolved concern. A possible issue exists but ambiguity, missing scope, or uncertain attribution prevents identifying a specific substantive error.",
+        "2": "2: A concrete endorsed factual assertion has a plausible substantive contradiction or materially misleading inference; independent verification is warranted.",
+        "3": "3: A concrete endorsed assertion appears directly incompatible with well-established background knowledge, or an explicit inference is clearly invalid. Strong priority for verification, not an evidence-backed verdict."
+      },
+      "probabilities": {
+        "0": 0.23,
+        "1": 0.15,
+        "2": 0.4,
+        "3": 0.22
+      }
+    },
+    "target_17_suspicion": {
+      "type": "score",
+      "score": 0.22,
+      "confidence": 0.79,
+      "legend": {
+        "0": "0: No specific endorsed factual issue identified. Includes ordinary plausible facts, opinions, neutral quotations, explicit rebuttals, or merely missing citations.",
+        "1": "1: Weak or unresolved concern. A possible issue exists but ambiguity, missing scope, or uncertain attribution prevents identifying a specific substantive error.",
+        "2": "2: A concrete endorsed factual assertion has a plausible substantive contradiction or materially misleading inference; independent verification is warranted.",
+        "3": "3: A concrete endorsed assertion appears directly incompatible with well-established background knowledge, or an explicit inference is clearly invalid. Strong priority for verification, not an evidence-backed verdict."
+      },
+      "probabilities": {
+        "0": 0.85,
+        "1": 0.1,
+        "2": 0.04,
+        "3": 0.01
+      }
+    },
+    "target_18_suspicion": {
+      "type": "score",
+      "score": 0.69,
+      "confidence": 0.31,
+      "legend": {
+        "0": "0: No specific endorsed factual issue identified. Includes ordinary plausible facts, opinions, neutral quotations, explicit rebuttals, or merely missing citations.",
+        "1": "1: Weak or unresolved concern. A possible issue exists but ambiguity, missing scope, or uncertain attribution prevents identifying a specific substantive error.",
+        "2": "2: A concrete endorsed factual assertion has a plausible substantive contradiction or materially misleading inference; independent verification is warranted.",
+        "3": "3: A concrete endorsed assertion appears directly incompatible with well-established background knowledge, or an explicit inference is clearly invalid. Strong priority for verification, not an evidence-backed verdict."
+      },
+      "probabilities": {
+        "0": 0.58,
+        "1": 0.19,
+        "2": 0.19,
+        "3": 0.04
+      }
+    },
+    "target_19_suspicion": {
+      "type": "score",
+      "score": 0.59,
+      "confidence": 0.4,
+      "legend": {
+        "0": "0: No specific endorsed factual issue identified. Includes ordinary plausible facts, opinions, neutral quotations, explicit rebuttals, or merely missing citations.",
+        "1": "1: Weak or unresolved concern. A possible issue exists but ambiguity, missing scope, or uncertain attribution prevents identifying a specific substantive error.",
+        "2": "2: A concrete endorsed factual assertion has a plausible substantive contradiction or materially misleading inference; independent verification is warranted.",
+        "3": "3: A concrete endorsed assertion appears directly incompatible with well-established background knowledge, or an explicit inference is clearly invalid. Strong priority for verification, not an evidence-backed verdict."
+      },
+      "probabilities": {
+        "0": 0.59,
+        "1": 0.24,
+        "2": 0.15,
+        "3": 0.02
+      }
+    },
+    "target_20_suspicion": {
+      "type": "score",
+      "score": 0.33,
+      "confidence": 0.65,
+      "legend": {
+        "0": "0: No specific endorsed factual issue identified. Includes ordinary plausible facts, opinions, neutral quotations, explicit rebuttals, or merely missing citations.",
+        "1": "1: Weak or unresolved concern. A possible issue exists but ambiguity, missing scope, or uncertain attribution prevents identifying a specific substantive error.",
+        "2": "2: A concrete endorsed factual assertion has a plausible substantive contradiction or materially misleading inference; independent verification is warranted.",
+        "3": "3: A concrete endorsed assertion appears directly incompatible with well-established background knowledge, or an explicit inference is clearly invalid. Strong priority for verification, not an evidence-backed verdict."
+      },
+      "probabilities": {
+        "0": 0.78,
+        "1": 0.12,
+        "2": 0.07,
+        "3": 0.03
+      }
+    },
+    "target_21_suspicion": {
+      "type": "score",
+      "score": 0.44,
+      "confidence": 0.56,
+      "legend": {
+        "0": "0: No specific endorsed factual issue identified. Includes ordinary plausible facts, opinions, neutral quotations, explicit rebuttals, or merely missing citations.",
+        "1": "1: Weak or unresolved concern. A possible issue exists but ambiguity, missing scope, or uncertain attribution prevents identifying a specific substantive error.",
+        "2": "2: A concrete endorsed factual assertion has a plausible substantive contradiction or materially misleading inference; independent verification is warranted.",
+        "3": "3: A concrete endorsed assertion appears directly incompatible with well-established background knowledge, or an explicit inference is clearly invalid. Strong priority for verification, not an evidence-backed verdict."
+      },
+      "probabilities": {
+        "0": 0.69,
+        "1": 0.2,
+        "2": 0.09,
+        "3": 0.02
+      }
+    },
+    "target_22_suspicion": {
+      "type": "score",
+      "score": 0.95,
+      "confidence": 0.42,
+      "legend": {
+        "0": "0: No specific endorsed factual issue identified. Includes ordinary plausible facts, opinions, neutral quotations, explicit rebuttals, or merely missing citations.",
+        "1": "1: Weak or unresolved concern. A possible issue exists but ambiguity, missing scope, or uncertain attribution prevents identifying a specific substantive error.",
+        "2": "2: A concrete endorsed factual assertion has a plausible substantive contradiction or materially misleading inference; independent verification is warranted.",
+        "3": "3: A concrete endorsed assertion appears directly incompatible with well-established background knowledge, or an explicit inference is clearly invalid. Strong priority for verification, not an evidence-backed verdict."
+      },
+      "probabilities": {
+        "0": 0.32,
+        "1": 0.49,
+        "2": 0.12,
+        "3": 0.07
+      }
+    },
+    "target_23_suspicion": {
+      "type": "score",
+      "score": 0.16,
+      "confidence": 0.83,
+      "legend": {
+        "0": "0: No specific endorsed factual issue identified. Includes ordinary plausible facts, opinions, neutral quotations, explicit rebuttals, or merely missing citations.",
+        "1": "1: Weak or unresolved concern. A possible issue exists but ambiguity, missing scope, or uncertain attribution prevents identifying a specific substantive error.",
+        "2": "2: A concrete endorsed factual assertion has a plausible substantive contradiction or materially misleading inference; independent verification is warranted.",
+        "3": "3: A concrete endorsed assertion appears directly incompatible with well-established background knowledge, or an explicit inference is clearly invalid. Strong priority for verification, not an evidence-backed verdict."
+      },
+      "probabilities": {
+        "0": 0.9,
+        "1": 0.05,
+        "2": 0.03,
+        "3": 0.02
+      }
+    },
+    "target_24_suspicion": {
+      "type": "score",
+      "score": 0.14,
+      "confidence": 0.87,
+      "legend": {
+        "0": "0: No specific endorsed factual issue identified. Includes ordinary plausible facts, opinions, neutral quotations, explicit rebuttals, or merely missing citations.",
+        "1": "1: Weak or unresolved concern. A possible issue exists but ambiguity, missing scope, or uncertain attribution prevents identifying a specific substantive error.",
+        "2": "2: A concrete endorsed factual assertion has a plausible substantive contradiction or materially misleading inference; independent verification is warranted.",
+        "3": "3: A concrete endorsed assertion appears directly incompatible with well-established background knowledge, or an explicit inference is clearly invalid. Strong priority for verification, not an evidence-backed verdict."
+      },
+      "probabilities": {
+        "0": 0.92,
+        "1": 0.04,
+        "2": 0.03,
+        "3": 0.01
+      }
+    },
+    "target_25_suspicion": {
+      "type": "score",
+      "score": 0.22,
+      "confidence": 0.79,
+      "legend": {
+        "0": "0: No specific endorsed factual issue identified. Includes ordinary plausible facts, opinions, neutral quotations, explicit rebuttals, or merely missing citations.",
+        "1": "1: Weak or unresolved concern. A possible issue exists but ambiguity, missing scope, or uncertain attribution prevents identifying a specific substantive error.",
+        "2": "2: A concrete endorsed factual assertion has a plausible substantive contradiction or materially misleading inference; independent verification is warranted.",
+        "3": "3: A concrete endorsed assertion appears directly incompatible with well-established background knowledge, or an explicit inference is clearly invalid. Strong priority for verification, not an evidence-backed verdict."
+      },
+      "probabilities": {
+        "0": 0.85,
+        "1": 0.1,
+        "2": 0.04,
+        "3": 0.01
+      }
+    },
+    "target_26_suspicion": {
+      "type": "score",
+      "score": 0.1,
+      "confidence": 0.89,
+      "legend": {
+        "0": "0: No specific endorsed factual issue identified. Includes ordinary plausible facts, opinions, neutral quotations, explicit rebuttals, or merely missing citations.",
+        "1": "1: Weak or unresolved concern. A possible issue exists but ambiguity, missing scope, or uncertain attribution prevents identifying a specific substantive error.",
+        "2": "2: A concrete endorsed factual assertion has a plausible substantive contradiction or materially misleading inference; independent verification is warranted.",
+        "3": "3: A concrete endorsed assertion appears directly incompatible with well-established background knowledge, or an explicit inference is clearly invalid. Strong priority for verification, not an evidence-backed verdict."
+      },
+      "probabilities": {
+        "0": 0.93,
+        "1": 0.04,
+        "2": 0.02,
+        "3": 0.01
+      }
+    },
+    "target_27_suspicion": {
+      "type": "score",
+      "score": 1.22,
+      "confidence": 0,
+      "legend": {
+        "0": "0: No specific endorsed factual issue identified. Includes ordinary plausible facts, opinions, neutral quotations, explicit rebuttals, or merely missing citations.",
+        "1": "1: Weak or unresolved concern. A possible issue exists but ambiguity, missing scope, or uncertain attribution prevents identifying a specific substantive error.",
+        "2": "2: A concrete endorsed factual assertion has a plausible substantive contradiction or materially misleading inference; independent verification is warranted.",
+        "3": "3: A concrete endorsed assertion appears directly incompatible with well-established background knowledge, or an explicit inference is clearly invalid. Strong priority for verification, not an evidence-backed verdict."
+      },
+      "probabilities": {
+        "0": 0.36,
+        "1": 0.2,
+        "2": 0.31,
+        "3": 0.13
+      }
+    },
+    "target_28_suspicion": {
+      "type": "score",
+      "score": 0.25,
+      "confidence": 0.73,
+      "legend": {
+        "0": "0: No specific endorsed factual issue identified. Includes ordinary plausible facts, opinions, neutral quotations, explicit rebuttals, or merely missing citations.",
+        "1": "1: Weak or unresolved concern. A possible issue exists but ambiguity, missing scope, or uncertain attribution prevents identifying a specific substantive error.",
+        "2": "2: A concrete endorsed factual assertion has a plausible substantive contradiction or materially misleading inference; independent verification is warranted.",
+        "3": "3: A concrete endorsed assertion appears directly incompatible with well-established background knowledge, or an explicit inference is clearly invalid. Strong priority for verification, not an evidence-backed verdict."
+      },
+      "probabilities": {
+        "0": 0.84,
+        "1": 0.08,
+        "2": 0.05,
+        "3": 0.03
+      }
+    },
+    "target_29_suspicion": {
+      "type": "score",
+      "score": 1.24,
+      "confidence": 0,
+      "legend": {
+        "0": "0: No specific endorsed factual issue identified. Includes ordinary plausible facts, opinions, neutral quotations, explicit rebuttals, or merely missing citations.",
+        "1": "1: Weak or unresolved concern. A possible issue exists but ambiguity, missing scope, or uncertain attribution prevents identifying a specific substantive error.",
+        "2": "2: A concrete endorsed factual assertion has a plausible substantive contradiction or materially misleading inference; independent verification is warranted.",
+        "3": "3: A concrete endorsed assertion appears directly incompatible with well-established background knowledge, or an explicit inference is clearly invalid. Strong priority for verification, not an evidence-backed verdict."
+      },
+      "probabilities": {
+        "0": 0.31,
+        "1": 0.26,
+        "2": 0.3,
+        "3": 0.13
+      }
+    },
+    "target_30_suspicion": {
+      "type": "score",
+      "score": 0.72,
+      "confidence": 0.28,
+      "legend": {
+        "0": "0: No specific endorsed factual issue identified. Includes ordinary plausible facts, opinions, neutral quotations, explicit rebuttals, or merely missing citations.",
+        "1": "1: Weak or unresolved concern. A possible issue exists but ambiguity, missing scope, or uncertain attribution prevents identifying a specific substantive error.",
+        "2": "2: A concrete endorsed factual assertion has a plausible substantive contradiction or materially misleading inference; independent verification is warranted.",
+        "3": "3: A concrete endorsed assertion appears directly incompatible with well-established background knowledge, or an explicit inference is clearly invalid. Strong priority for verification, not an evidence-backed verdict."
+      },
+      "probabilities": {
+        "0": 0.54,
+        "1": 0.26,
+        "2": 0.14,
+        "3": 0.06
+      }
+    },
+    "target_31_suspicion": {
+      "type": "score",
+      "score": 0.38,
+      "confidence": 0.63,
+      "legend": {
+        "0": "0: No specific endorsed factual issue identified. Includes ordinary plausible facts, opinions, neutral quotations, explicit rebuttals, or merely missing citations.",
+        "1": "1: Weak or unresolved concern. A possible issue exists but ambiguity, missing scope, or uncertain attribution prevents identifying a specific substantive error.",
+        "2": "2: A concrete endorsed factual assertion has a plausible substantive contradiction or materially misleading inference; independent verification is warranted.",
+        "3": "3: A concrete endorsed assertion appears directly incompatible with well-established background knowledge, or an explicit inference is clearly invalid. Strong priority for verification, not an evidence-backed verdict."
+      },
+      "probabilities": {
+        "0": 0.76,
+        "1": 0.13,
+        "2": 0.09,
+        "3": 0.02
+      }
+    },
+    "target_32_suspicion": {
+      "type": "score",
+      "score": 0.23,
+      "confidence": 0.77,
+      "legend": {
+        "0": "0: No specific endorsed factual issue identified. Includes ordinary plausible facts, opinions, neutral quotations, explicit rebuttals, or merely missing citations.",
+        "1": "1: Weak or unresolved concern. A possible issue exists but ambiguity, missing scope, or uncertain attribution prevents identifying a specific substantive error.",
+        "2": "2: A concrete endorsed factual assertion has a plausible substantive contradiction or materially misleading inference; independent verification is warranted.",
+        "3": "3: A concrete endorsed assertion appears directly incompatible with well-established background knowledge, or an explicit inference is clearly invalid. Strong priority for verification, not an evidence-backed verdict."
+      },
+      "probabilities": {
+        "0": 0.85,
+        "1": 0.09,
+        "2": 0.04,
+        "3": 0.02
+      }
+    },
+    "target_33_suspicion": {
+      "type": "score",
+      "score": 0.2,
+      "confidence": 0.78,
+      "legend": {
+        "0": "0: No specific endorsed factual issue identified. Includes ordinary plausible facts, opinions, neutral quotations, explicit rebuttals, or merely missing citations.",
+        "1": "1: Weak or unresolved concern. A possible issue exists but ambiguity, missing scope, or uncertain attribution prevents identifying a specific substantive error.",
+        "2": "2: A concrete endorsed factual assertion has a plausible substantive contradiction or materially misleading inference; independent verification is warranted.",
+        "3": "3: A concrete endorsed assertion appears directly incompatible with well-established background knowledge, or an explicit inference is clearly invalid. Strong priority for verification, not an evidence-backed verdict."
+      },
+      "probabilities": {
+        "0": 0.88,
+        "1": 0.05,
+        "2": 0.04,
+        "3": 0.03
+      }
+    },
+    "target_34_suspicion": {
+      "type": "score",
+      "score": 0.6,
+      "confidence": 0.39,
+      "legend": {
+        "0": "0: No specific endorsed factual issue identified. Includes ordinary plausible facts, opinions, neutral quotations, explicit rebuttals, or merely missing citations.",
+        "1": "1: Weak or unresolved concern. A possible issue exists but ambiguity, missing scope, or uncertain attribution prevents identifying a specific substantive error.",
+        "2": "2: A concrete endorsed factual assertion has a plausible substantive contradiction or materially misleading inference; independent verification is warranted.",
+        "3": "3: A concrete endorsed assertion appears directly incompatible with well-established background knowledge, or an explicit inference is clearly invalid. Strong priority for verification, not an evidence-backed verdict."
+      },
+      "probabilities": {
+        "0": 0.6,
+        "1": 0.22,
+        "2": 0.15,
+        "3": 0.03
+      }
+    },
+    "target_35_suspicion": {
+      "type": "score",
+      "score": 0.93,
+      "confidence": 0.35,
+      "legend": {
+        "0": "0: No specific endorsed factual issue identified. Includes ordinary plausible facts, opinions, neutral quotations, explicit rebuttals, or merely missing citations.",
+        "1": "1: Weak or unresolved concern. A possible issue exists but ambiguity, missing scope, or uncertain attribution prevents identifying a specific substantive error.",
+        "2": "2: A concrete endorsed factual assertion has a plausible substantive contradiction or materially misleading inference; independent verification is warranted.",
+        "3": "3: A concrete endorsed assertion appears directly incompatible with well-established background knowledge, or an explicit inference is clearly invalid. Strong priority for verification, not an evidence-backed verdict."
+      },
+      "probabilities": {
+        "0": 0.36,
+        "1": 0.37,
+        "2": 0.25,
+        "3": 0.02
+      }
+    },
+    "target_36_suspicion": {
+      "type": "score",
+      "score": 1.36,
+      "confidence": 0.21,
+      "legend": {
+        "0": "0: No specific endorsed factual issue identified. Includes ordinary plausible facts, opinions, neutral quotations, explicit rebuttals, or merely missing citations.",
+        "1": "1: Weak or unresolved concern. A possible issue exists but ambiguity, missing scope, or uncertain attribution prevents identifying a specific substantive error.",
+        "2": "2: A concrete endorsed factual assertion has a plausible substantive contradiction or materially misleading inference; independent verification is warranted.",
+        "3": "3: A concrete endorsed assertion appears directly incompatible with well-established background knowledge, or an explicit inference is clearly invalid. Strong priority for verification, not an evidence-backed verdict."
+      },
+      "probabilities": {
+        "0": 0.22,
+        "1": 0.27,
+        "2": 0.43,
+        "3": 0.08
+      }
+    },
+    "target_37_suspicion": {
+      "type": "score",
+      "score": 1.03,
+      "confidence": 0,
+      "legend": {
+        "0": "0: No specific endorsed factual issue identified. Includes ordinary plausible facts, opinions, neutral quotations, explicit rebuttals, or merely missing citations.",
+        "1": "1: Weak or unresolved concern. A possible issue exists but ambiguity, missing scope, or uncertain attribution prevents identifying a specific substantive error.",
+        "2": "2: A concrete endorsed factual assertion has a plausible substantive contradiction or materially misleading inference; independent verification is warranted.",
+        "3": "3: A concrete endorsed assertion appears directly incompatible with well-established background knowledge, or an explicit inference is clearly invalid. Strong priority for verification, not an evidence-backed verdict."
+      },
+      "probabilities": {
+        "0": 0.38,
+        "1": 0.28,
+        "2": 0.28,
+        "3": 0.06
+      }
+    },
+    "target_38_suspicion": {
+      "type": "score",
+      "score": 0.07,
+      "confidence": 0.95,
+      "legend": {
+        "0": "0: No specific endorsed factual issue identified. Includes ordinary plausible facts, opinions, neutral quotations, explicit rebuttals, or merely missing citations.",
+        "1": "1: Weak or unresolved concern. A possible issue exists but ambiguity, missing scope, or uncertain attribution prevents identifying a specific substantive error.",
+        "2": "2: A concrete endorsed factual assertion has a plausible substantive contradiction or materially misleading inference; independent verification is warranted.",
+        "3": "3: A concrete endorsed assertion appears directly incompatible with well-established background knowledge, or an explicit inference is clearly invalid. Strong priority for verification, not an evidence-backed verdict."
+      },
+      "probabilities": {
+        "0": 0.96,
+        "1": 0.03,
+        "2": 0.01,
+        "3": 0
+      }
+    },
+    "target_39_suspicion": {
+      "type": "score",
+      "score": 0.1,
+      "confidence": 0.89,
+      "legend": {
+        "0": "0: No specific endorsed factual issue identified. Includes ordinary plausible facts, opinions, neutral quotations, explicit rebuttals, or merely missing citations.",
+        "1": "1: Weak or unresolved concern. A possible issue exists but ambiguity, missing scope, or uncertain attribution prevents identifying a specific substantive error.",
+        "2": "2: A concrete endorsed factual assertion has a plausible substantive contradiction or materially misleading inference; independent verification is warranted.",
+        "3": "3: A concrete endorsed assertion appears directly incompatible with well-established background knowledge, or an explicit inference is clearly invalid. Strong priority for verification, not an evidence-backed verdict."
+      },
+      "probabilities": {
+        "0": 0.93,
+        "1": 0.04,
+        "2": 0.02,
+        "3": 0.01
+      }
+    },
+    "target_40_suspicion": {
+      "type": "score",
+      "score": 0.01,
+      "confidence": 0.99,
+      "legend": {
+        "0": "0: No specific endorsed factual issue identified. Includes ordinary plausible facts, opinions, neutral quotations, explicit rebuttals, or merely missing citations.",
+        "1": "1: Weak or unresolved concern. A possible issue exists but ambiguity, missing scope, or uncertain attribution prevents identifying a specific substantive error.",
+        "2": "2: A concrete endorsed factual assertion has a plausible substantive contradiction or materially misleading inference; independent verification is warranted.",
+        "3": "3: A concrete endorsed assertion appears directly incompatible with well-established background knowledge, or an explicit inference is clearly invalid. Strong priority for verification, not an evidence-backed verdict."
+      },
+      "probabilities": {
+        "0": 0.99,
+        "1": 0.01,
+        "2": 0,
+        "3": 0
+      }
+    },
+    "target_41_suspicion": {
+      "type": "score",
+      "score": 0.4,
+      "confidence": 0.61,
+      "legend": {
+        "0": "0: No specific endorsed factual issue identified. Includes ordinary plausible facts, opinions, neutral quotations, explicit rebuttals, or merely missing citations.",
+        "1": "1: Weak or unresolved concern. A possible issue exists but ambiguity, missing scope, or uncertain attribution prevents identifying a specific substantive error.",
+        "2": "2: A concrete endorsed factual assertion has a plausible substantive contradiction or materially misleading inference; independent verification is warranted.",
+        "3": "3: A concrete endorsed assertion appears directly incompatible with well-established background knowledge, or an explicit inference is clearly invalid. Strong priority for verification, not an evidence-backed verdict."
+      },
+      "probabilities": {
+        "0": 0.71,
+        "1": 0.2,
+        "2": 0.08,
+        "3": 0.01
+      }
+    },
+    "target_42_suspicion": {
+      "type": "score",
+      "score": 0.03,
+      "confidence": 0.98,
+      "legend": {
+        "0": "0: No specific endorsed factual issue identified. Includes ordinary plausible facts, opinions, neutral quotations, explicit rebuttals, or merely missing citations.",
+        "1": "1: Weak or unresolved concern. A possible issue exists but ambiguity, missing scope, or uncertain attribution prevents identifying a specific substantive error.",
+        "2": "2: A concrete endorsed factual assertion has a plausible substantive contradiction or materially misleading inference; independent verification is warranted.",
+        "3": "3: A concrete endorsed assertion appears directly incompatible with well-established background knowledge, or an explicit inference is clearly invalid. Strong priority for verification, not an evidence-backed verdict."
+      },
+      "probabilities": {
+        "0": 0.98,
+        "1": 0.02,
+        "2": 0,
+        "3": 0
+      }
+    },
+    "target_43_suspicion": {
+      "type": "score",
+      "score": 0.43,
+      "confidence": 0.57,
+      "legend": {
+        "0": "0: No specific endorsed factual issue identified. Includes ordinary plausible facts, opinions, neutral quotations, explicit rebuttals, or merely missing citations.",
+        "1": "1: Weak or unresolved concern. A possible issue exists but ambiguity, missing scope, or uncertain attribution prevents identifying a specific substantive error.",
+        "2": "2: A concrete endorsed factual assertion has a plausible substantive contradiction or materially misleading inference; independent verification is warranted.",
+        "3": "3: A concrete endorsed assertion appears directly incompatible with well-established background knowledge, or an explicit inference is clearly invalid. Strong priority for verification, not an evidence-backed verdict."
+      },
+      "probabilities": {
+        "0": 0.69,
+        "1": 0.21,
+        "2": 0.08,
+        "3": 0.02
+      }
+    },
+    "target_44_suspicion": {
+      "type": "score",
+      "score": 0.41,
+      "confidence": 0.59,
+      "legend": {
+        "0": "0: No specific endorsed factual issue identified. Includes ordinary plausible facts, opinions, neutral quotations, explicit rebuttals, or merely missing citations.",
+        "1": "1: Weak or unresolved concern. A possible issue exists but ambiguity, missing scope, or uncertain attribution prevents identifying a specific substantive error.",
+        "2": "2: A concrete endorsed factual assertion has a plausible substantive contradiction or materially misleading inference; independent verification is warranted.",
+        "3": "3: A concrete endorsed assertion appears directly incompatible with well-established background knowledge, or an explicit inference is clearly invalid. Strong priority for verification, not an evidence-backed verdict."
+      },
+      "probabilities": {
+        "0": 0.68,
+        "1": 0.24,
+        "2": 0.07,
+        "3": 0.01
+      }
+    },
+    "target_45_suspicion": {
+      "type": "score",
+      "score": 0.58,
+      "confidence": 0.42,
+      "legend": {
+        "0": "0: No specific endorsed factual issue identified. Includes ordinary plausible facts, opinions, neutral quotations, explicit rebuttals, or merely missing citations.",
+        "1": "1: Weak or unresolved concern. A possible issue exists but ambiguity, missing scope, or uncertain attribution prevents identifying a specific substantive error.",
+        "2": "2: A concrete endorsed factual assertion has a plausible substantive contradiction or materially misleading inference; independent verification is warranted.",
+        "3": "3: A concrete endorsed assertion appears directly incompatible with well-established background knowledge, or an explicit inference is clearly invalid. Strong priority for verification, not an evidence-backed verdict."
+      },
+      "probabilities": {
+        "0": 0.6,
+        "1": 0.24,
+        "2": 0.14,
+        "3": 0.02
+      }
+    },
+    "target_46_suspicion": {
+      "type": "score",
+      "score": 0.3,
+      "confidence": 0.7,
+      "legend": {
+        "0": "0: No specific endorsed factual issue identified. Includes ordinary plausible facts, opinions, neutral quotations, explicit rebuttals, or merely missing citations.",
+        "1": "1: Weak or unresolved concern. A possible issue exists but ambiguity, missing scope, or uncertain attribution prevents identifying a specific substantive error.",
+        "2": "2: A concrete endorsed factual assertion has a plausible substantive contradiction or materially misleading inference; independent verification is warranted.",
+        "3": "3: A concrete endorsed assertion appears directly incompatible with well-established background knowledge, or an explicit inference is clearly invalid. Strong priority for verification, not an evidence-backed verdict."
+      },
+      "probabilities": {
+        "0": 0.79,
+        "1": 0.14,
+        "2": 0.05,
+        "3": 0.02
+      }
+    },
+    "target_47_suspicion": {
+      "type": "score",
+      "score": 0.52,
+      "confidence": 0.48,
+      "legend": {
+        "0": "0: No specific endorsed factual issue identified. Includes ordinary plausible facts, opinions, neutral quotations, explicit rebuttals, or merely missing citations.",
+        "1": "1: Weak or unresolved concern. A possible issue exists but ambiguity, missing scope, or uncertain attribution prevents identifying a specific substantive error.",
+        "2": "2: A concrete endorsed factual assertion has a plausible substantive contradiction or materially misleading inference; independent verification is warranted.",
+        "3": "3: A concrete endorsed assertion appears directly incompatible with well-established background knowledge, or an explicit inference is clearly invalid. Strong priority for verification, not an evidence-backed verdict."
+      },
+      "probabilities": {
+        "0": 0.69,
+        "1": 0.15,
+        "2": 0.11,
+        "3": 0.05
+      }
+    },
+    "target_48_suspicion": {
+      "type": "score",
+      "score": 0.45,
+      "confidence": 0.55,
+      "legend": {
+        "0": "0: No specific endorsed factual issue identified. Includes ordinary plausible facts, opinions, neutral quotations, explicit rebuttals, or merely missing citations.",
+        "1": "1: Weak or unresolved concern. A possible issue exists but ambiguity, missing scope, or uncertain attribution prevents identifying a specific substantive error.",
+        "2": "2: A concrete endorsed factual assertion has a plausible substantive contradiction or materially misleading inference; independent verification is warranted.",
+        "3": "3: A concrete endorsed assertion appears directly incompatible with well-established background knowledge, or an explicit inference is clearly invalid. Strong priority for verification, not an evidence-backed verdict."
+      },
+      "probabilities": {
+        "0": 0.67,
+        "1": 0.23,
+        "2": 0.08,
+        "3": 0.02
+      }
+    },
+    "target_49_suspicion": {
+      "type": "score",
+      "score": 0.24,
+      "confidence": 0.78,
+      "legend": {
+        "0": "0: No specific endorsed factual issue identified. Includes ordinary plausible facts, opinions, neutral quotations, explicit rebuttals, or merely missing citations.",
+        "1": "1: Weak or unresolved concern. A possible issue exists but ambiguity, missing scope, or uncertain attribution prevents identifying a specific substantive error.",
+        "2": "2: A concrete endorsed factual assertion has a plausible substantive contradiction or materially misleading inference; independent verification is warranted.",
+        "3": "3: A concrete endorsed assertion appears directly incompatible with well-established background knowledge, or an explicit inference is clearly invalid. Strong priority for verification, not an evidence-backed verdict."
+      },
+      "probabilities": {
+        "0": 0.84,
+        "1": 0.11,
+        "2": 0.04,
+        "3": 0.01
+      }
+    },
+    "target_50_suspicion": {
+      "type": "score",
+      "score": 0.1,
+      "confidence": 0.89,
+      "legend": {
+        "0": "0: No specific endorsed factual issue identified. Includes ordinary plausible facts, opinions, neutral quotations, explicit rebuttals, or merely missing citations.",
+        "1": "1: Weak or unresolved concern. A possible issue exists but ambiguity, missing scope, or uncertain attribution prevents identifying a specific substantive error.",
+        "2": "2: A concrete endorsed factual assertion has a plausible substantive contradiction or materially misleading inference; independent verification is warranted.",
+        "3": "3: A concrete endorsed assertion appears directly incompatible with well-established background knowledge, or an explicit inference is clearly invalid. Strong priority for verification, not an evidence-backed verdict."
+      },
+      "probabilities": {
+        "0": 0.93,
+        "1": 0.04,
+        "2": 0.02,
+        "3": 0.01
+      }
+    },
+    "target_51_suspicion": {
+      "type": "score",
+      "score": 0.37,
+      "confidence": 0.65,
+      "legend": {
+        "0": "0: No specific endorsed factual issue identified. Includes ordinary plausible facts, opinions, neutral quotations, explicit rebuttals, or merely missing citations.",
+        "1": "1: Weak or unresolved concern. A possible issue exists but ambiguity, missing scope, or uncertain attribution prevents identifying a specific substantive error.",
+        "2": "2: A concrete endorsed factual assertion has a plausible substantive contradiction or materially misleading inference; independent verification is warranted.",
+        "3": "3: A concrete endorsed assertion appears directly incompatible with well-established background knowledge, or an explicit inference is clearly invalid. Strong priority for verification, not an evidence-backed verdict."
+      },
+      "probabilities": {
+        "0": 0.77,
+        "1": 0.13,
+        "2": 0.08,
+        "3": 0.02
+      }
+    },
+    "target_52_suspicion": {
+      "type": "score",
+      "score": 0.19,
+      "confidence": 0.81,
+      "legend": {
+        "0": "0: No specific endorsed factual issue identified. Includes ordinary plausible facts, opinions, neutral quotations, explicit rebuttals, or merely missing citations.",
+        "1": "1: Weak or unresolved concern. A possible issue exists but ambiguity, missing scope, or uncertain attribution prevents identifying a specific substantive error.",
+        "2": "2: A concrete endorsed factual assertion has a plausible substantive contradiction or materially misleading inference; independent verification is warranted.",
+        "3": "3: A concrete endorsed assertion appears directly incompatible with well-established background knowledge, or an explicit inference is clearly invalid. Strong priority for verification, not an evidence-backed verdict."
+      },
+      "probabilities": {
+        "0": 0.86,
+        "1": 0.1,
+        "2": 0.03,
+        "3": 0.01
+      }
+    },
+    "target_53_suspicion": {
+      "type": "score",
+      "score": 0.02,
+      "confidence": 0.99,
+      "legend": {
+        "0": "0: No specific endorsed factual issue identified. Includes ordinary plausible facts, opinions, neutral quotations, explicit rebuttals, or merely missing citations.",
+        "1": "1: Weak or unresolved concern. A possible issue exists but ambiguity, missing scope, or uncertain attribution prevents identifying a specific substantive error.",
+        "2": "2: A concrete endorsed factual assertion has a plausible substantive contradiction or materially misleading inference; independent verification is warranted.",
+        "3": "3: A concrete endorsed assertion appears directly incompatible with well-established background knowledge, or an explicit inference is clearly invalid. Strong priority for verification, not an evidence-backed verdict."
+      },
+      "probabilities": {
+        "0": 0.99,
+        "1": 0.01,
+        "2": 0,
+        "3": 0
+      }
+    },
+    "target_54_suspicion": {
+      "type": "score",
+      "score": 0.01,
+      "confidence": 0.99,
+      "legend": {
+        "0": "0: No specific endorsed factual issue identified. Includes ordinary plausible facts, opinions, neutral quotations, explicit rebuttals, or merely missing citations.",
+        "1": "1: Weak or unresolved concern. A possible issue exists but ambiguity, missing scope, or uncertain attribution prevents identifying a specific substantive error.",
+        "2": "2: A concrete endorsed factual assertion has a plausible substantive contradiction or materially misleading inference; independent verification is warranted.",
+        "3": "3: A concrete endorsed assertion appears directly incompatible with well-established background knowledge, or an explicit inference is clearly invalid. Strong priority for verification, not an evidence-backed verdict."
+      },
+      "probabilities": {
+        "0": 0.99,
+        "1": 0.01,
+        "2": 0,
+        "3": 0
+      }
+    },
+    "target_55_suspicion": {
+      "type": "score",
+      "score": 0.02,
+      "confidence": 0.99,
+      "legend": {
+        "0": "0: No specific endorsed factual issue identified. Includes ordinary plausible facts, opinions, neutral quotations, explicit rebuttals, or merely missing citations.",
+        "1": "1: Weak or unresolved concern. A possible issue exists but ambiguity, missing scope, or uncertain attribution prevents identifying a specific substantive error.",
+        "2": "2: A concrete endorsed factual assertion has a plausible substantive contradiction or materially misleading inference; independent verification is warranted.",
+        "3": "3: A concrete endorsed assertion appears directly incompatible with well-established background knowledge, or an explicit inference is clearly invalid. Strong priority for verification, not an evidence-backed verdict."
+      },
+      "probabilities": {
+        "0": 0.99,
+        "1": 0.01,
+        "2": 0,
+        "3": 0
+      }
+    },
+    "target_56_suspicion": {
+      "type": "score",
+      "score": 1.59,
+      "confidence": 0.36,
+      "legend": {
+        "0": "0: No specific endorsed factual issue identified. Includes ordinary plausible facts, opinions, neutral quotations, explicit rebuttals, or merely missing citations.",
+        "1": "1: Weak or unresolved concern. A possible issue exists but ambiguity, missing scope, or uncertain attribution prevents identifying a specific substantive error.",
+        "2": "2: A concrete endorsed factual assertion has a plausible substantive contradiction or materially misleading inference; independent verification is warranted.",
+        "3": "3: A concrete endorsed assertion appears directly incompatible with well-established background knowledge, or an explicit inference is clearly invalid. Strong priority for verification, not an evidence-backed verdict."
+      },
+      "probabilities": {
+        "0": 0.15,
+        "1": 0.22,
+        "2": 0.51,
+        "3": 0.12
+      }
+    },
+    "target_57_suspicion": {
+      "type": "score",
+      "score": 0.58,
+      "confidence": 0.42,
+      "legend": {
+        "0": "0: No specific endorsed factual issue identified. Includes ordinary plausible facts, opinions, neutral quotations, explicit rebuttals, or merely missing citations.",
+        "1": "1: Weak or unresolved concern. A possible issue exists but ambiguity, missing scope, or uncertain attribution prevents identifying a specific substantive error.",
+        "2": "2: A concrete endorsed factual assertion has a plausible substantive contradiction or materially misleading inference; independent verification is warranted.",
+        "3": "3: A concrete endorsed assertion appears directly incompatible with well-established background knowledge, or an explicit inference is clearly invalid. Strong priority for verification, not an evidence-backed verdict."
+      },
+      "probabilities": {
+        "0": 0.6,
+        "1": 0.24,
+        "2": 0.14,
+        "3": 0.02
+      }
+    },
+    "target_58_suspicion": {
+      "type": "score",
+      "score": 0.74,
+      "confidence": 0.25,
+      "legend": {
+        "0": "0: No specific endorsed factual issue identified. Includes ordinary plausible facts, opinions, neutral quotations, explicit rebuttals, or merely missing citations.",
+        "1": "1: Weak or unresolved concern. A possible issue exists but ambiguity, missing scope, or uncertain attribution prevents identifying a specific substantive error.",
+        "2": "2: A concrete endorsed factual assertion has a plausible substantive contradiction or materially misleading inference; independent verification is warranted.",
+        "3": "3: A concrete endorsed assertion appears directly incompatible with well-established background knowledge, or an explicit inference is clearly invalid. Strong priority for verification, not an evidence-backed verdict."
+      },
+      "probabilities": {
+        "0": 0.49,
+        "1": 0.3,
+        "2": 0.18,
+        "3": 0.03
+      }
+    },
+    "target_59_suspicion": {
+      "type": "score",
+      "score": 0.26,
+      "confidence": 0.71,
+      "legend": {
+        "0": "0: No specific endorsed factual issue identified. Includes ordinary plausible facts, opinions, neutral quotations, explicit rebuttals, or merely missing citations.",
+        "1": "1: Weak or unresolved concern. A possible issue exists but ambiguity, missing scope, or uncertain attribution prevents identifying a specific substantive error.",
+        "2": "2: A concrete endorsed factual assertion has a plausible substantive contradiction or materially misleading inference; independent verification is warranted.",
+        "3": "3: A concrete endorsed assertion appears directly incompatible with well-established background knowledge, or an explicit inference is clearly invalid. Strong priority for verification, not an evidence-backed verdict."
+      },
+      "probabilities": {
+        "0": 0.76,
+        "1": 0.2,
+        "2": 0.03,
+        "3": 0.01
+      }
+    },
+    "target_60_suspicion": {
+      "type": "score",
+      "score": 0.52,
+      "confidence": 0.51,
+      "legend": {
+        "0": "0: No specific endorsed factual issue identified. Includes ordinary plausible facts, opinions, neutral quotations, explicit rebuttals, or merely missing citations.",
+        "1": "1: Weak or unresolved concern. A possible issue exists but ambiguity, missing scope, or uncertain attribution prevents identifying a specific substantive error.",
+        "2": "2: A concrete endorsed factual assertion has a plausible substantive contradiction or materially misleading inference; independent verification is warranted.",
+        "3": "3: A concrete endorsed assertion appears directly incompatible with well-established background knowledge, or an explicit inference is clearly invalid. Strong priority for verification, not an evidence-backed verdict."
+      },
+      "probabilities": {
+        "0": 0.61,
+        "1": 0.31,
+        "2": 0.06,
+        "3": 0.02
+      }
+    },
+    "target_61_suspicion": {
+      "type": "score",
+      "score": 0.09,
+      "confidence": 0.92,
+      "legend": {
+        "0": "0: No specific endorsed factual issue identified. Includes ordinary plausible facts, opinions, neutral quotations, explicit rebuttals, or merely missing citations.",
+        "1": "1: Weak or unresolved concern. A possible issue exists but ambiguity, missing scope, or uncertain attribution prevents identifying a specific substantive error.",
+        "2": "2: A concrete endorsed factual assertion has a plausible substantive contradiction or materially misleading inference; independent verification is warranted.",
+        "3": "3: A concrete endorsed assertion appears directly incompatible with well-established background knowledge, or an explicit inference is clearly invalid. Strong priority for verification, not an evidence-backed verdict."
+      },
+      "probabilities": {
+        "0": 0.93,
+        "1": 0.06,
+        "2": 0.01,
+        "3": 0
+      }
+    },
+    "target_62_suspicion": {
+      "type": "score",
+      "score": 0.98,
+      "confidence": 0.02,
+      "legend": {
+        "0": "0: No specific endorsed factual issue identified. Includes ordinary plausible facts, opinions, neutral quotations, explicit rebuttals, or merely missing citations.",
+        "1": "1: Weak or unresolved concern. A possible issue exists but ambiguity, missing scope, or uncertain attribution prevents identifying a specific substantive error.",
+        "2": "2: A concrete endorsed factual assertion has a plausible substantive contradiction or materially misleading inference; independent verification is warranted.",
+        "3": "3: A concrete endorsed assertion appears directly incompatible with well-established background knowledge, or an explicit inference is clearly invalid. Strong priority for verification, not an evidence-backed verdict."
+      },
+      "probabilities": {
+        "0": 0.36,
+        "1": 0.36,
+        "2": 0.22,
+        "3": 0.06
+      }
+    },
+    "target_63_suspicion": {
+      "type": "score",
+      "score": 0.06,
+      "confidence": 0.95,
+      "legend": {
+        "0": "0: No specific endorsed factual issue identified. Includes ordinary plausible facts, opinions, neutral quotations, explicit rebuttals, or merely missing citations.",
+        "1": "1: Weak or unresolved concern. A possible issue exists but ambiguity, missing scope, or uncertain attribution prevents identifying a specific substantive error.",
+        "2": "2: A concrete endorsed factual assertion has a plausible substantive contradiction or materially misleading inference; independent verification is warranted.",
+        "3": "3: A concrete endorsed assertion appears directly incompatible with well-established background knowledge, or an explicit inference is clearly invalid. Strong priority for verification, not an evidence-backed verdict."
+      },
+      "probabilities": {
+        "0": 0.96,
+        "1": 0.03,
+        "2": 0.01,
+        "3": 0
+      }
+    }
+  },
+  "usage": {
+    "input_tokens": 26599,
+    "output_tokens": 1210
+  }
+}

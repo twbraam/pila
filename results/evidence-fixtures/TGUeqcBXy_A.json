@@ -1,0 +1,33 @@
+{
+  "videoId": "TGUeqcBXy_A",
+  "language": "zh-TW",
+  "videoUrl": "https://www.youtube.com/watch?v=TGUeqcBXy_A",
+  "transcriptSource": "examples/transcripts/TGUeqcBXy_A.json",
+  "screeningSource": "results/TGUeqcBXy_A/20261017T071223686Z/results.json",
+  "evidenceSource": "results/TGUeqcBXy_A/evidence-20261017T080255791Z/evidence.json",
+  "maxSearches": 3,
+  "eligibleClaims": 3,
+  "assessments": [
+    {
+      "videoId": "TGUeqcBXy_A",
+      "sentenceId": "s0010",
+      "targetId": "s0010::part-2",
+      "text": "地中海沿岸的海盜他所劫掠過的那些名都 都化爲灰燼 希臘是退回到了小型村落的時代 不再有像樣的宮殿 城市也衰落 手工藝品大量減少 所以沿著地中海這樣一個繁榮的貿易體 互相依存的這個經濟網絡就徹底瓦解崩潰了 青銅時代就這樣落下了帷幕 其後幾百年 被稱之爲黑暗時代 也非常缺少歷史記錄 大約要到400年以後記錄才更加豐富 這時候人們已經迎來了鐵器時代 現在考古發現青銅文明終結的那個時代 在土耳其、希臘、敘利亞的土層裡面都有很多被火燒過的痕跡 可見這些海盜的破壞力爆表啊！",
+      "start": 427.52,
+      "end": 543.4830000000001,
+      "screeningScore": 2.02,
+      "evidenceStatus": "insufficient_evidence",
+      "citations": []
+    }
+  ],
+  "pending": [
+    {
+      "targetId": "s0012::part-2",
+      "reason": "evidence_context_budget"
+    },
+    {
+      "targetId": "s0012::part-1",
+      "reason": "evidence_context_budget"
+    }
+  ]
+}

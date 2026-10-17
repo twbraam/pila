@@ -1,0 +1,42 @@
+{
+  "query": "that’s why over last years climate prediction after another based computer models evidence",
+  "follow_up_questions": null,
+  "answer": null,
+  "images": [],
+  "results": [
+    {
+      "url": "https://cpo.noaa.gov/new-noaa-research-to-improve-prediction-systems",
+      "title": "New NOAA research to improve prediction systems - Climate Program Office",
+      "content": "Forecasters at NOAA use a variety of tools to produce predictions for anywhere from two weeks to a year in advance. One of the major inputs to forecasts is the set of predictions made by computer models of the atmosphere, land, and ocean system. Over the past few years, a larger system called the North American Multi-Model Ensemble (NMME) has been built that combines NOAA model predictions with the predictions produced by models from NASA, NCAR, and Environment Canada. The research projects [...] NOAA’s Modeling, Analysis, Predictions, and Projections (MAPP) program awarded $1.8 million to support 10 new multi-year projects to help improve NOAA’s climate predictions from two weeks to a year in advance, including extreme conditions. These projects will contribute to the NOAA Climate Test Bed, aimed at accelerating research-based advances in climate prediction and transitioning new tools and techniques to NOAA’s operational services. MAPP is a part of the Climate Program Office, situated",
+      "score": 0.44160134,
+      "raw_content": null,
+      "id": "ef30de-00"
+    },
+    {
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11885559",
+      "title": "Global lightning-ignited wildfires prediction and climate change projections based on explainable machine learning models",
+      "content": "Wildfires are among the most hazardous natural disasters on Earth. Although studies have found a decrease in global burned areas due to anthropogenic activity1, the frequency of extratropical lightning-ignited wildfires appears to be on the rise as the Earth’s climate changes2. For example, the frequency of extreme lightning-ignited wildfires has drastically increased in California in the last decades3. Lightning is the main cause for wildfire activity in high latitudes both in terms of [...] Wildfires pose a significant natural disaster risk to populations and contribute to accelerated climate change. As wildfires are also affected by climate change, extreme wildfires are becoming increasingly frequent. Although they occur less frequently globally than those sparked by human activities, lightning-ignited wildfires play a substantial role in carbon emissions and account for the majority of burned areas in certain regions. While existing computational models, especially those based [...] effect of climate change in two ways: either based on our data (2014–2021), or based on climate change projections. The analysis based on the actual data makes its conclusion solid and robust, but it comes at the price of basing our findings regarding climate change on eight years of data, which is not necessarily sufficient for this matter. In contrast, using the climate projections provides insights on a longer time frame, but is not as accurate as the empirical analysis. Future studies could",
+      "score": 0.32595003,
+      "raw_content": null,
+      "id": "a16ebf-01"
+    },
+    {
+      "url": "https://climatekids.nasa.gov/climate-model",
+      "title": "What Are Climate Models? - NASA Science",
+      "content": "Weather is a specific event—like a rain storm or hot day—that happens over a short period of time. A weather forecast can tell you what the weather will be like in a few hours or days from now.\n\nClimate, on the other hand, is the average weather conditions in a place over a long period of time—30 years or more. How do scientists predict what Earth’s climate will be like in the future? They use special computer programs called climate models.\n\n## What Is a Climate Model? [...] This video uses climate model data to show a prediction of how global temperatures will change throughout this century. Credit: NASA Scientific Visualization Studio.\n\n## How Is a Climate Model Used?\n\nClimate models work like a laboratory in a computer. They allow scientists to study how different factors interact to influence a region’s climate. [...] Scientists use computer programs called climate models to understand how our planet is changing. Climate models work like a laboratory in a computer. They allow scientists to study how different factors interact to influence a region’s climate.\n\nScientists use computer programs called climate models to understand how our planet is changing.\n\n## What Exactly Is Climate?\n\nMountains in Alaska’s Brooks Range seen as part of NASA’s Operation IceBridge.\n\nNASA/Michael Studinger",
+      "score": 0.3175749,
+      "raw_content": null,
+      "id": "9de450-02"
+    },
+    {
+      "url": "https://cpo.noaa.gov/new-research-offers-insights-into-why-climate-models-often-get-spring-el-nino-forecasts-wrong",
+      "title": "New research offers insights into why climate models often get spring El Niño forecasts wrong - Climate Program Office",
+      "content": "frequently fail to deliver. The authors, Aaron Levine of the University of Washington and the NOAA Climate Prediction Center’s Michelle L’Heureux and Caihong Wen found that the problem is that these models lean too heavily on tropical Pacific signals. The models can miss key influences from outside the tropics, leading to inaccurate forecasts that can leave decision-makers unprepared. [...] current models are too quick to predict El Niño based on tropical signals alone, this research helps scientists move toward more accurate seasonal forecasts, giving communities and industries around the world better information to prepare for the impacts of El Niño. [...] El Niño events have sweeping impacts on global weather, agriculture, and economies, so getting the forecast right matters. A new study published in npj climate and atmospheric science highlights a persistent blind spot: the overconfidence of climate models when predicting El Niño from March through May, a historically tricky time known as the “spring predictability barrier.” Researchers found that while models often issue high-confidence El Niño forecasts in spring, they frequently fail to",
+      "score": 0.2417269,
+      "raw_content": null,
+      "id": "162c38-03"
+    }
+  ],
+  "response_time": 2.4,
+  "request_id": "f214012f-b60e-4d62-b709-97020c32dac8"
+}
