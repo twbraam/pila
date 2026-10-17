@@ -1,0 +1,23 @@
+{
+  "evidenceRun": "results/OwqIy8Ikv-c/evidence-20261017T080238219Z",
+  "sources": {
+    "s0003": [
+      "https://science.nasa.gov/climate-change/evidence",
+      "https://science.nasa.gov/climate-change/scientific-consensus",
+      "https://www.ipcc.ch/sr15",
+      "https://www.noaa.gov/stories/whats-hottest-earths-ever-been-ext"
+    ],
+    "s0017": [
+      "https://pmc.ncbi.nlm.nih.gov/articles/PMC10107025",
+      "https://pmc.ncbi.nlm.nih.gov/articles/PMC9605864",
+      "https://pmc.ncbi.nlm.nih.gov/articles/PMC13084424",
+      "https://pubmed.ncbi.nlm.nih.gov/40339018"
+    ],
+    "s0024": [
+      "https://www.ipcc.ch/sr15",
+      "https://www.ipcc.ch/site/assets/uploads/2018/03/ar4_wg2_full_report.pdf",
+      "https://www.ipcc.ch/site/assets/uploads/2018/03/ar4-wg1-chapter1.pdf",
+      "https://www.ipcc.ch/site/assets/uploads/2018/02/WG1AR5_Chapter12_FINAL.pdf"
+    ]
+  }
+}

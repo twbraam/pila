@@ -1,0 +1,17 @@
+{
+  "evidenceRun": "results/7wFWgopJP5Q/evidence-20261017T080216689Z",
+  "sources": {
+    "s0013::part-1": [
+      "https://tfc-taiwan.org.tw/fact-check-reports/migration-6268",
+      "https://www.bbc.com/zhongwen/trad/chinese-news-41004248",
+      "https://www.bbc.com/zhongwen/trad/chinese-news-39698936",
+      "https://www.bbc.com/zhongwen/articles/cj02eq1l7j5o/trad.amp"
+    ],
+    "s0010": [
+      "https://www.bbc.com/zhongwen/trad/world-64239386",
+      "https://www.bbc.com/zhongwen/articles/c79rxj51qg2o/trad",
+      "https://www.bbc.com/zhongwen/articles/c79rxj51qg2o/trad.amp",
+      "https://www.bbc.com/zhongwen/trad/chinese-news-56357890"
+    ]
+  }
+}

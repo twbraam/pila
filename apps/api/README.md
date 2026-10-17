@@ -102,8 +102,15 @@ The mock (`src/factcheck/mock.ts`) returns one item per target of a recorded Jev
 | anything else | the English run | 36 |
 
 `timestamp` = `start`, `sentence` = `text` (HTML entities such as `&quot;` decoded), `score` = `floor(suspicionScore)`
-clamped to 0-3 (so `score >= 2` is exactly what Jev flagged), `sources` = `[]` (screening only). Chinese targets are
-parts of long caption sentences, so several items can share a timestamp.
+clamped to 0-3 (so `score >= 2` is exactly what Jev flagged). Chinese targets are parts of long caption sentences, so
+several items can share a timestamp.
+
+`sources` come from the recorded evidence runs (`results/<videoId>/evidence-*`, built into
+`src/factcheck/mock-results/<videoId>.evidence.json` by `npx tsx scripts/mock-evidence.ts`; a test checks they still
+match). Per searched claim: Jev's citation URLs, or, when Jev cited nothing, the pages Tavily found, best first.
+In both current runs Jev cited nothing, so every source is an **unconfirmed search result**. Claims that were not
+searched have `sources: []`: `OwqIy8Ikv-c` has sources at 2.42, 101.68, 168.7 s (187 s was skipped for search
+budget); `7wFWgopJP5Q` at 543.819 and 646.029 s.
 
 ## Plugging in the real functions
 

@@ -57,7 +57,8 @@ returns the server → Overlay array defined below (top-level array, exactly `ti
 
 The API chains a transcript function and a fact-check function. Both are **mocks** today, built from recorded Jev
 screenings: `OwqIy8Ikv-c` (English, 36 results) and `7wFWgopJP5Q` (Chinese, 24 results); any other video ID gets the
-English results. `score` is Jev's `suspicionScore` floored, so `score >= 2` means flagged; `sources` are empty (headers `x-pila-transcript-source: mock`, `x-pila-factcheck-source: mock`). Extract and Process
+English results. `score` is Jev's `suspicionScore` floored, so `score >= 2` means flagged. `sources` come from the recorded evidence
+runs: Jev's citations, else the Tavily results for that claim (unconfirmed by Jev); unsearched claims have `[]` (headers `x-pila-transcript-source: mock`, `x-pila-factcheck-source: mock`). Extract and Process
 plug in through `apps/api/src/transcripts/provider.ts` and `apps/api/src/factcheck/provider.ts`. Deployment:
 [`infra/aws/README.md`](./infra/aws/README.md).
 

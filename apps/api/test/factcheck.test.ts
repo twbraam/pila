@@ -61,7 +61,7 @@ describe("mockFactCheck", () => {
 
 describe("toFactCheckItem", () => {
   it("clamps scores to 0-3 and decodes HTML entities", () => {
-    const target = { text: " &quot;x&quot; &amp; y ", start: 1, suspicionScore: 0 };
+    const target = { sentenceId: "s1", text: " &quot;x&quot; &amp; y ", start: 1, suspicionScore: 0 };
     expect(toFactCheckItem({ ...target, suspicionScore: 3.4 })).toEqual({ timestamp: 1, sentence: '"x" & y', score: 3, sources: [] });
     expect(toFactCheckItem({ ...target, suspicionScore: -0.2 }).score).toBe(0);
   });
@@ -95,5 +95,19 @@ describe("factCheckProviders", () => {
     expect(factCheckProviders.mock).toBe(mockFactCheck);
     expect(isFactCheckSource("mock")).toBe(true);
     expect(isFactCheckSource("toString")).toBe(false);
+  });
+});
+
+describe("mock evidence", () => {
+  it("adds sources to the searched claims only", async () => {
+    const items = await check("OwqIy8Ikv-c");
+    const withSources = items.filter((i) => i.sources.length > 0).map((i) => i.timestamp);
+    expect(withSources).toEqual([2.42, 101.68, 168.7]); // s0003, s0017, s0024; s0025 was not searched (budget)
+    expect(items.find((i) => i.timestamp === 168.7)?.sources[0]).toBe("https://www.ipcc.ch/sr15");
+  });
+
+  it("adds sources to both flagged Chinese claims", async () => {
+    const items = await check("7wFWgopJP5Q");
+    expect(items.filter((i) => i.sources.length > 0).map((i) => i.timestamp)).toEqual([543.819, 646.029]);
   });
 });
