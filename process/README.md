@@ -16,14 +16,14 @@ const results = await processTranscript(transcript);
 
 Set `GEMINI_API_KEY` in the server environment or root `.env`. Entry points load `.env` without overriding existing environment variables. Library callers load their own environment or supply `apiKey` through `ProcessOptions`.
 
-`ProcessOptions` also accepts `screenModel`, `verifyModel`, `threshold`, `timeoutMs`, `signal`, and an injectable `fetch` for offline tests. The default screening cutoff is 3, exclusive. Lower diagnostic cutoffs can check more sentences, but the public output still excludes scores of 3 or less. The default processing timeout is 180 seconds; the HTTP endpoint shares its 180-second deadline across extraction and processing. Signals propagate to every provider call.
+`ProcessOptions` also accepts `screenModel`, `verifyModel`, `threshold`, `timeoutMs`, `signal`, and an injectable `fetch` for offline tests. The default screening cutoff is 2, exclusive. Lower diagnostic cutoffs can check more sentences, but the public output still excludes scores of 2 or less. The default processing timeout is 180 seconds; the HTTP endpoint shares its 180-second deadline across extraction and processing. Signals propagate to every provider call.
 
 ## Screen, ground, judge
 
-1. `screen.ts` reads the entire transcript and scores every sentence from 0 to 5. Only ratings **strictly greater than 3** proceed by default. The model must return every sentence exactly once with a rating and screening rationale.
+1. `screen.ts` reads the entire transcript and scores every sentence from 0 to 5. Only ratings **strictly greater than 2** proceed by default. The model must return every sentence exactly once with a rating and screening rationale.
 2. `check.ts` sends the full transcript as context to Gemini with `google_search`, asking for findings only on flagged sentences. `grounding.ts` attaches sources only to findings cited by the provider's grounding metadata. It handles UTF-8 byte offsets and response part indices.
 3. A separate Gemini call judges those findings as `truth`, `not_truth`, or `unchecked`. Missing results, duplicate IDs, invalid verdicts, and malformed output are errors. A conclusion without a cited HTTP(S) source, or with `NO SOURCES FOUND` findings, becomes `unchecked`.
-4. `processTranscript()` returns only `not_truth` results with a rating above 3 and at least one cited source. It looks up each original sentence by ID, preserving the exact original text and start time. It returns results in transcript order, with the verifier's reason in `explanation`.
+4. `processTranscript()` returns only `not_truth` results with a rating above 2 and at least one cited source. It looks up each original sentence by ID, preserving the exact original text and start time. It returns results in transcript order, with the verifier's reason in `explanation`.
 
 The rating is the screener's original suspicion score, including fractional values. It is not rescaled, rounded into an integer, or replaced by an invented verdict score. A high screening score alone never produces an Overlay item. Skipped sentences are not verified true.
 
@@ -47,7 +47,7 @@ Every result has exactly five fields:
 
 - `timestamp`: original sentence `start`, in seconds.
 - `sentence`: original sentence `text`.
-- `score`: finite number on the original 0–5 screening scale, strictly greater than 3 and at most 5.
+- `score`: finite number on the original 0–5 screening scale, strictly greater than 2 and at most 5.
 - `explanation`: nonempty evidence-based reason from the verifier.
 - `sources`: at least one HTTP(S) URL cited for this sentence.
 
@@ -65,7 +65,7 @@ npm run check -- transcript.json --threshold 2 --out report.txt
 npm run factcheck -- transcript.json --format json
 ```
 
-`screen` scores sentences and lists those strictly above `--threshold` (default 3); `--all` includes every sentence. `check` runs screening, grounding, and judging; its default text report lists sourced problems, while `--format json` includes every verified sentence, model names, screening rationales, verdicts, counts, and timing. These diagnostic objects are separate from the HTTP Overlay contract.
+`screen` scores sentences and lists those strictly above `--threshold` (default 2); `--all` includes every sentence. `check` runs screening, grounding, and judging; its default text report lists sourced problems, while `--format json` includes every verified sentence, model names, screening rationales, verdicts, counts, and timing. These diagnostic objects are separate from the HTTP Overlay contract.
 
 `factcheck` retains the branch's separate whole-video workflow: overview, grounding of factual claims, judging, and a report of the video's message and problems. It does not use the screening cutoff and does not supply `/check`'s output. All three CLIs accept `--out`; `check` and `factcheck` accept `--format text|json`.
 

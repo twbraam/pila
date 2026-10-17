@@ -225,7 +225,7 @@ For older `{ text, start, duration }[]` downloads, supply the video ID separatel
 
 The implementation lives in [`process/`](./process/README.md) and consumes the validated shared `Transcript` directly. It keeps the original video ID, sentence IDs, text, and timing throughout processing. It uses the same root package and server as Extract.
 
-1. **Screen:** Gemini reads the full transcript and assigns every sentence a suspicion rating from 0 to 5. Sentences scoring strictly above 3 proceed to verification; skipped sentences produce no result and are not verified true.
+1. **Screen:** Gemini reads the full transcript and assigns every sentence a suspicion rating from 0 to 5. Sentences scoring strictly above 2 proceed to verification; skipped sentences produce no result and are not verified true.
 2. **Ground:** Gemini with Google Search checks the flagged sentences using the full transcript as context. Sources are attached only where the provider's grounding metadata cites the findings for that sentence.
 3. **Judge:** a separate Gemini call assesses the search findings. A conclusion without an attached HTTP(S) source remains inconclusive. The API returns the original screening rating, without rounding, only when verification finds a sourced problem. The rating measures suspicion on a 0–5 scale; it is not a calibrated probability of falsehood.
 
@@ -262,13 +262,13 @@ The shared output contract is implemented in [`shared/overlay-results.ts`](./sha
 | --- | --- | --- |
 | `timestamp` | `number` | Start time in seconds from the beginning of the video, taken from the original transcript sentence's `start`. |
 | `sentence` | `string` | Original transcript sentence text, taken from `text`. |
-| `score` | `number` | Original suspicion rating on a 0–5 scale, strictly greater than 3; fractional values are retained. |
+| `score` | `number` | Original suspicion rating on a 0–5 scale, strictly greater than 2; fractional values are retained. |
 | `explanation` | `string` | Evidence-based reason from the verifier explaining the problem. |
 | `sources` | `string[]` | At least one HTTP(S) source URL cited for this sentence. |
 
 Each result has exactly these five fields. `explanation` is the verifier's evidence-based reason, not the screening rationale. The response has no wrapper object, and Overlay does not need the internal `Transcript`, sentence IDs, or server file paths. The client associates the response with the video it requested and uses `timestamp` for playback. Return results in nondecreasing timestamp order. A successful check with no reportable results returns `[]`; extraction or processing failures must remain errors.
 
-`OverlayResult` and `OverlayResults` provide the TypeScript types. `assertOverlayResults()` validates the exact fields, finite nonnegative timestamps, nonempty sentence text, finite scores strictly above 3 and at most 5, nonempty explanations, at least one HTTP(S) source URL, and chronological order. Supported and inconclusive claims, and screening ratings of 3 or less, are omitted.
+`OverlayResult` and `OverlayResults` provide the TypeScript types. `assertOverlayResults()` validates the exact fields, finite nonnegative timestamps, nonempty sentence text, finite scores strictly above 2 and at most 5, nonempty explanations, at least one HTTP(S) source URL, and chronological order. Supported and inconclusive claims, and screening ratings of 2 or less, are omitted.
 
 The server validates this contract before replying and checks that every result matches an original transcript sentence and start time. Internal diagnostics, sentence IDs, model metadata, and server file paths are omitted from the HTTP response.
 

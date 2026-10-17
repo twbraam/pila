@@ -1,4 +1,4 @@
-export const DEFAULT_THRESHOLD = 3;
+export const DEFAULT_THRESHOLD = 2;
 export const DEFAULT_TIMEOUT_MS = 180_000;
 export const DEFAULT_SCREEN_MODEL = 'gemini-3.5-flash-lite';
 export const DEFAULT_VERIFY_MODEL = 'gemini-3.8-flash';

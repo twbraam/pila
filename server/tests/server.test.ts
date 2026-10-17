@@ -55,7 +55,7 @@ function checkVideo(base: string, body: unknown = { url: VIDEO_URL }) {
 }
 
 test('the default HTTP pipeline runs real Process code with simulated Gemini responses', async () => {
-  const fake = fakeGemini({ scores: [4.25, 1, 4] });
+  const fake = fakeGemini({ scores: [2.25, 1, 4] });
   await withServer({
     extract: async () => structuredClone(pipelineTranscript),
     processOptions: { apiKey: 'offline', fetch: fake.fetch },
@@ -63,7 +63,7 @@ test('the default HTTP pipeline runs real Process code with simulated Gemini res
     const response = await checkVideo(base);
     assert.equal(response.status, 200);
     assert.deepEqual(await response.json(), [{
-      timestamp: 1.123456, sentence: 'A claim to check.', score: 4.25,
+      timestamp: 1.123456, sentence: 'A claim to check.', score: 2.25,
       explanation: 'The first claim is contradicted.', sources: ['https://example.org/evidence'],
     }]);
     assert.equal(fake.calls.length, 3);

@@ -5,25 +5,25 @@ import { check } from '../check';
 import { transcript, fakeGemini } from './fixtures/gemini';
 
 test('public output includes only sourced problems, retaining the screening score and verifier explanation', async () => {
-  const fake = fakeGemini({ scores: [4.253, 1, 4] });
+  const fake = fakeGemini({ scores: [2.253, 1, 4] });
   assert.deepEqual(await processTranscript(transcript, { apiKey: 'offline', fetch: fake.fetch }), [{
     timestamp: 1.123456,
     sentence: 'A claim to check.',
-    score: 4.253,
+    score: 2.253,
     explanation: 'The first claim is contradicted.',
     sources: ['https://example.org/evidence'],
   }]);
 });
 
-test('score 3 is excluded, just above 3 is included, and 5 is included', async () => {
-  for (const score of [3, 3.00001, 5]) {
+test('score 2 is excluded, just above 2 is included, and 3 through 5 are included', async () => {
+  for (const score of [2, 2.00001, 3, 5]) {
     const fake = fakeGemini({
       scores: [score, 0, 0], notes: '0: Sources contradict this claim.',
       judging: JSON.stringify([{ id: 0, verdict: 'not_truth', reason: 'Evidence contradicts the claim.' }]),
     });
     const results = await processTranscript(transcript, { apiKey: 'offline', fetch: fake.fetch });
-    assert.deepEqual(results.map(result => result.score), score === 3 ? [] : [score]);
-    assert.equal(fake.calls.length, score === 3 ? 1 : 3);
+    assert.deepEqual(results.map(result => result.score), score === 2 ? [] : [score]);
+    assert.equal(fake.calls.length, score === 2 ? 1 : 3);
   }
 });
 

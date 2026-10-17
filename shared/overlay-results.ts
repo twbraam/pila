@@ -1,4 +1,4 @@
-/** Original screening suspicion rating on a 0–5 scale; report only scores > 3. */
+/** Original screening suspicion rating on a 0–5 scale; report only scores > 2. */
 export type OverlayScore = number;
 
 /** One server result for Overlay. Timestamp is seconds from the video's start. */
@@ -41,7 +41,7 @@ export function assertOverlayResults(value: unknown): asserts value is OverlayRe
       !Object.keys(result).every(key => ['timestamp', 'sentence', 'score', 'explanation', 'sources'].includes(key)) ||
       typeof result.timestamp !== 'number' || !Number.isFinite(result.timestamp) || result.timestamp < 0 ||
       typeof result.sentence !== 'string' || result.sentence.trim() === '' ||
-      typeof result.score !== 'number' || !Number.isFinite(result.score) || result.score <= 3 || result.score > 5 ||
+      typeof result.score !== 'number' || !Number.isFinite(result.score) || result.score <= 2 || result.score > 5 ||
       typeof result.explanation !== 'string' || result.explanation.trim() === '' ||
       !Array.isArray(result.sources) || result.sources.length === 0 || !result.sources.every(isSourceUrl)
     ) {

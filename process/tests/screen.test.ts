@@ -21,8 +21,8 @@ test('screening preserves original IDs, text, and timing without rounding', asyn
       const body = JSON.parse(String(init.body));
       assert(body.contents[0].parts[0].text.includes(transcript.sentences[0]!.text));
       return Response.json({ candidates: [{ finishReason: 'STOP', content: { parts: [{ text: JSON.stringify([
-        { id: 1, score: 2.9, reason: 'Specific claim.' },
-        { id: 0, score: 3.01, reason: 'Needs checking.' },
+        { id: 1, score: 2, reason: 'Specific claim.' },
+        { id: 0, score: 2.01, reason: 'Needs checking.' },
       ]) }] } }] });
     },
   });

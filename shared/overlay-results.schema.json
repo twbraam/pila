@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Pila Overlay Results",
-  "description": "Evidence-backed problems in timestamp order. Score is the original 0-5 screening rating, strictly greater than 3. Validate chronological order with assertOverlayResults.",
+  "description": "Evidence-backed problems in timestamp order. Score is the original 0-5 screening rating, strictly greater than 2. Validate chronological order with assertOverlayResults.",
   "type": "array",
   "items": {
     "type": "object",
@@ -14,7 +14,7 @@
         "description": "Original transcript sentence start, in seconds from the video's beginning."
       },
       "sentence": { "type": "string", "pattern": "\\S" },
-      "score": { "type": "number", "exclusiveMinimum": 3, "maximum": 5 },
+      "score": { "type": "number", "exclusiveMinimum": 2, "maximum": 5 },
       "explanation": { "type": "string", "pattern": "\\S" },
       "sources": {
         "type": "array",

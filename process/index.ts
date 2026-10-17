@@ -17,7 +17,7 @@ export function toOverlayResults(transcript: Transcript, result: CheckResult): O
   const output: OverlayResults = [];
   for (const original of transcript.sentences) {
     const sentence = verified.get(original.id);
-    if (!sentence || sentence.suspicionScore <= 3 || sentence.verdict !== 'not_truth' || sentence.sources.length === 0) continue;
+    if (!sentence || sentence.suspicionScore <= 2 || sentence.verdict !== 'not_truth' || sentence.sources.length === 0) continue;
     output.push({
       timestamp: original.start,
       sentence: original.text,

@@ -11,16 +11,16 @@ const result: OverlayResult = {
   sources: ['https://factcheck.org/...'],
 };
 
-test('Overlay results accept original suspicion ratings above 3, exact timestamps, Unicode, and no results', () => {
-  const results: OverlayResults = [3.0001, 3.5, 4, 5].map(score => ({ ...result, score }));
+test('Overlay results accept original suspicion ratings above 2, exact timestamps, Unicode, and no results', () => {
+  const results: OverlayResults = [2.0001, 2.5, 3, 3.5, 4, 5].map(score => ({ ...result, score }));
   assertOverlayResults(results);
   assertOverlayResults([]);
   assertOverlayResults([{ ...result, timestamp: 0, sentence: '這是一句話。' }]);
   assertOverlayResults([{ ...result, sources: ['http://example.org/evidence', 'https://example.org/other'] }]);
 });
 
-test('Overlay scores must be finite numbers strictly above 3 and at most 5 without coercion', () => {
-  for (const score of [-1, 0, 1, 2, 3, 5.001, 6, NaN, Infinity, '4', null, undefined, true]) {
+test('Overlay scores must be finite numbers strictly above 2 and at most 5 without coercion', () => {
+  for (const score of [-1, 0, 1, 2, 5.001, 6, NaN, Infinity, '4', null, undefined, true]) {
     assert.throws(() => assertOverlayResults([{ ...result, score }]), /Invalid Overlay result/);
   }
 });
@@ -69,7 +69,7 @@ test('the portable schema and README examples use the same five-field output con
   assert.equal(schema.type, 'array');
   assert.equal(schema.items.additionalProperties, false);
   assert.deepEqual(schema.items.required, ['timestamp', 'sentence', 'score', 'explanation', 'sources']);
-  assert.deepEqual(schema.items.properties.score, { type: 'number', exclusiveMinimum: 3, maximum: 5 });
+  assert.deepEqual(schema.items.properties.score, { type: 'number', exclusiveMinimum: 2, maximum: 5 });
   const examples: unknown[] = [];
   for (const path of ['README.md', 'process/README.md']) {
     const markdown = await readFile(path, 'utf8');
