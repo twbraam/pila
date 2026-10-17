@@ -93,10 +93,17 @@ type FactCheckFn = (
 The API validates what it returns: `timestamp` ≥ 0, `score` an integer 0-3, `sources` http(s) URLs (at most 20),
 and drops any extra fields. A throw or an invalid item gives `502 factcheck_failed` (details only in logs).
 
-The mock (`src/factcheck/mock.ts`) returns, for **every** video, one item per sentence of a recorded Jev screening
-of the Lindzen video (`results/OwqIy8Ikv-c/20261017T070618135Z/results.json`, copied to
-`src/factcheck/mock-jev-results.json` and kept identical by a test): `timestamp` = `start`, `sentence` = `text`,
-`score` = `floor(suspicionScore)` (so `score >= 2` is exactly what Jev flagged), `sources` = `[]` (screening only).
+The mock (`src/factcheck/mock.ts`) returns one item per target of a recorded Jev screening, chosen by video ID:
+
+| `videoId` | Jev run (copied to `src/factcheck/mock-results/`, kept identical by a test) | Items |
+| - | - | - |
+| `OwqIy8Ikv-c` | `results/OwqIy8Ikv-c/20261017T070618135Z/results.json` (English) | 36 |
+| `7wFWgopJP5Q` | `results/7wFWgopJP5Q/20261017T071219936Z/results.json` (Chinese) | 24 |
+| anything else | the English run | 36 |
+
+`timestamp` = `start`, `sentence` = `text` (HTML entities such as `&quot;` decoded), `score` = `floor(suspicionScore)`
+clamped to 0-3 (so `score >= 2` is exactly what Jev flagged), `sources` = `[]` (screening only). Chinese targets are
+parts of long caption sentences, so several items can share a timestamp.
 
 ## Plugging in the real functions
 

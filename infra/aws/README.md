@@ -90,7 +90,7 @@ curl -s https://4qigmpqu4wrhkst6ijpt227whu0xjnlc.lambda-url.us-west-2.on.aws/hea
 curl -s -X POST -H 'content-type: application/json' https://d3tuhog92nak7r.cloudfront.net/factcheck -d '{}'  # 401 (no token)
 curl -s -X POST -H 'content-type: application/json' -H "authorization: Bearer $PILA_API_TOKEN" \
   https://d3tuhog92nak7r.cloudfront.net/factcheck -d '{"videoId": "OwqIy8Ikv-c"}'
-# 200, the 36 mock items from the recorded Jev run; a repeat is a cache hit (verified 2026-10-17)
+# 200, the 36 mock items from the recorded Jev run (7wFWgopJP5Q: 24 Chinese items); a repeat is a cache hit (verified 2026-10-17)
 aws logs tail /aws/lambda/pila-factcheck --region us-west-2 --since 10m
 ```
 

@@ -55,9 +55,9 @@ built now. `POST /factcheck` with `Authorization: Bearer <token>` and `{ "videoI
 returns the server → Overlay array defined below (top-level array, exactly `timestamp`, `sentence`, `score`,
 `sources`). Errors are `{ "error": { "code", "message", "requestId" } }` with a 4xx/5xx status.
 
-The API chains a transcript function and a fact-check function. Both are **mocks** today: every video gets the same
-36 results from a recorded Jev screening of `OwqIy8Ikv-c` (`results/OwqIy8Ikv-c/20261017T070618135Z`;
-`score` is Jev's `suspicionScore` floored, so `score >= 2` means flagged; `sources` are empty) (headers `x-pila-transcript-source: mock`, `x-pila-factcheck-source: mock`). Extract and Process
+The API chains a transcript function and a fact-check function. Both are **mocks** today, built from recorded Jev
+screenings: `OwqIy8Ikv-c` (English, 36 results) and `7wFWgopJP5Q` (Chinese, 24 results); any other video ID gets the
+English results. `score` is Jev's `suspicionScore` floored, so `score >= 2` means flagged; `sources` are empty (headers `x-pila-transcript-source: mock`, `x-pila-factcheck-source: mock`). Extract and Process
 plug in through `apps/api/src/transcripts/provider.ts` and `apps/api/src/factcheck/provider.ts`. Deployment:
 [`infra/aws/README.md`](./infra/aws/README.md).
 

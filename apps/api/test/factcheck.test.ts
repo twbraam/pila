@@ -6,30 +6,50 @@ import { getMockTranscript } from "../src/transcripts/index.js";
 
 const item = { timestamp: 42.5, sentence: "Sample excerpt", score: 2, sources: ["https://factcheck.org/x"] };
 
-const JEV_RUN = "../../../results/OwqIy8Ikv-c/20261017T070618135Z/results.json";
-const jevRun = JSON.parse(readFileSync(new URL(JEV_RUN, import.meta.url), "utf8"));
+const RUNS = {
+  "OwqIy8Ikv-c": "../../../results/OwqIy8Ikv-c/20261017T070618135Z/results.json",
+  "7wFWgopJP5Q": "../../../results/7wFWgopJP5Q/20261017T071219936Z/results.json",
+} as const;
+const IDS = Object.keys(RUNS) as (keyof typeof RUNS)[];
+type Target = { text: string; start: number; suspectedIssue: boolean };
+const run = (id: keyof typeof RUNS): { targets: Target[] } => JSON.parse(readFileSync(new URL(RUNS[id], import.meta.url), "utf8"));
+const check = async (videoId: string) => mockFactCheck(await getMockTranscript(videoId));
 
 describe("mockFactCheck", () => {
-  it("bundles an exact copy of the recorded Jev run", () => {
-    expect(JSON.parse(readFileSync(new URL("../src/factcheck/mock-jev-results.json", import.meta.url), "utf8"))).toEqual(jevRun);
+  it.each(IDS)("bundles an exact copy of the recorded Jev run for %s", (id) => {
+    const copy = JSON.parse(readFileSync(new URL(`../src/factcheck/mock-results/${id}.json`, import.meta.url), "utf8"));
+    expect(copy).toEqual(run(id));
   });
 
-  it("returns one item per screened sentence, from the Jev run, in video order", async () => {
-    const items = await mockFactCheck(await getMockTranscript("OwqIy8Ikv-c"));
+  it.each(IDS)("returns one item per Jev target of %s, in video order", async (id) => {
+    const items = await check(id);
+    const targets = run(id).targets;
     expect(parseFactCheckItems(items)).toEqual(items);
-    expect(items).toHaveLength(jevRun.targets.length);
-    expect(items.map((i) => i.sentence)).toEqual(jevRun.targets.map((t: { text: string }) => t.text));
-    expect(items.map((i) => i.timestamp)).toEqual(jevRun.targets.map((t: { start: number }) => t.start));
+    expect(items.map((i) => i.timestamp)).toEqual(targets.map((t) => t.start));
+    expect(items.map((i) => i.sentence)).toEqual(targets.map((t) => t.text.replaceAll("&quot;", '"').trim()));
     for (const i of items) expect(Object.keys(i).sort()).toEqual(["score", "sentence", "sources", "timestamp"]);
   });
 
-  it("floors Jev's 0-3 suspicion score, so score >= 2 means Jev flagged the sentence", async () => {
-    const items = await mockFactCheck(await getMockTranscript("OwqIy8Ikv-c"));
+  it.each(IDS)("gives score >= 2 exactly to what Jev flagged in %s", async (id) => {
+    const flagged = run(id).targets.filter((t) => t.suspectedIssue).map((t) => t.start);
+    expect((await check(id)).filter((i) => i.score >= 2).map((i) => i.timestamp)).toEqual(flagged);
+  });
+
+  it("floors Jev's 0-3 suspicion score", async () => {
+    const items = await check("OwqIy8Ikv-c");
     expect(items[0]).toEqual({ timestamp: 2.42, sentence: "I’m an atmospheric physicist.", score: 0, sources: [] });
-    expect(items.find((i) => i.sentence.startsWith("For 30 years"))?.score).toBe(2); // suspicionScore 2.69
+    expect(items.find((i) => i.sentence.startsWith("For 30 years"))?.score).toBe(2); // 2.69
     expect(items.find((i) => i.sentence.startsWith("4) Over this period"))?.score).toBe(1); // 1.95, below threshold
-    const flagged = jevRun.targets.filter((t: { suspectedIssue: boolean }) => t.suspectedIssue).map((t: { text: string }) => t.text);
-    expect(items.filter((i) => i.score >= 2).map((i) => i.sentence)).toEqual(flagged);
+  });
+
+  it("returns the Chinese run for 7wFWgopJP5Q, with HTML entities decoded", async () => {
+    const items = await check("7wFWgopJP5Q");
+    expect(items[0]).toEqual({ timestamp: 22.872, sentence: "有沒有人知道我在講哪一國的語言?", score: 0, sources: [] });
+    expect(items.some((i) => i.sentence.includes("&quot;"))).toBe(false);
+  });
+
+  it("falls back to the English run for any other video", async () => {
+    expect(await check("dQw4w9WgXcQ")).toEqual(await check("OwqIy8Ikv-c"));
   });
 
   it("stops when the signal is aborted", async () => {
@@ -40,9 +60,9 @@ describe("mockFactCheck", () => {
 });
 
 describe("toFactCheckItem", () => {
-  it("clamps scores to 0-3", () => {
-    const target = { text: "x", start: 1, suspicionScore: 0 };
-    expect(toFactCheckItem({ ...target, suspicionScore: 3.4 }).score).toBe(3);
+  it("clamps scores to 0-3 and decodes HTML entities", () => {
+    const target = { text: " &quot;x&quot; &amp; y ", start: 1, suspicionScore: 0 };
+    expect(toFactCheckItem({ ...target, suspicionScore: 3.4 })).toEqual({ timestamp: 1, sentence: '"x" & y', score: 3, sources: [] });
     expect(toFactCheckItem({ ...target, suspicionScore: -0.2 }).score).toBe(0);
   });
 });
