@@ -15,7 +15,9 @@ process/                  Jev preprocessing and screening CLI
 server/                   Shared HTTP server and endpoint tests
 shared/
   transcript.ts           Shared Transcript types and runtime validation
-  transcript.schema.json  Portable JSON output contract
+  transcript.schema.json  Internal Extract → Process JSON contract
+  overlay-results.ts      Server → Overlay types and validation (TODO)
+  overlay-results.schema.json  Portable server → Overlay contract (TODO)
 examples/                 Example videos and transcript fixtures
 package.json              Shared dependencies and commands
 tsconfig.json             Shared TypeScript configuration
@@ -25,7 +27,7 @@ Run commands from the repository root. Each step keeps its implementation in its
 
 ## Proof of concept
 
-Extract retrieves the whole video's caption track and assembles caption fragments into timed sentence units. On the same server, Process will check those units and produce evidence-backed results for Overlay. The `Transcript` contract is the internal Extract → Process handoff; the server → Overlay response is a JSON array of results with `timestamp`, `sentence`, `explanation`, and `sources`.
+Extract retrieves the whole video's caption track and assembles caption fragments into timed sentence units. On the same server, Process will check those units and produce results for Overlay. The `Transcript` contract is the internal Extract → Process handoff; the server → Overlay response is a JSON array of results with `timestamp`, `sentence`, `score`, and `sources`.
 
 ```mermaid
 flowchart LR
@@ -65,7 +67,7 @@ curl --fail-with-body http://127.0.0.1:3000/extract \
 
 The server fetches the captions and writes `examples/transcripts/<videoId>.json` using the shared `Transcript` contract. The client receives HTTP **201** with `videoId`, the selected `language`, the saved `file` path, and `sentenceCount`. Only JSON is saved.
 
-This is the **current extraction-only endpoint**. It does not run Process or return the planned [server → Overlay response](#output-contract-server--overlay-todo). Integrating Process and returning that result array is still TODO.
+This is the **current extraction-only endpoint**. It does not run Process or return the [server → Overlay response](#output-contract-server--overlay). The output shape is documented; its shared validator, Process integration, and returning that array are still TODO.
 
 `lang` is optional. When omitted, the server uses YouTube's first available caption track; when supplied, it requests that exact language. Use `zh-TW` or `zh-Hant` for videos offering those Traditional Chinese tracks. No translation or script conversion is performed.
 
@@ -198,25 +200,25 @@ npm run jev -- examples/transcripts/OwqIy8Ikv-c.json
 npm run jev -- examples/transcripts/7wFWgopJP5Q.json
 ```
 
-See [JEV.md](./JEV.md) for JSON prompts, score criteria, options, and the `results/` layout. A score prioritizes fact-checking; it is not a verified misinformation warning.
+See [JEV.md](./JEV.md) for JSON prompts, score criteria, options, API reuse, and the `results/` layout. The module also exports callable functions; a server handler need not spawn the CLI. Internal fractional screening scores prioritize review and are not the final integer Overlay scores.
 
 The complete processing pipeline is:
 
-1. **Screen with Jev (implemented as a CLI):** identify statements that need fact-checking. A candidate proceeds to evidence checking; otherwise, continue with the next sentence.
-2. **Find and assess evidence (TODO):** use Tavily to search for evidence links, then ask Jev to assess whether the statement should be flagged or confirmed. If suitable evidence supports a conclusion, include a result with an explanation and source URLs. If no good evidence is found, skip the result and continue.
+1. **Screen with Jev (implemented):** identify statements that need fact-checking. A candidate proceeds to evidence checking; otherwise, continue with the next sentence.
+2. **Find and assess evidence (TODO):** use Tavily to search for evidence links, then use Jev to assess the statement and produce an integer score with source URLs. The final score meanings and reporting criteria will be specified separately.
 
 **Input:** the internal `Transcript`. **Output:** the array defined below. A skipped sentence produces no result; that does not establish that it is true.
 
-### Output contract: server → Overlay (TODO)
+### Output contract: server → Overlay
 
-The completed server must return a **top-level JSON array** with this structure:
+The completed server must return a **top-level JSON array** with the structure below. Shared types, schema, and runtime validation are planned for `shared/overlay-results.ts` and `shared/overlay-results.schema.json`; those files are not yet present.
 
 ```json
 [
   {
     "timestamp": 42.5,
     "sentence": "Sample excerpt from video speech or transcript",
-    "explanation": "Context explaining why this statement is flagged or confirmed",
+    "score": 2,
     "sources": ["https://factcheck.org/..."]
   }
 ]
@@ -226,20 +228,22 @@ The completed server must return a **top-level JSON array** with this structure:
 | --- | --- | --- |
 | `timestamp` | `number` | Start time in seconds from the beginning of the video, taken from the original transcript sentence's `start`. |
 | `sentence` | `string` | Original transcript sentence text, taken from `text`. |
-| `explanation` | `string` | Context and evidence explaining why the statement is flagged or confirmed. |
-| `sources` | `string[]` | Evidence URLs supporting the explanation. |
+| `score` | `0 \| 1 \| 2 \| 3` | Integer score. Its meaning and scoring criteria will be specified later. |
+| `sources` | `string[]` | HTTP(S) source URLs associated with the result. |
 
-Each result has these four fields. The response has no wrapper object, and Overlay does not need the internal `Transcript`, sentence IDs, or server file paths. The client associates the response with the video it requested and uses `timestamp` for playback. Return results in nondecreasing timestamp order. A successful check with no reportable results returns `[]`; extraction or processing failures must remain errors.
+Each result has exactly these four fields; `explanation` is no longer part of the contract. The response has no wrapper object, and Overlay does not need the internal `Transcript`, sentence IDs, or server file paths. The client associates the response with the video it requested and uses `timestamp` for playback. Return results in nondecreasing timestamp order. A successful check with no reportable results returns `[]`; extraction or processing failures must remain errors.
 
-**Process TODO:** implement the result type, schema, and runtime validation in `shared/`; add evidence checking and field mapping to the existing screening code in `process/`; integrate Process into the existing server so it returns this array after Extract and Process finish; and add contract and server integration tests. Split targets must be mapped back to their original source sentence text and start time. The response structure is agreed; its implementation is still pending.
+The planned `OverlayResult`, `OverlayResults`, and `assertOverlayResults()` must enforce the exact fields, finite nonnegative timestamps, nonempty sentence text, integer scores from 0 through 3, HTTP(S) source URLs, and chronological order. The contract permits an empty `sources` array and does not assign score meanings.
+
+**Process TODO:** implement the shared result types/schema/validator and their tests; define final scoring criteria; add evidence checking and field mapping to the existing screening code; and integrate Process into the server with integration tests. Split targets must map back to their original source sentence text and start time. The screening implementation exists; the final response and combined endpoint remain pending.
 
 ## 3. Overlay (planned)
 
 - Associate the returned array with the requested video.
 - Use each result's `timestamp` and the current playback position to show the relevant result. Multiple results can share a timestamp.
-- Display the `sentence`, its `explanation`, and clickable `sources`. The explanation states why the statement is flagged or confirmed.
+- Display the `sentence`, its `score`, and clickable `sources`. Score interpretation will be specified with the scoring criteria.
 
-**Input:** the server's result array and the current playback position. Only statements with evidence-backed results from Process produce an Overlay item.
+**Input:** the server's result array and the current playback position. Each result from Process provides an Overlay item.
 
 ## Development
 
@@ -248,7 +252,7 @@ npm run typecheck
 npm test
 ```
 
-Tests run offline and cover sentence assembly, source timing validation, the runtime output contract, URL handling, cancellation, CLI behavior, and HTTP requests to a local test server with simulated caption providers. They verify that existing files and concurrent requests cannot overwrite transcripts. Live retrieval depends on YouTube and is checked separately.
+Existing tests run offline and cover sentence assembly, source timing validation, the internal transcript contract, URL handling, cancellation, CLI behavior, and HTTP requests to a local test server with simulated caption providers. Server → Overlay contract tests are still TODO. They verify that existing files and concurrent requests cannot overwrite transcripts. Live retrieval depends on YouTube and is checked separately.
 
 ## Example videos
 

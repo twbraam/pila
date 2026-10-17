@@ -1,55 +1,44 @@
 # Process
 
-Processing runs on the **same Node.js server as Extract**, sharing the root dependencies and TypeScript configuration. The Jev screening CLI is implemented; evidence checking and server integration remain **TODO**. Processing consumes the validated `Transcript` contract from `shared/transcript.ts`, preserving source sentence IDs, text, and time ranges. The planned server integration will run Extract and then Process, returning the completed result array to Overlay.
+Processing shares Extract's Node.js runtime, root dependencies, and TypeScript configuration. Jev screening is implemented; evidence checking and HTTP endpoint integration remain TODO. The planned server runs Extract and then Process before returning results to Overlay.
 
-- `preprocess.ts`: automatically selects English or Traditional Chinese prompts, splits oversized Mandarin entries without losing source IDs/times, and builds context windows and Jev requests.
-- `jev_call.ts`: calls Jev, records timing, and saves ranked, timestamped concerns.
+- `preprocess.ts`: validates the shared transcript, selects English or Traditional Chinese prompts, splits oversized Mandarin entries, and builds context windows.
+- `jev_call.ts`: exports callable processing/API functions and provides the CLI. It records timing and saves ranked concerns with original source IDs and times.
 
 ```bash
-# Prepare only
 npm run preprocess -- examples/transcripts/OwqIy8Ikv-c.json
-
-# Call Jev (defaults: automatic language, score, threshold 2, batch size 64, context 4000 tokens)
 npm run jev -- examples/transcripts/OwqIy8Ikv-c.json
-```
-
-For Chinese transcripts, the same command works without a language flag:
-
-```bash
 npm run jev -- examples/transcripts/7wFWgopJP5Q.json
 ```
 
-Use `assertTranscript()` to validate JSON received across a file or request boundary. The portable schema is [shared/transcript.schema.json](../shared/transcript.schema.json), and a complete input example is [examples/transcripts/OwqIy8Ikv-c.json](../examples/transcripts/OwqIy8Ikv-c.json).
+Chinese prompts are selected automatically. Importing `jev_call.ts` does not execute the CLI or call the API. A server handler can call its exported functions directly. See [JEV.md](../JEV.md) for usage, prompts, scoring, and saved results.
 
-See [JEV.md](../JEV.md) for prompts, CLI options, scoring, and the `results/` layout. The current CLI writes ranked review candidates, not the final server response.
+The input is the validated `Transcript` from `shared/transcript.ts`. Current fractional concern scores are internal screening results, **not** the final integer scores below.
 
-The complete pipeline will use the existing Jev screening step, retrieve evidence with Tavily, and use Jev to assess whether each statement should be flagged or confirmed. Include an Overlay result only when suitable evidence supports the explanation. Skipping a statement does not confirm it.
-
-## Required output (TODO)
-
-The server → Overlay response must be a top-level JSON array with exactly these fields per result:
+## Required server → Overlay output
 
 ```json
 [
   {
     "timestamp": 42.5,
-    "sentence": "Sample excerpt from video speech or transcript",
-    "explanation": "Context explaining why this statement is flagged or confirmed",
+    "sentence": "Original transcript sentence",
+    "score": 2,
     "sources": ["https://factcheck.org/..."]
   }
 ]
 ```
 
-- `timestamp`: the original sentence's `start`, in seconds from the beginning of the video.
-- `sentence`: the original sentence's `text`.
-- `explanation`: context and evidence explaining why the statement is flagged or confirmed.
-- `sources`: an array of evidence URL strings supporting the explanation.
+- `timestamp`: original source sentence's `start`, in seconds.
+- `sentence`: original source sentence's complete `text`.
+- `score`: an integer `0 | 1 | 2 | 3`; final meanings/reporting rules are still to be defined.
+- `sources`: HTTP(S) URLs; an empty array is permitted by the proposed contract.
 
-Keep the original `videoId` and sentence `id` association internally while processing. Overlay receives the result array for the video it requested, without a wrapper, internal transcript, IDs, or file paths. Return results in nondecreasing timestamp order, or `[]` when a successful check produces no reportable results. Extraction and processing failures must remain errors.
+Return exactly these fields, without a wrapper or the old `explanation` field. Preserve IDs internally, map split targets back to their source sentences, and order results by timestamp. A successful check with no reportable results returns `[]`; extraction and processing failures remain errors.
 
-## Implementation TODO
+## Remaining work
 
-- Define the result type, JSON Schema, and runtime validator in `shared/`, following the [server → Overlay contract](../README.md#output-contract-server--overlay-todo).
-- Add Tavily evidence retrieval and Jev evidence assessment to the existing screening step. Map targets back to their original source sentence text and start time, including targets split from long Chinese entries.
-- Integrate Process into the shared server so the client receives the array after both extraction and processing complete. The current `POST /extract` endpoint only saves a transcript and returns metadata; it does not implement this response yet.
-- Add contract and server integration tests for the exact response shape, original text/timestamp mapping, result ordering, evidence-backed flagged or confirmed explanations, empty results, and failures.
+- Implement `shared/overlay-results.ts`, its JSON Schema, runtime validation, and contract tests. These files are not yet present in the repository.
+- Define final score meanings. Do not silently round fractional screening scores into final Overlay judgments.
+- Add Tavily evidence retrieval and Jev evidence assessment to the existing screening step.
+- Integrate Process into the shared HTTP server. Current `POST /extract` only saves a transcript and returns metadata.
+- Add server integration tests for output shape, source text/timestamps, ordering, scoring, and failures.

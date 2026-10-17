@@ -116,6 +116,30 @@ For comparison, `noul` returns a 0–1 model probability for the defined event: 
 
 Jev's `choice` type allows multiple answer options, but this workflow uses numeric ratings for ranking. A limit on answer choices is not the same as a limit on questions per request. Earlier live calls successfully included 64 targets.
 
+## Calling from a server API
+
+`npm run jev` is only the CLI entry point. Importing `process/jev_call.ts` does **not** run the CLI or make network calls. Your handler can call the existing exported function directly:
+
+```typescript
+import { run } from '../process/jev_call';
+
+const runDirectory = await run({
+  transcript: savedTranscriptPath, // Server-owned path returned by Extract.
+  language: 'auto',
+  batchSize: 64,
+  contextTokens: 4000,
+  decisionType: 'score',
+  threshold: 2,
+  outdir: undefined,
+});
+```
+
+`run()` prepares requests, loads credentials, calls Jev, saves artifacts, and returns the run directory. It does not return the scored JSON directly; that is saved as `results.json` in that directory. Do not spawn `npm` from the endpoint or accept arbitrary client-provided filesystem paths.
+
+For lower-level control, `callJev(apiKey, payload)` returns the raw response without writing files, and `summarize(payload, response, threshold)` maps it to timestamped screening results. An in-memory high-level wrapper can be added later if the API should avoid transcript/result files.
+
+These internal results are separate from main's planned Overlay response `{timestamp, sentence, score, sources}`. That final `score` must be an integer; the current fractional screening score must not be silently treated as the final judgment.
+
 ## Results folder
 
 ```text

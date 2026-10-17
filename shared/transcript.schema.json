@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Pila Transcript",
-  "description": "The whole-video JSON handoff from Extract to Processing and Overlay. IDs must be unique and sentences must be in nondecreasing start order; validate these cross-item constraints with assertTranscript.",
+  "description": "The internal whole-video JSON handoff from Extract to Process. IDs must be unique and sentences must be in nondecreasing start order; validate these cross-item constraints with assertTranscript.",
   "type": "object",
   "additionalProperties": false,
   "required": ["videoId", "sentences"],
