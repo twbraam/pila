@@ -2,7 +2,7 @@
 
 A planned Chrome extension that checks YouTube captions for potential misinformation and shows evidence links during video playback.
 
-The **Extract module is implemented as a TypeScript/Node.js HTTP endpoint, CLI, and library**. Extract and Process share the same server runtime and root package configuration. Process now includes Jev transcript screening; evidence retrieval, Overlay, and the WXT extension integration are planned. Extract uses [`youtube-transcript-plus`](https://github.com/ericmmartin/youtube-transcript-plus) to retrieve existing YouTube captions; it does not transcribe audio or require Gemini credentials.
+The **Extract module is implemented as a TypeScript/Node.js HTTP endpoint, CLI, and library**. Extract and Process share the root package configuration and must run on the **same Node.js server**. Process includes a working Jev screening CLI; evidence checking, Process integration into the server, Overlay, and the WXT extension integration remain planned. The completed server will extract captions, process them, and return the result array specified below to Overlay. Extract uses [`youtube-transcript-plus`](https://github.com/ericmmartin/youtube-transcript-plus) to retrieve existing YouTube captions; it does not transcribe audio or require Gemini credentials.
 
 ## Project layout
 
@@ -25,15 +25,19 @@ Run commands from the repository root. Each step keeps its implementation in its
 
 ## Proof of concept
 
-Extract retrieves the whole video's caption track and assembles caption fragments into timed sentence units. Processing will check those units and produce warnings for Overlay. All modules share the JSON `Transcript` contract below.
+Extract retrieves the whole video's caption track and assembles caption fragments into timed sentence units. On the same server, Process will check those units and produce evidence-backed results for Overlay. The `Transcript` contract is the internal Extract → Process handoff; the server → Overlay response is a JSON array of results with `timestamp`, `sentence`, `explanation`, and `sources`.
 
 ```mermaid
 flowchart LR
-    A["YouTube URL or ID"] --> B["Extract: fetch captions"]
-    B --> C["Assemble timed sentences"]
-    C --> D["Transcript JSON"]
-    D --> E["Processing: Jev screening; evidence stage planned"]
-    E --> F["Overlay during playback (planned)"]
+    A["YouTube URL or ID"] --> B
+    subgraph Server["Same Node.js server; Process integration TODO"]
+        B["Extract: fetch captions"] --> C["Assemble timed sentences"]
+        C --> D["Internal Transcript"]
+        D --> E["Process: Jev screening"]
+        E --> H["Evidence checking (TODO)"]
+    end
+    H --> F["JSON result array (TODO)"]
+    F --> G["Overlay during playback (planned)"]
 ```
 
 The planned extension stack is TypeScript + WXT (Manifest V3), with content scripts for playback, a background service worker for requests to the shared Extract/Process server, and Chrome messaging/storage. The caption package imports Node.js filesystem modules and runs on that server. Extension-to-server integration is still planned.
@@ -60,6 +64,8 @@ curl --fail-with-body http://127.0.0.1:3000/extract \
 ```
 
 The server fetches the captions and writes `examples/transcripts/<videoId>.json` using the shared `Transcript` contract. The client receives HTTP **201** with `videoId`, the selected `language`, the saved `file` path, and `sentenceCount`. Only JSON is saved.
+
+This is the **current extraction-only endpoint**. It does not run Process or return the planned [server → Overlay response](#output-contract-server--overlay-todo). Integrating Process and returning that result array is still TODO.
 
 `lang` is optional. When omitted, the server uses YouTube's first available caption track; when supplied, it requests that exact language. Use `zh-TW` or `zh-Hant` for videos offering those Traditional Chinese tracks. No translation or script conversion is performed.
 
@@ -113,7 +119,7 @@ main().catch(console.error);
 
 `extractTranscript()` rejects on failure. It accepts an optional third `CaptionFetcher` argument for offline tests or a replacement transport. `normalizeCaptions(videoId, captions, locale?)` is the pure assembly function for already downloaded captions.
 
-### Output contract: Extract → Processing
+### Internal output contract: Extract → Process
 
 The source of truth is [`shared/transcript.ts`](./shared/transcript.ts). A portable [JSON Schema](./shared/transcript.schema.json) describes the file structure; `assertTranscript()` additionally checks unique IDs, finite timestamps, chronological order, and `start < end`.
 
@@ -158,7 +164,7 @@ Extract owns this conversion:
 - Native captions have `{ text, offset, duration, lang }`, with numeric timestamps in **seconds**. Extract keeps their timing precision and uses `offset + duration` for each cue's end.
 - Captions are sorted by start time, preserving source order on ties. Whitespace and line breaks are normalized to spaces; empty caption text is omitted. Invalid timestamps fail extraction.
 - `Intl.Segmenter` finds sentence boundaries in the combined text, including across caption boundaries. Each sentence gets the earliest start and latest end of all contributing captions. Sentences from the same caption can share or overlap time ranges; no word-level alignment is invented.
-- IDs are assigned after assembly as `s0001`, `s0002`, and so on. Identical input and segmentation runtime produce identical IDs; sentence boundaries may change across runtime versions or caption updates. Processing and Overlay must preserve the IDs, text, and timestamps for that transcript.
+- IDs are assigned after assembly as `s0001`, `s0002`, and so on. Identical input and segmentation runtime produce identical IDs; sentence boundaries may change across runtime versions or caption updates. Process must retain the original sentence association internally and map `text` to `sentence` and `start` to `timestamp` in the Overlay response.
 - Sentence detection is a punctuation-based heuristic, not a grammatical guarantee. Abbreviations and automatic captions can produce imperfect boundaries. A final fragment is retained without adding punctuation; a passage with no sentence punctuation can remain one long unit.
 - No network or parsing failure is converted into an empty success. The contract allows `sentences: []`, but the live extractor rejects empty/unusable caption tracks because it cannot establish that the video contains no speech.
 
@@ -177,7 +183,9 @@ For older `{ text, start, duration }[]` downloads, supply the video ID separatel
 
 ## 2. Processing
 
-[`process/`](./process/README.md) consumes the shared `Transcript` contract, automatically selects English or Traditional Chinese prompts, and batches target sentences with surrounding context. Oversized Chinese entries are split into smaller targets while retaining their source IDs and original time ranges. Jev rates each target independently; Processing saves ranked concerns with the original sentence IDs and timestamps.
+[`process/`](./process/README.md) runs alongside Extract and consumes the shared `Transcript` contract. Its screening CLI automatically selects English or Traditional Chinese prompts and batches target sentences with surrounding context. Oversized Chinese entries are split into smaller targets while retaining their source IDs and original time ranges. Jev rates each target independently and saves ranked concerns.
+
+The planned server integration will run Extract and then Process before returning the result array to the client; the extension will not orchestrate these steps separately. The screening CLI's saved scores are internal review candidates, not the evidence-backed Overlay response.
 
 ```bash
 # Prepare only
@@ -190,15 +198,48 @@ npm run jev -- examples/transcripts/OwqIy8Ikv-c.json
 npm run jev -- examples/transcripts/7wFWgopJP5Q.json
 ```
 
-See [JEV.md](./JEV.md) for JSON prompts, score criteria, options, and the `results/` layout. A score prioritizes fact-checking; it is not a verified misinformation warning. The later Tavily evidence stage and `MisinformationWarning` output remain planned.
+See [JEV.md](./JEV.md) for JSON prompts, score criteria, options, and the `results/` layout. A score prioritizes fact-checking; it is not a verified misinformation warning.
+
+The complete processing pipeline is:
+
+1. **Screen with Jev (implemented as a CLI):** identify statements that need fact-checking. A candidate proceeds to evidence checking; otherwise, continue with the next sentence.
+2. **Find and assess evidence (TODO):** use Tavily to search for evidence links, then ask Jev to assess whether the statement should be flagged or confirmed. If suitable evidence supports a conclusion, include a result with an explanation and source URLs. If no good evidence is found, skip the result and continue.
+
+**Input:** the internal `Transcript`. **Output:** the array defined below. A skipped sentence produces no result; that does not establish that it is true.
+
+### Output contract: server → Overlay (TODO)
+
+The completed server must return a **top-level JSON array** with this structure:
+
+```json
+[
+  {
+    "timestamp": 42.5,
+    "sentence": "Sample excerpt from video speech or transcript",
+    "explanation": "Context explaining why this statement is flagged or confirmed",
+    "sources": ["https://factcheck.org/..."]
+  }
+]
+```
+
+| Field | Type | Meaning |
+| --- | --- | --- |
+| `timestamp` | `number` | Start time in seconds from the beginning of the video, taken from the original transcript sentence's `start`. |
+| `sentence` | `string` | Original transcript sentence text, taken from `text`. |
+| `explanation` | `string` | Context and evidence explaining why the statement is flagged or confirmed. |
+| `sources` | `string[]` | Evidence URLs supporting the explanation. |
+
+Each result has these four fields. The response has no wrapper object, and Overlay does not need the internal `Transcript`, sentence IDs, or server file paths. The client associates the response with the video it requested and uses `timestamp` for playback. Return results in nondecreasing timestamp order. A successful check with no reportable results returns `[]`; extraction or processing failures must remain errors.
+
+**Process TODO:** implement the result type, schema, and runtime validation in `shared/`; add evidence checking and field mapping to the existing screening code in `process/`; integrate Process into the existing server so it returns this array after Extract and Process finish; and add contract and server integration tests. Split targets must be mapped back to their original source sentence text and start time. The response structure is agreed; its implementation is still pending.
 
 ## 3. Overlay (planned)
 
-- Match warnings to sentences using the video ID and sentence ID.
-- Use the sentence timestamps and current playback position to show the relevant warning. Shared/overlapping time ranges may make several sentences active at once.
-- Tell the user **“This statement is probably false”** and display a clickable link to the selected source.
+- Associate the returned array with the requested video.
+- Use each result's `timestamp` and the current playback position to show the relevant result. Multiple results can share a timestamp.
+- Display the `sentence`, its `explanation`, and clickable `sources`. The explanation states why the statement is flagged or confirmed.
 
-**Input:** the `Transcript`, warnings from Processing, and the current playback position. Only sentences with evidence from Processing produce a warning.
+**Input:** the server's result array and the current playback position. Only statements with evidence-backed results from Process produce an Overlay item.
 
 ## Development
 
