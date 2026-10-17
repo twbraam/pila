@@ -1,0 +1,69 @@
+{
+  "model": "jev-1.13.0",
+  "state": {
+    "claim": "Morris Chang wrote a farewell letter praising Jensen Huang for protecting Taiwan and Chiang Wan-an for his high emotional intelligence.",
+    "evidence": {
+      "source_1": {
+        "source": "Video transcript (channel unknown)",
+        "text": "Recently, a \"farewell letter from Morris Chang\" has been circulating online, praising Jensen Huang for protecting Taiwan and saying Taipei Mayor Chiang Wan-an has high emotional intelligence. In fact, Morris Chang did not write this letter. The content was pieced together from netizens' posts and scam messages"
+      },
+      "source_2": {
+        "source": "Social media post (author unknown)",
+        "text": "This is a fake letter using his name and has nothing to do with Morris Chang⚠️ A \"Morris Chang farewell letter\" has been circulating online recently. It says his autobiography is a gift to Taiwan, and it also praises #JensenHuang for using AI to protect Taiwan and Taipei Mayor #ChiangWanAn for his high emotional intelligence"
+      },
+      "source_3": {
+        "source": "Taiwan FactCheck Center",
+        "text": "Recently, an article beginning with \"Morris Chang's Farewell Letter\" has been circulating online. It discusses Jensen Huang's influence on Taiwan's tech industry and the interaction when Chiang Wan-an gave Huang the key to the city. Our check found that the article was pieced together from scam messages and netizens' personal opinions, and was not written by Morris Chang.\n\n1. The article claims that TSMC founder Morris Chang left his autobiography to Taiwan as a gift. In fact, content such as \"Morris Chang's Farewell Letter\" was already spreading together with phishing websites as early as late 2025. It is a scam message that uses Morris Chang's name, and it was not written by him.\n\n2. The second half of the article says that NVIDIA CEO Jensen Huang protects Taiwan in a different way, and that Taipei Mayor Chiang Wan-an showed high emotional intelligence when he gave Huang the key to the city. This content is actually netizens' personal opinions or comments, not statements by Morris Chang.\n\nThe article is in fact a mix of scam messages that use Morris Chang's name and netizens' opinions about Jensen Huang and Chiang Wan-an. It did not come from Morris Chang, so it is \"False\" information with a false attribution."
+      }
+    }
+  },
+  "questions": {
+    "verdict": {
+      "type": "choice",
+      "instructions": "Based only on `evidence`, is `claim` true or false?",
+      "criteria": {
+        "false": "The evidence shows the claim is false, fabricated, or falsely attributed",
+        "misleading": "The evidence shows the claim has some truth but distorts, exaggerates, or leaves out important context",
+        "true": "The evidence confirms the claim",
+        "insufficient_evidence": "The evidence is not relevant or not enough to confirm or refute the claim"
+      }
+    },
+    "verdict_reversed": {
+      "type": "choice",
+      "instructions": "Based only on `evidence`, is `claim` true or false?",
+      "criteria": {
+        "insufficient_evidence": "The evidence is not relevant or not enough to confirm or refute the claim",
+        "true": "The evidence confirms the claim",
+        "misleading": "The evidence shows the claim has some truth but distorts, exaggerates, or leaves out important context",
+        "false": "The evidence shows the claim is false, fabricated, or falsely attributed"
+      }
+    },
+    "source_1_stance": {
+      "type": "choice",
+      "instructions": "What does `evidence.source_1` say about `claim`?",
+      "criteria": {
+        "refutes": "The source says the claim is false, fake, or falsely attributed",
+        "supports": "The source says the claim is true",
+        "not_relevant": "The source does not say whether the claim is true or false"
+      }
+    },
+    "source_2_stance": {
+      "type": "choice",
+      "instructions": "What does `evidence.source_2` say about `claim`?",
+      "criteria": {
+        "refutes": "The source says the claim is false, fake, or falsely attributed",
+        "supports": "The source says the claim is true",
+        "not_relevant": "The source does not say whether the claim is true or false"
+      }
+    },
+    "source_3_stance": {
+      "type": "choice",
+      "instructions": "What does `evidence.source_3` say about `claim`?",
+      "criteria": {
+        "refutes": "The source says the claim is false, fake, or falsely attributed",
+        "supports": "The source says the claim is true",
+        "not_relevant": "The source does not say whether the claim is true or false"
+      }
+    }
+  }
+}
