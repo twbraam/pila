@@ -1,6 +1,12 @@
 import { resolve } from 'node:path';
 import { createPilaServer } from './index';
 
+try {
+  process.loadEnvFile();
+} catch (error) {
+  if (!(error instanceof Error && 'code' in error && error.code === 'ENOENT')) throw error;
+}
+
 const port = Number(process.env.PORT ?? '3000');
 if (!Number.isInteger(port) || port < 0 || port > 65535) {
   throw new TypeError('PORT must be an integer between 0 and 65535.');

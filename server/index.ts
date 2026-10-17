@@ -3,11 +3,17 @@ import { createServer, type IncomingMessage, type ServerResponse } from 'node:ht
 import { join, resolve } from 'node:path';
 import { listLanguages } from 'youtube-transcript-plus';
 import { assertTranscript, extractTranscript, parseVideoId } from '../extract';
+import type { Transcript } from '../shared/transcript';
+import { assertOverlayResults, type OverlayResults } from '../shared/overlay-results';
+import { ProcessConfigurationError, resolveOptions, type ProcessOptions } from '../process/config';
+import { processTranscript } from '../process';
 
 interface ServerOptions {
   outputDirectory: string;
   extract?: typeof extractTranscript;
   languages?: typeof listLanguages;
+  process?: (transcript: Transcript, options: { signal: AbortSignal }) => Promise<OverlayResults>;
+  processOptions?: ProcessOptions;
 }
 
 class HttpError extends Error {
@@ -75,13 +81,49 @@ export function createPilaServer(options: ServerOptions) {
         respond(response, 200, { status: 'ok' });
         return;
       }
-      if (request.url !== '/extract') throw new HttpError(404, 'not_found', 'Use POST /extract.');
+      if (request.url !== '/extract' && request.url !== '/check') {
+        throw new HttpError(404, 'not_found', 'Use POST /check or POST /extract.');
+      }
       if (request.method !== 'POST') {
         response.setHeader('Allow', 'POST');
-        throw new HttpError(405, 'method_not_allowed', 'Use POST /extract.');
+        throw new HttpError(405, 'method_not_allowed', `Use POST ${request.url}.`);
       }
       const input = await readRequest(request);
       const videoId = parseVideoId(input.url);
+      const disconnected = new AbortController();
+      response.once('close', () => {
+        if (!response.writableEnded) disconnected.abort();
+      });
+      const extractCaptions = async () => {
+        const signal = AbortSignal.any([disconnected.signal, AbortSignal.timeout(30_000)]);
+        const lang = input.lang ?? (await languages(videoId, { signal }))[0]?.languageCode;
+        signal.throwIfAborted();
+        if (!lang) throw new HttpError(422, 'captions_unavailable', 'No caption track is available.');
+        const transcript = await extract(input.url, { lang, signal });
+        signal.throwIfAborted();
+        assertTranscript(transcript);
+        if (transcript.videoId !== videoId || transcript.sentences.length === 0) {
+          throw new HttpError(502, 'invalid_transcript', 'Caption provider returned an invalid transcript.');
+        }
+        return { transcript, lang };
+      };
+
+      if (request.url === '/check') {
+        // Resolve credentials before fetching captions; /extract remains usable without a key.
+        const processingOptions = options.process ? { signal: disconnected.signal }
+          : resolveOptions({ ...options.processOptions, signal: disconnected.signal });
+        const { transcript } = await extractCaptions();
+        const results = await (options.process ?? processTranscript)(transcript, processingOptions);
+        disconnected.signal.throwIfAborted();
+        assertOverlayResults(results);
+        // Defend the handoff even when a replacement processor is injected.
+        if (results.some(result => !transcript.sentences.some(sentence =>
+          sentence.start === result.timestamp && sentence.text === result.sentence))) {
+          throw new HttpError(502, 'invalid_results', 'Process returned a result outside the original transcript.');
+        }
+        respond(response, 200, results);
+        return;
+      }
       const destination = join(outputDirectory, `${videoId}.json`);
       try {
         await access(destination);
@@ -90,14 +132,7 @@ export function createPilaServer(options: ServerOptions) {
         if (errorCode(error) !== 'ENOENT') throw error;
       }
 
-      const signal = AbortSignal.timeout(30_000);
-      const lang = input.lang ?? (await languages(videoId, { signal }))[0]?.languageCode;
-      if (!lang) throw new HttpError(422, 'captions_unavailable', 'No caption track is available.');
-      const transcript = await extract(input.url, { lang, signal });
-      assertTranscript(transcript);
-      if (transcript.videoId !== videoId || transcript.sentences.length === 0) {
-        throw new HttpError(502, 'invalid_transcript', 'Caption provider returned an invalid transcript.');
-      }
+      const { transcript, lang } = await extractCaptions();
       await mkdir(outputDirectory, { recursive: true });
       // Exclusive creation also prevents replacement if concurrent requests race.
       await writeFile(destination, `${JSON.stringify(transcript, null, 2)}\n`, { encoding: 'utf8', flag: 'wx' });
@@ -105,8 +140,11 @@ export function createPilaServer(options: ServerOptions) {
         videoId, language: lang, file: destination, sentenceCount: transcript.sentences.length,
       });
     } catch (error) {
+      if (response.destroyed) return;
       if (error instanceof HttpError) {
         respond(response, error.status, { error: { code: error.code, message: error.message } });
+      } else if (error instanceof ProcessConfigurationError) {
+        respond(response, 503, { error: { code: 'processing_unavailable', message: error.message } });
       } else if (errorCode(error) === 'EEXIST') {
         respond(response, 409, { error: { code: 'transcript_exists', message: 'Transcript already exists; nothing was overwritten.' } });
       } else {

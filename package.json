@@ -4,8 +4,11 @@
   "scripts": {
     "start": "tsx server/main.ts",
     "extract": "tsx extract/main.ts",
-    "test": "node --import tsx --test extract/tests/*.test.ts shared/tests/*.test.ts server/tests/*.test.ts",
-    "typecheck": "tsc --noEmit"
+    "test": "node --import tsx --test extract/tests/*.test.ts process/tests/*.test.ts shared/tests/*.test.ts server/tests/*.test.ts",
+    "typecheck": "tsc --noEmit",
+    "screen": "tsx process/screen-cli.ts",
+    "check": "tsx process/check-cli.ts",
+    "factcheck": "tsx process/factcheck-cli.ts"
   },
   "engines": {
     "node": ">=22"

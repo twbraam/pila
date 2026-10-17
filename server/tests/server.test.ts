@@ -4,7 +4,9 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import test from 'node:test';
 import { assertTranscript, type Transcript } from '../../shared/transcript';
+import type { OverlayResults } from '../../shared/overlay-results';
 import { createPilaServer } from '../index';
+import { transcript as pipelineTranscript, fakeGemini } from '../../process/tests/fixtures/gemini';
 
 const VIDEO_ID = '7wFWgopJP5Q';
 const VIDEO_URL = `https://www.youtube.com/watch?v=${VIDEO_ID}`;
@@ -45,6 +47,156 @@ function submit(base: string, body: unknown) {
     method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body),
   });
 }
+
+function checkVideo(base: string, body: unknown = { url: VIDEO_URL }) {
+  return fetch(`${base}/check`, {
+    method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body),
+  });
+}
+
+test('the default HTTP pipeline runs real Process code with simulated Gemini responses', async () => {
+  const fake = fakeGemini({ scores: [4.25, 1, 4] });
+  await withServer({
+    extract: async () => structuredClone(pipelineTranscript),
+    processOptions: { apiKey: 'offline', fetch: fake.fetch },
+  }, async (base, directory) => {
+    const response = await checkVideo(base);
+    assert.equal(response.status, 200);
+    assert.deepEqual(await response.json(), [{
+      timestamp: 1.123456, sentence: 'A claim to check.', score: 4.25,
+      explanation: 'The first claim is contradicted.', sources: ['https://example.org/evidence'],
+    }]);
+    assert.equal(fake.calls.length, 3);
+    assert.deepEqual(await readdir(directory), []);
+  });
+});
+
+test('missing Gemini configuration fails before extraction and leaves extraction-only API available', async () => {
+  let extracted = false;
+  await withServer({
+    processOptions: { apiKey: '' },
+    extract: async () => { extracted = true; return structuredClone(transcript); },
+  }, async base => {
+    assert.equal((await checkVideo(base)).status, 503);
+    assert.equal(extracted, false);
+    assert.equal((await fetch(`${base}/health`)).status, 200);
+    assert.equal((await submit(base, { url: VIDEO_URL })).status, 201);
+  });
+});
+
+test('the default processing deadline aborts the upstream call and returns 504', async () => {
+  await withServer({ processOptions: {
+    apiKey: 'offline', timeoutMs: 30,
+    fetch: async (_input, init) => new Promise((_resolve, reject) => {
+      init?.signal?.addEventListener('abort', () => reject(init.signal?.reason), { once: true });
+    }),
+  } }, async base => {
+    assert.equal((await checkVideo(base)).status, 504);
+  });
+});
+
+test('disconnecting the HTTP client cancels pending processing', async () => {
+  let started!: () => void;
+  const processingStarted = new Promise<void>(resolve => { started = resolve; });
+  let cancelled!: () => void;
+  const processingCancelled = new Promise<void>(resolve => { cancelled = resolve; });
+  await withServer({ process: async (_transcript, options) => {
+    started();
+    return new Promise((_resolve, reject) => {
+      options.signal.addEventListener('abort', () => { cancelled(); reject(options.signal.reason); }, { once: true });
+    });
+  } }, async base => {
+    const controller = new AbortController();
+    const response = fetch(`${base}/check`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ url: VIDEO_URL }), signal: controller.signal,
+    });
+    await processingStarted;
+    controller.abort();
+    await assert.rejects(response, { name: 'AbortError' });
+    await processingCancelled;
+  });
+});
+
+test('POST /check runs Extract then Process and returns only the Overlay array', async () => {
+  const calls: string[] = [];
+  const expected: OverlayResults = [{ timestamp: 1, sentence: '這是一句話。', score: 4.25, explanation: 'Evidence contradicts this claim.', sources: ['https://example.org/evidence'] }];
+  await withServer({
+    extract: async () => { calls.push('extract'); return structuredClone(transcript); },
+    process: async (input, options) => {
+      calls.push('process');
+      assert.deepEqual(input, transcript);
+      assert(options.signal instanceof AbortSignal);
+      return structuredClone(expected);
+    },
+  }, async (base, directory) => {
+    const response = await checkVideo(base);
+    assert.equal(response.status, 200);
+    assert.match(response.headers.get('content-type') ?? '', /application\/json/);
+    assert.deepEqual(await response.json(), expected);
+    assert.deepEqual(calls, ['extract', 'process']);
+    assert.deepEqual(await readdir(directory), []);
+  });
+});
+
+test('checks can be repeated even when a saved transcript exists', async () => {
+  let calls = 0;
+  await withServer({ process: async () => { calls++; return []; } }, async (base, directory) => {
+    const file = join(directory, `${VIDEO_ID}.json`);
+    await writeFile(file, 'existing transcript');
+    for (let index = 0; index < 2; index++) {
+      const response = await checkVideo(base, { url: VIDEO_URL, lang: 'zh-TW' });
+      assert.equal(response.status, 200);
+      assert.deepEqual(await response.json(), []);
+    }
+    assert.equal(calls, 2);
+    assert.equal(await readFile(file, 'utf8'), 'existing transcript');
+  });
+});
+
+test('caption failures, invalid transcripts, and invalid requests never call Process', async () => {
+  let calls = 0;
+  const process = async () => { calls++; return []; };
+  await withServer({ process, languages: async () => [] }, async base => {
+    assert.equal((await checkVideo(base)).status, 422);
+  });
+  await withServer({ process, extract: async () => { throw new Error('Missing captions'); } }, async base => {
+    assert.equal((await checkVideo(base)).status, 502);
+    assert.equal((await checkVideo(base, { url: 'invalid' })).status, 400);
+    assert.equal((await fetch(`${base}/check`)).status, 405);
+  });
+  for (const invalid of [{ ...transcript, videoId: 'OwqIy8Ikv-c' }, { ...transcript, sentences: [] }]) {
+    await withServer({ process, extract: async () => invalid }, async base => {
+      assert.equal((await checkVideo(base)).status, 502);
+    });
+  }
+  assert.equal(calls, 0);
+});
+
+test('processing failures and timeouts stay errors and do not write transcripts', async () => {
+  for (const [error, status] of [[new Error('Provider failed'), 502], [new DOMException('Deadline', 'TimeoutError'), 504]] as const) {
+    await withServer({ process: async () => { throw error; } }, async (base, directory) => {
+      const response = await checkVideo(base);
+      assert.equal(response.status, status);
+      const body = await response.json();
+      assert(body !== null && typeof body === 'object' && 'error' in body);
+      assert.deepEqual(await readdir(directory), []);
+    });
+  }
+});
+
+test('the server rejects malformed processor output and invented text or timing', async () => {
+  for (const result of [
+    [{ timestamp: 1, sentence: '這是一句話。', score: 6, explanation: 'Invalid score.', sources: ['https://example.org'] }],
+    [{ timestamp: 1, sentence: 'Invented sentence.', score: 4, explanation: 'Evidence.', sources: ['https://example.org'] }],
+    [{ timestamp: 1.1, sentence: '這是一句話。', score: 4, explanation: 'Evidence.', sources: ['https://example.org'] }],
+    [{ timestamp: 1, sentence: '這是一句話。', score: 4, explanation: 'Evidence.', sources: ['https://example.org'], reason: 'Extra' }],
+  ]) {
+    await withServer({ process: async () => result as Awaited<ReturnType<NonNullable<Dependencies['process']>>> }, async base => {
+      assert.equal((await checkVideo(base)).status, 502);
+    });
+  }
+});
 
 test('a client sends only a YouTube URL and the server writes the JSON contract', async () => {
   await withServer({ extract: async (input, options) => {

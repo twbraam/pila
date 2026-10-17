@@ -2,7 +2,9 @@
 
 A planned Chrome extension that checks YouTube captions for potential misinformation and shows evidence links during video playback.
 
-The **Extract module is implemented as a TypeScript/Node.js HTTP endpoint, CLI, and library**. Extract and Process must run on the **same server**, using the root package configuration. Process, its integration into the server, Overlay, and the WXT extension integration are still planned. The completed server will extract captions, process them, and return the result array specified below to Overlay. Extract uses [`youtube-transcript-plus`](https://github.com/ericmmartin/youtube-transcript-plus) to retrieve existing YouTube captions; it does not transcribe audio or require Gemini credentials.
+The **Node.js API server runs Extract and Process together**. `POST /check` accepts a YouTube URL or ID, retrieves existing captions with [`youtube-transcript-plus`](https://github.com/ericmmartin/youtube-transcript-plus), then screens and verifies the transcript with Gemini and Google Search. It returns the top-level result array specified below. Overlay and the WXT extension integration are still planned.
+
+Caption extraction does not transcribe audio or require an API key. Processing requires `GEMINI_API_KEY`. The merged backend uses the Gemini/Google Search implementation from `screen-verify`.
 
 ## Project layout
 
@@ -11,7 +13,7 @@ extract/                  Caption extraction, JSON CLI, and its tests
   main.ts                 CLI entry point
   index.ts                Reusable Extract API
   tests/                  Offline tests and simulated YouTube responses
-process/                  Process step (implementation planned)
+process/                  Gemini screening, grounded verification, CLIs, and tests
 server/                   Shared HTTP server and endpoint tests
 shared/
   transcript.ts           Shared Transcript types and runtime validation
@@ -27,7 +29,7 @@ Run commands from the repository root. Each step keeps its implementation in its
 
 ## Proof of concept
 
-Extract retrieves the whole video's caption track and assembles caption fragments into timed sentence units. On the same server, Process will check those units and produce results for Overlay. The `Transcript` contract is the internal Extract → Process handoff; the server → Overlay response is a JSON array of results with `timestamp`, `sentence`, `score`, and `sources`.
+Extract retrieves the whole video's caption track and assembles caption fragments into timed sentence units. On the same server, Process checks those units and produces results for Overlay. The `Transcript` contract is the internal Extract → Process handoff; the server → Overlay response is a JSON array of results with `timestamp`, `sentence`, `score`, `explanation`, and `sources`.
 
 ```mermaid
 flowchart LR
@@ -35,13 +37,50 @@ flowchart LR
     subgraph Server["Same Node.js server"]
         B["Extract: fetch captions"] --> C["Assemble timed sentences"]
         C --> D["Internal Transcript"]
-        D --> E["Process: Jev + Tavily (TODO)"]
+        D --> E["Process: Gemini + Google Search"]
     end
-    E --> F["JSON result array (TODO)"]
+    E --> F["JSON result array"]
     F --> G["Overlay during playback (planned)"]
 ```
 
 The planned extension stack is TypeScript + WXT (Manifest V3), with content scripts for playback, a background service worker for requests to the shared Extract/Process server, and Chrome messaging/storage. The caption package imports Node.js filesystem modules and runs on that server. Extension-to-server integration is still planned.
+
+## API: check a YouTube video
+
+Requires **Node.js 22 or later**. Run from the repository root:
+
+```bash
+npm ci
+cp .env.example .env
+# Set GEMINI_API_KEY in .env, then start the server.
+npm start
+```
+
+Submit a video URL (a bare 11-character video ID also works):
+
+```bash
+curl --fail-with-body http://127.0.0.1:3000/check \
+  -H 'Content-Type: application/json' \
+  -d '{"url":"https://www.youtube.com/watch?v=7wFWgopJP5Q","lang":"zh-TW"}'
+```
+
+`lang` is optional. When omitted, Extract selects the first available caption track; when supplied, it requests that exact language without translation or fallback. The request accepts only `url` and optional `lang`.
+
+The server runs caption extraction, suspicion screening, Google Search grounding for flagged sentences, then evidence-based judging. HTTP **200** contains the [server → Overlay result array](#output-contract-server--overlay), including `[]` when no sentences are reportable. `/check` keeps the transcript in memory and can be repeated regardless of files already saved by `/extract`.
+
+Failures return a non-2xx response with `{ "error": { "code": "...", "message": "..." } }`. Invalid requests return 400, missing caption tracks return 422, upstream extraction or processing failures return 502, missing processing configuration returns 503, and timeouts return 504. Wrong content types return 415 and request bodies over 16 KiB return 413. Failures never become successful empty arrays.
+
+The server listens on `127.0.0.1:3000`; set `PORT` to change the port. `GET /health` is a liveness check, not a check of external provider availability. Caption retrieval has a 30-second deadline. The complete check has a 180-second deadline shared across extraction and processing and is cancelled if the client disconnects. Root `.env` values are loaded by the server and Process CLIs; existing environment variables take precedence.
+
+| Setting | Default | Purpose |
+| --- | --- | --- |
+| `GEMINI_API_KEY` | Required for `/check` | Server-side Gemini API credential. |
+| `SCREEN_MODEL` | `gemini-3.5-flash-lite` | Screening model from `screen-verify`. |
+| `FACTCHECK_MODEL` | `gemini-3.8-flash` | Grounding and judging model from `screen-verify`. |
+| `PORT` | `3000` | Local server port. |
+| `TRANSCRIPT_DIR` | `examples/transcripts` | Create-only output directory for `/extract`. |
+
+Model IDs retain the branch defaults; your Gemini account must have access to the selected models and Google Search grounding. You can override the model IDs. Model availability and live provider behavior are separate from the offline tests.
 
 ## 1. Extract
 
@@ -66,13 +105,13 @@ curl --fail-with-body http://127.0.0.1:3000/extract \
 
 The server fetches the captions and writes `examples/transcripts/<videoId>.json` using the shared `Transcript` contract. The client receives HTTP **201** with `videoId`, the selected `language`, the saved `file` path, and `sentenceCount`. Only JSON is saved.
 
-This is the **current extraction-only endpoint**. It does not run Process or return the [server → Overlay response](#output-contract-server--overlay). The shared output contract is implemented; integrating Process and returning that result array is still TODO.
+This is the **extraction-only endpoint**. Use `POST /check` for the complete Extract → Process → Overlay response.
 
 `lang` is optional. When omitted, the server uses YouTube's first available caption track; when supplied, it requests that exact language. Use `zh-TW` or `zh-Hant` for videos offering those Traditional Chinese tracks. No translation or script conversion is performed.
 
 **Existing files are never replaced:** the server returns HTTP **409** before fetching if the destination exists, and exclusive file creation also prevents concurrent requests from replacing each other's output. Failed extraction creates no transcript. Clients cannot choose output paths.
 
-The server listens on `127.0.0.1:3000`. Set `PORT` to change the port and `TRANSCRIPT_DIR` to change the server-owned output directory. `GET /health` checks readiness. Process will be integrated into this same server.
+The server listens on `127.0.0.1:3000`. Set `PORT` to change the port and `TRANSCRIPT_DIR` to change the server-owned output directory. `GET /health` checks liveness. The same server runs Process through `/check`.
 
 ### CLI
 
@@ -182,16 +221,26 @@ For older `{ text, start, duration }[]` downloads, supply the video ID separatel
 - Caption quality, punctuation, duplicate/rolling caption text, and coarse timing are inherited from YouTube. Extract normalizes boundaries and whitespace; it does not correct or deduplicate speech.
 - The entire transcript is held in memory and returned once extraction succeeds. The 30-second request timeout applies regardless of video duration.
 
-## 2. Processing (planned)
+## 2. Processing
 
-The implementation belongs in [`process/`](./process/README.md), alongside Extract on the same server. It imports its input contract from `shared/`. The server will run Extract and then Process before returning the result array to the client; the extension will not orchestrate these steps separately.
+The implementation lives in [`process/`](./process/README.md) and consumes the validated shared `Transcript` directly. It keeps the original video ID, sentence IDs, text, and timing throughout processing. It uses the same root package and server as Extract.
 
-For every sentence in the transcript:
+1. **Screen:** Gemini reads the full transcript and assigns every sentence a suspicion rating from 0 to 5. Sentences scoring strictly above 3 proceed to verification; skipped sentences produce no result and are not verified true.
+2. **Ground:** Gemini with Google Search checks the flagged sentences using the full transcript as context. Sources are attached only where the provider's grounding metadata cites the findings for that sentence.
+3. **Judge:** a separate Gemini call assesses the search findings. A conclusion without an attached HTTP(S) source remains inconclusive. The API returns the original screening rating, without rounding, only when verification finds a sourced problem. The rating measures suspicion on a 0–5 scale; it is not a calibrated probability of falsehood.
 
-1. **Detect with Jev:** identify statements that need fact-checking. A candidate proceeds to evidence checking; otherwise, continue with the next sentence.
-2. **Find and assess evidence:** use Tavily to search for evidence links, then use Jev to assess the statement and produce a score with source URLs. The meaning of each score and the scoring/reporting criteria will be specified later.
+Incomplete, duplicate, malformed, blocked, or truncated screening/judging responses fail processing. No automatic retries or partial successful result arrays are returned. The full transcript is sent as context in each stage; videos that exceed the models' context or output limits fail rather than being silently truncated.
 
-**Input:** the internal `Transcript`. **Output:** the array defined below. A skipped sentence produces no result; that does not establish that it is true.
+The branch's Process CLIs remain available and now accept the same `Transcript` JSON produced by Extract:
+
+```bash
+npm run extract -- OwqIy8Ikv-c --out transcript.json
+npm run screen -- transcript.json --all
+npm run check -- transcript.json --format json
+npm run factcheck -- transcript.json --format json
+```
+
+`screen` only screens. `check` runs the server's screen-and-verify workflow and prints diagnostic results or a text report. `factcheck` retains the branch's separate whole-video overview and fact-check report. CLI diagnostic objects are separate from the HTTP Overlay array. See [`process/README.md`](./process/README.md) for library usage and CLI options.
 
 ### Output contract: server → Overlay
 
@@ -202,7 +251,8 @@ The shared output contract is implemented in [`shared/overlay-results.ts`](./sha
   {
     "timestamp": 42.5,
     "sentence": "Sample excerpt from video speech or transcript",
-    "score": 2,
+    "score": 4.25,
+    "explanation": "The cited evidence contradicts the claim.",
     "sources": ["https://factcheck.org/..."]
   }
 ]
@@ -212,20 +262,21 @@ The shared output contract is implemented in [`shared/overlay-results.ts`](./sha
 | --- | --- | --- |
 | `timestamp` | `number` | Start time in seconds from the beginning of the video, taken from the original transcript sentence's `start`. |
 | `sentence` | `string` | Original transcript sentence text, taken from `text`. |
-| `score` | `0 \| 1 \| 2 \| 3` | Integer score. Its meaning and scoring criteria will be specified later. |
-| `sources` | `string[]` | HTTP(S) source URLs associated with the result. |
+| `score` | `number` | Original suspicion rating on a 0–5 scale, strictly greater than 3; fractional values are retained. |
+| `explanation` | `string` | Evidence-based reason from the verifier explaining the problem. |
+| `sources` | `string[]` | At least one HTTP(S) source URL cited for this sentence. |
 
-Each result has exactly these four fields; `explanation` is no longer part of the contract. The response has no wrapper object, and Overlay does not need the internal `Transcript`, sentence IDs, or server file paths. The client associates the response with the video it requested and uses `timestamp` for playback. Return results in nondecreasing timestamp order. A successful check with no reportable results returns `[]`; extraction or processing failures must remain errors.
+Each result has exactly these five fields. `explanation` is the verifier's evidence-based reason, not the screening rationale. The response has no wrapper object, and Overlay does not need the internal `Transcript`, sentence IDs, or server file paths. The client associates the response with the video it requested and uses `timestamp` for playback. Return results in nondecreasing timestamp order. A successful check with no reportable results returns `[]`; extraction or processing failures must remain errors.
 
-`OverlayResult` and `OverlayResults` provide the TypeScript types. `assertOverlayResults()` validates the exact fields, finite nonnegative timestamps, nonempty sentence text, integer scores from 0 through 3, HTTP(S) source URLs, and chronological order. The contract permits an empty `sources` array and does not assign score meanings.
+`OverlayResult` and `OverlayResults` provide the TypeScript types. `assertOverlayResults()` validates the exact fields, finite nonnegative timestamps, nonempty sentence text, finite scores strictly above 3 and at most 5, nonempty explanations, at least one HTTP(S) source URL, and chronological order. Supported and inconclusive claims, and screening ratings of 3 or less, are omitted.
 
-**Process TODO:** define the scoring criteria, implement evidence checking and the field mapping in `process/`, integrate Process into the existing server so it returns this array after Extract and Process finish, and add server integration tests. The shared contract and its tests are implemented; Process and the combined endpoint remain pending.
+The server validates this contract before replying and checks that every result matches an original transcript sentence and start time. Internal diagnostics, sentence IDs, model metadata, and server file paths are omitted from the HTTP response.
 
 ## 3. Overlay (planned)
 
 - Associate the returned array with the requested video.
 - Use each result's `timestamp` and the current playback position to show the relevant result. Multiple results can share a timestamp.
-- Display the `sentence`, its `score`, and clickable `sources`. Score interpretation will be specified with the scoring criteria.
+- Display the `sentence`, its `score`, and clickable `sources`. Show the evidence-based `explanation` beside the original suspicion rating.
 
 **Input:** the server's result array and the current playback position. Each result from Process provides an Overlay item.
 
@@ -236,8 +287,8 @@ npm run typecheck
 npm test
 ```
 
-Tests run offline and cover sentence assembly, source timing validation, the internal transcript contract, the server → Overlay contract (including scores, source URLs, and ordering), URL handling, cancellation, CLI behavior, and HTTP requests to a local test server with simulated caption providers. They verify that existing files and concurrent requests cannot overwrite transcripts. Live retrieval depends on YouTube and is checked separately.
+Tests run offline and cover extraction, both shared contracts, strict model-response parsing, source attribution (including Chinese byte offsets), cancellation, CLI behavior, and local HTTP integration. Caption and Gemini providers are simulated. Existing-file and concurrent-write protection for `/extract` remain covered. Live YouTube retrieval and billed Gemini/Google Search calls require separate verification with working provider access.
 
 ## Example videos
 
-See [example videos](./examples/youtube_videos.md).
+See [example videos](./examples/youtube_videos.md). The branch's [legacy raw captions](./examples/screen-verify-captions.json) are retained for reference; normalize raw cues with Extract before passing them to Process.
